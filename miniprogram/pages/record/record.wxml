@@ -1,0 +1,37 @@
+<view class="page">
+
+  <!-- 宝宝切换 -->
+  <view class="baby-bar" bindtap="goBaby">
+    <view wx:if="{{baby}}">
+      <text class="baby-emoji">{{baby.emoji || '👶'}}</text>
+      <text class="baby-name">{{baby.name}} · {{ageText}}</text>
+    </view>
+    <view wx:else class="no-baby">添加宝宝后开始记录 ›</view>
+    <text class="baby-switch">切换</text>
+  </view>
+
+  <!-- 记录列表 -->
+  <block wx:if="{{baby && groupedLogs.length}}">
+    <view class="date-group" wx:for="{{groupedLogs}}" wx:key="date" wx:for-item="group">
+      <view class="date-title">{{group.date}}</view>
+      <view class="log-item" wx:for="{{group.items}}" wx:key="id">
+        <view class="log-emoji">{{item.emoji || '🍽️'}}</view>
+        <view class="log-info">
+          <view class="log-title">{{item.recipeTitle}}</view>
+          <view class="log-note" wx:if="{{item.note}}">{{item.note}}</view>
+        </view>
+        <view class="log-right">
+          <text class="reaction reaction-{{item.reaction}}">{{item.reactionLabel}}</text>
+          <text class="log-del" data-id="{{item.id}}" catchtap="removeLog">删除</text>
+        </view>
+      </view>
+    </view>
+  </block>
+
+  <view class="empty" wx:if="{{!baby}}">请先添加宝宝档案</view>
+  <view class="empty" wx:elif="{{!groupedLogs.length}}">还没有喂养记录，点右下角开始打卡</view>
+
+  <!-- 悬浮打卡按钮 -->
+  <view class="fab" bindtap="goAdd">＋</view>
+
+</view>

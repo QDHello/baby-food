@@ -1,0 +1,113 @@
+.page {
+  padding-bottom: 160rpx;
+}
+
+.form-label {
+  font-size: 28rpx;
+  color: #666;
+}
+.form-item {
+  display: flex;
+  align-items: center;
+  padding: 20rpx 0;
+  border-bottom: 2rpx solid #f7f3f0;
+}
+.form-item:last-child {
+  border-bottom: none;
+}
+.form-item .form-label {
+  width: 160rpx;
+  flex-shrink: 0;
+}
+.form-input {
+  flex: 1;
+  font-size: 28rpx;
+}
+.form-picker {
+  flex: 1;
+  font-size: 28rpx;
+}
+.form-picker.placeholder {
+  color: #bbb;
+}
+.age-preview {
+  color: #ff7043;
+  font-weight: 600;
+}
+
+.emoji-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20rpx;
+  margin-top: 16rpx;
+}
+.emoji-opt {
+  width: 84rpx;
+  height: 84rpx;
+  border-radius: 50%;
+  background: #f7f3f0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 44rpx;
+}
+.emoji-opt.active {
+  background: #fff0e9;
+  border: 3rpx solid #ff8a65;
+}
+
+.gender-group {
+  display: flex;
+  gap: 20rpx;
+}
+.gender-opt {
+  padding: 10rpx 48rpx;
+  border-radius: 32rpx;
+  background: #f7f3f0;
+  font-size: 28rpx;
+}
+.gender-opt.active {
+  background: linear-gradient(135deg, #ff8a65, #ff7043);
+  color: #fff;
+}
+
+.allergen-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16rpx;
+  margin-top: 20rpx;
+}
+.allergen-chip {
+  padding: 12rpx 28rpx;
+  border-radius: 32rpx;
+  background: #f7f3f0;
+  font-size: 26rpx;
+}
+.allergen-chip.checked {
+  background: #ffebee;
+  color: #e53935;
+  font-weight: 600;
+}
+.star {
+  color: #ff7043;
+  font-size: 22rpx;
+}
+.allergen-hint {
+  font-size: 22rpx;
+  color: #bbb;
+  margin-top: 16rpx;
+}
+
+.save-btn {
+  position: fixed;
+  left: 40rpx;
+  right: 40rpx;
+  bottom: 60rpx;
+  text-align: center;
+  line-height: 88rpx;
+  background: linear-gradient(135deg, #ff8a65, #ff7043);
+  color: #fff;
+  border-radius: 44rpx;
+  font-size: 30rpx;
+  font-weight: 600;
+}

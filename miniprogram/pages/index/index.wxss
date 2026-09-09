@@ -1,0 +1,175 @@
+.page {
+  padding-bottom: 40rpx;
+}
+
+/* 月龄卡片 */
+.hero {
+  margin: 24rpx;
+  padding: 32rpx;
+  border-radius: 28rpx;
+  background: linear-gradient(135deg, #ff8a65, #ff7043);
+  color: #fff;
+}
+.hero-top {
+  display: flex;
+  align-items: center;
+}
+.baby-avatar {
+  width: 100rpx;
+  height: 100rpx;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.25);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 52rpx;
+  flex-shrink: 0;
+}
+.baby-info {
+  flex: 1;
+  margin-left: 24rpx;
+}
+.baby-name {
+  font-size: 34rpx;
+  font-weight: 700;
+}
+.baby-stage {
+  font-size: 24rpx;
+  opacity: 0.9;
+  margin-top: 6rpx;
+}
+.hero-switch {
+  font-size: 24rpx;
+  padding: 8rpx 24rpx;
+  background: rgba(255, 255, 255, 0.25);
+  border-radius: 32rpx;
+}
+.hero-tip {
+  margin-top: 24rpx;
+  font-size: 26rpx;
+  opacity: 0.95;
+  line-height: 1.5;
+}
+.hero-actions {
+  display: flex;
+  margin-top: 24rpx;
+}
+.action-btn {
+  flex: 1;
+  text-align: center;
+  background: #fff;
+  color: #ff7043;
+  border-radius: 40rpx;
+  line-height: 72rpx;
+  font-size: 28rpx;
+  font-weight: 600;
+  margin-right: 20rpx;
+}
+.action-btn.ghost {
+  background: rgba(255, 255, 255, 0.2);
+  color: #fff;
+  margin-right: 0;
+}
+.empty-hero {
+  display: flex;
+  align-items: center;
+}
+.hero-arrow {
+  font-size: 44rpx;
+  opacity: 0.7;
+}
+
+/* 区块 */
+.section {
+  margin: 8rpx 24rpx;
+}
+.section-head {
+  margin-top: 16rpx;
+}
+.section-title {
+  font-size: 32rpx;
+  font-weight: 700;
+}
+.more {
+  font-size: 26rpx;
+  color: #999;
+}
+
+/* 食谱网格 */
+.recipe-grid {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+.recipe-card {
+  width: 48.5%;
+  background: #fff;
+  border-radius: 24rpx;
+  padding: 28rpx;
+  box-sizing: border-box;
+  margin-bottom: 20rpx;
+  box-shadow: 0 4rpx 20rpx rgba(255, 138, 101, 0.06);
+}
+.recipe-emoji {
+  font-size: 64rpx;
+}
+.recipe-emoji.sm {
+  font-size: 56rpx;
+  width: 88rpx;
+  height: 88rpx;
+  background: #fff0e9;
+  border-radius: 20rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+.recipe-title {
+  font-size: 30rpx;
+  font-weight: 700;
+  margin-top: 12rpx;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.recipe-desc {
+  font-size: 24rpx;
+  color: #999;
+  margin-top: 6rpx;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* 食谱列表行 */
+.recipe-list {
+  background: #fff;
+  border-radius: 24rpx;
+  overflow: hidden;
+}
+.recipe-row {
+  display: flex;
+  align-items: center;
+  padding: 24rpx 28rpx;
+  border-bottom: 2rpx solid #f7f3f0;
+}
+.recipe-row:last-child {
+  border-bottom: none;
+}
+.row-info {
+  flex: 1;
+  margin-left: 20rpx;
+  overflow: hidden;
+}
+.row-meta {
+  display: flex;
+  align-items: center;
+  margin-top: 8rpx;
+}
+.row-desc {
+  font-size: 24rpx;
+  color: #999;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}

@@ -1,0 +1,66 @@
+<view class="page">
+
+  <!-- 宝宝月龄卡片 -->
+  <view class="hero" wx:if="{{baby}}">
+    <view class="hero-top">
+      <view class="baby-avatar">{{baby.emoji || '👶'}}</view>
+      <view class="baby-info">
+        <view class="baby-name">{{baby.name}} · {{ageText}}</view>
+        <view class="baby-stage">{{stage.name}} · {{stage.desc}}</view>
+      </view>
+      <view class="hero-switch" bindtap="goBaby">切换</view>
+    </view>
+    <view class="hero-tip">💡 {{stage.tip}}</view>
+    <view class="hero-actions">
+      <view class="action-btn" bindtap="goAddRecord">➕ 今日打卡</view>
+      <view class="action-btn ghost" bindtap="goWiki">📖 食物百科</view>
+    </view>
+  </view>
+
+  <!-- 无宝宝时引导 -->
+  <view class="hero empty-hero" wx:else bindtap="goBaby">
+    <view class="baby-avatar">👶</view>
+    <view class="baby-info">
+      <view class="baby-name">添加宝宝档案</view>
+      <view class="baby-stage">记录生日，自动推荐适龄辅食</view>
+    </view>
+    <view class="hero-arrow">›</view>
+  </view>
+
+  <!-- 按月龄推荐 -->
+  <view class="section" wx:if="{{baby}}">
+    <view class="flex-between section-head">
+      <text class="section-title">适合 {{baby.name}} 的食谱</text>
+      <text class="more" bindtap="goRecipeList">全部 ›</text>
+    </view>
+    <view class="recipe-grid" wx:if="{{recommendRecipes.length}}">
+      <view class="recipe-card" wx:for="{{recommendRecipes}}" wx:key="id" data-id="{{item.id}}" bindtap="goRecipe">
+        <view class="recipe-emoji">{{item.emoji}}</view>
+        <view class="recipe-title">{{item.title}}</view>
+        <view class="recipe-desc">{{item.desc}}</view>
+      </view>
+    </view>
+    <view class="empty" wx:else>暂无可推荐食谱，可去百科看看</view>
+  </view>
+
+  <!-- 热门食谱 -->
+  <view class="section">
+    <view class="flex-between section-head">
+      <text class="section-title">热门食谱</text>
+      <text class="more" bindtap="goRecipeList">全部 ›</text>
+    </view>
+    <view class="recipe-list">
+      <view class="recipe-row" wx:for="{{hotRecipes}}" wx:key="id" data-id="{{item.id}}" bindtap="goRecipe">
+        <view class="recipe-emoji sm">{{item.emoji}}</view>
+        <view class="row-info">
+          <view class="recipe-title">{{item.title}}</view>
+          <view class="row-meta">
+            <text class="tag">{{item.minMonths}}-{{item.maxMonths}}月</text>
+            <text class="row-desc">{{item.desc}}</text>
+          </view>
+        </view>
+      </view>
+    </view>
+  </view>
+
+</view>

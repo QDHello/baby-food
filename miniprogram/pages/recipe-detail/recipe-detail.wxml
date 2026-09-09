@@ -1,0 +1,49 @@
+<view class="page" wx:if="{{recipe}}">
+
+  <!-- 头图 -->
+  <view class="cover">{{recipe.emoji}}</view>
+
+  <!-- 标题区 -->
+  <view class="card">
+    <view class="title">{{recipe.title}}</view>
+    <view class="desc">{{recipe.desc}}</view>
+    <view class="tags">
+      <text class="tag">{{recipe.minMonths}}-{{recipe.maxMonths}}月</text>
+      <text class="tag {{difficulty.color}}">难度{{difficulty.label}}</text>
+      <text class="tag tag-green" wx:for="{{recipe.tags}}" wx:key="*this">{{item}}</text>
+    </view>
+
+    <!-- 过敏冲突提示 -->
+    <view class="warn" wx:if="{{conflictText}}">
+      ⚠️ {{baby.name}} 对「{{conflictText}}」过敏，请勿食用或替换食材
+    </view>
+  </view>
+
+  <!-- 食材 -->
+  <view class="card">
+    <view class="section-title">食材</view>
+    <view class="ing-item" wx:for="{{recipe.ingredients}}" wx:key="*this">· {{item}}</view>
+  </view>
+
+  <!-- 步骤 -->
+  <view class="card">
+    <view class="section-title">步骤</view>
+    <view class="step-item" wx:for="{{recipe.steps}}" wx:key="*this">
+      <view class="step-num">{{index + 1}}</view>
+      <view class="step-text">{{item}}</view>
+    </view>
+  </view>
+
+  <!-- 营养 -->
+  <view class="card">
+    <view class="section-title">营养</view>
+    <view class="nutrition">{{recipe.nutrition}}</view>
+  </view>
+
+  <!-- 底部操作栏 -->
+  <view class="bottom-bar">
+    <view class="fav-btn" bindtap="addFavorite">⭐ 收藏</view>
+    <view class="add-btn" bindtap="goAdd">✓ 吃过了，打卡</view>
+  </view>
+
+</view>

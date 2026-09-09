@@ -1,0 +1,23 @@
+<view class="page">
+
+  <view class="baby-card {{item.id === currentId ? 'current' : ''}}"
+        wx:for="{{babies}}"
+        wx:key="id"
+        data-id="{{item.id}}"
+        bindtap="selectBaby">
+    <view class="baby-emoji">{{item.emoji || '👶'}}</view>
+    <view class="baby-info">
+      <view class="baby-name">{{item.name}} <text wx:if="{{item.id === currentId}}" class="badge">当前</text></view>
+      <view class="baby-age">{{item.ageText}} · {{item.gender}}</view>
+    </view>
+    <view class="baby-ops">
+      <text class="op" data-id="{{item.id}}" catchtap="editBaby">编辑</text>
+      <text class="op del" data-id="{{item.id}}" catchtap="removeBaby">删除</text>
+    </view>
+  </view>
+
+  <view class="empty" wx:if="{{!babies.length}}">还没有宝宝档案，点击下方添加</view>
+
+  <view class="add-btn" bindtap="addBaby">＋ 添加宝宝</view>
+
+</view>

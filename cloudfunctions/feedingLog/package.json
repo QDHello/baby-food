@@ -1,0 +1,9 @@
+{
+  "name": "feedingLog",
+  "version": "1.0.0",
+  "description": "喂养记录 CRUD",
+  "main": "index.js",
+  "dependencies": {
+    "wx-server-sdk": "~2.6.3"
+  }
+}

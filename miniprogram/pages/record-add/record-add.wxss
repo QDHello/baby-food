@@ -1,0 +1,86 @@
+.page {
+  padding-bottom: 160rpx;
+}
+
+.baby-tip {
+  margin: 24rpx;
+  background: #fff3e0;
+  color: #fb8c00;
+  padding: 20rpx 28rpx;
+  border-radius: 16rpx;
+  font-size: 26rpx;
+}
+.baby-tip.ok {
+  background: #e8f5e9;
+  color: #43a047;
+}
+
+.form-label {
+  font-size: 28rpx;
+  color: #666;
+}
+.form-picker {
+  font-size: 30rpx;
+  margin-top: 16rpx;
+}
+.form-picker.placeholder {
+  color: #bbb;
+}
+
+.form-item {
+  display: flex;
+  align-items: center;
+  padding: 16rpx 0;
+  border-bottom: 2rpx solid #f7f3f0;
+}
+.form-item:last-child {
+  border-bottom: none;
+}
+.form-item .form-label {
+  width: 140rpx;
+  flex-shrink: 0;
+}
+.reaction-group {
+  display: flex;
+  gap: 20rpx;
+}
+.reaction-opt {
+  padding: 10rpx 40rpx;
+  border-radius: 32rpx;
+  background: #f7f3f0;
+  font-size: 28rpx;
+}
+.reaction-opt.active {
+  background: #e8f5e9;
+  color: #43a047;
+  font-weight: 600;
+}
+.reaction-opt.active.reaction-allergy {
+  background: #ffebee;
+  color: #e53935;
+}
+.reaction-opt.active.reaction-discomfort {
+  background: #fff3e0;
+  color: #fb8c00;
+}
+
+.note-input {
+  width: 100%;
+  height: 180rpx;
+  margin-top: 16rpx;
+  font-size: 28rpx;
+}
+
+.save-btn {
+  position: fixed;
+  left: 40rpx;
+  right: 40rpx;
+  bottom: 60rpx;
+  text-align: center;
+  line-height: 88rpx;
+  background: linear-gradient(135deg, #ff8a65, #ff7043);
+  color: #fff;
+  border-radius: 44rpx;
+  font-size: 30rpx;
+  font-weight: 600;
+}

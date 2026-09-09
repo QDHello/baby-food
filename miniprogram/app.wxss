@@ -1,0 +1,96 @@
+/* 全局样式 */
+page {
+  background: #FFF6F0;
+  color: #333333;
+  font-size: 28rpx;
+  line-height: 1.6;
+  font-family: -apple-system, BlinkMacSystemFont, 'Helvetica Neue',
+    'PingFang SC', 'Microsoft YaHei', sans-serif;
+}
+
+/* 通用卡片 */
+.card {
+  background: #ffffff;
+  border-radius: 24rpx;
+  padding: 32rpx;
+  margin: 24rpx;
+  box-shadow: 0 4rpx 20rpx rgba(255, 138, 101, 0.06);
+}
+
+/* 主按钮 */
+.btn-primary {
+  background: linear-gradient(135deg, #ff8a65, #ff7043);
+  color: #ffffff;
+  border-radius: 48rpx;
+  font-size: 30rpx;
+  font-weight: 600;
+  line-height: 88rpx;
+  text-align: center;
+  border: none;
+}
+.btn-primary::after {
+  border: none;
+}
+
+/* 次按钮 */
+.btn-ghost {
+  background: #ffffff;
+  color: #ff7043;
+  border: 2rpx solid #ff8a65;
+  border-radius: 48rpx;
+  font-size: 30rpx;
+  line-height: 84rpx;
+  text-align: center;
+}
+.btn-ghost::after {
+  border: none;
+}
+
+/* 标签 */
+.tag {
+  display: inline-block;
+  padding: 4rpx 20rpx;
+  border-radius: 24rpx;
+  font-size: 22rpx;
+  margin-right: 12rpx;
+  background: #fff0e9;
+  color: #ff7043;
+}
+.tag-green {
+  background: #e8f5e9;
+  color: #43a047;
+}
+.tag-red {
+  background: #ffebee;
+  color: #e53935;
+}
+
+/* 通用标题 */
+.section-title {
+  font-size: 32rpx;
+  font-weight: 700;
+  margin: 8rpx 0 20rpx;
+}
+
+/* 空状态 */
+.empty {
+  text-align: center;
+  color: #999999;
+  padding: 120rpx 0;
+  font-size: 28rpx;
+}
+
+/* 布局工具 */
+.flex {
+  display: flex;
+  align-items: center;
+}
+.flex-between {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.flex-wrap {
+  display: flex;
+  flex-wrap: wrap;
+}

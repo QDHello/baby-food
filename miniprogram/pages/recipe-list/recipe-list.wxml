@@ -1,0 +1,50 @@
+<view class="page">
+
+  <!-- 搜索 -->
+  <view class="search-bar">
+    <input
+      class="search-input"
+      placeholder="搜索食谱或食材"
+      value="{{keyword}}"
+      bindinput="onSearch"
+      confirm-type="search"
+    />
+  </view>
+
+  <!-- 阶段筛选 -->
+  <scroll-view scroll-x class="stage-scroll" show-scrollbar="{{false}}">
+    <view class="stage-chips">
+      <view
+        class="chip {{activeStage === '' ? 'active' : ''}}"
+        data-stage=""
+        bindtap="onStage"
+      >全部</view>
+      <view
+        class="chip {{activeStage === item.key ? 'active' : ''}}"
+        wx:for="{{stages}}"
+        wx:key="key"
+        data-stage="{{item.key}}"
+        bindtap="onStage"
+      >{{item.label}}</view>
+    </view>
+  </scroll-view>
+
+  <!-- 食谱列表 -->
+  <view class="recipe-list">
+    <view class="recipe-row" wx:for="{{list}}" wx:key="id" data-id="{{item.id}}" bindtap="goRecipe">
+      <view class="recipe-emoji">{{item.emoji}}</view>
+      <view class="row-info">
+        <view class="recipe-title">{{item.title}}</view>
+        <view class="recipe-desc">{{item.desc}}</view>
+        <view class="row-tags">
+          <text class="tag">{{item.minMonths}}-{{item.maxMonths}}月</text>
+          <text class="tag tag-green" wx:for="{{item.tags}}" wx:key="*this">{{item}}</text>
+        </view>
+      </view>
+      <view class="row-arrow">›</view>
+    </view>
+  </view>
+
+  <view class="empty" wx:if="{{!list.length}}">没有找到匹配的食谱</view>
+
+</view>

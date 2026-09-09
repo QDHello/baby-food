@@ -1,0 +1,38 @@
+<view class="page">
+
+  <!-- 搜索框 -->
+  <view class="search-bar">
+    <input
+      class="search-input"
+      placeholder="搜索食材名称"
+      value="{{keyword}}"
+      bindinput="onSearch"
+      confirm-type="search"
+    />
+    <text class="search-clear" wx:if="{{keyword}}" bindtap="onClear">✕</text>
+  </view>
+
+  <!-- 食材列表 -->
+  <view class="ingredient-list">
+    <view
+      class="ingredient-card"
+      wx:for="{{ingredients}}"
+      wx:key="id"
+      data-id="{{item.id}}"
+      bindtap="goIngredient"
+    >
+      <view class="ing-emoji">{{item.emoji}}</view>
+      <view class="ing-info">
+        <view class="ing-name">{{item.name}}</view>
+        <view class="ing-nutrition">{{item.nutrition}}</view>
+      </view>
+      <view class="ing-right">
+        <text class="tag tag-green">{{item.addMonths}}月+</text>
+        <text class="ing-risk risk-{{item.riskKey}}">过敏{{item.allergenRisk}}</text>
+      </view>
+    </view>
+  </view>
+
+  <view class="empty" wx:if="{{!ingredients.length}}">未找到相关食材</view>
+
+</view>

@@ -1,0 +1,44 @@
+<view class="page">
+
+  <!-- 宝宝提示 -->
+  <view class="baby-tip" wx:if="{{!baby}}">⚠️ 请先在「宝宝档案」中添加宝宝</view>
+  <view class="baby-tip ok" wx:else>👶 {{baby.name}} · 今天的记录</view>
+
+  <!-- 选择食谱 -->
+  <view class="card">
+    <view class="form-label">食谱</view>
+    <picker range="{{recipes}}" range-key="title" value="{{recipeIndex >= 0 ? recipeIndex : 0}}" bindchange="onRecipe">
+      <view class="form-picker {{recipe ? '' : 'placeholder'}}">
+        {{recipe ? recipe.emoji + ' ' + recipe.title : '请选择食谱'}}
+      </view>
+    </picker>
+  </view>
+
+  <!-- 日期与反应 -->
+  <view class="card">
+    <view class="form-item">
+      <text class="form-label">日期</text>
+      <picker mode="date" value="{{date}}" end="{{today}}" bindchange="onDate">
+        <view class="form-picker">{{date}}</view>
+      </picker>
+    </view>
+    <view class="form-item">
+      <text class="form-label">反应</text>
+      <view class="reaction-group">
+        <view class="reaction-opt reaction-{{item.key}} {{reaction === item.key ? 'active' : ''}}"
+              wx:for="{{reactions}}" wx:key="key"
+              data-reaction="{{item.key}}" bindtap="onReaction">{{item.label}}</view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 备注 -->
+  <view class="card">
+    <view class="form-label">备注</view>
+    <textarea class="note-input" placeholder="记录宝宝的反应、食量等（可选）"
+              value="{{note}}" bindinput="onNote" maxlength="200"></textarea>
+  </view>
+
+  <view class="save-btn" bindtap="save">保存打卡</view>
+
+</view>

@@ -1,0 +1,80 @@
+.page {
+  padding-bottom: 40rpx;
+}
+
+.search-bar {
+  margin: 24rpx;
+  position: relative;
+}
+.search-input {
+  background: #fff;
+  border-radius: 40rpx;
+  padding: 20rpx 40rpx;
+  font-size: 28rpx;
+}
+.search-clear {
+  position: absolute;
+  right: 32rpx;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #bbb;
+  font-size: 32rpx;
+  padding: 10rpx;
+}
+
+.ingredient-list {
+  margin: 0 24rpx;
+}
+.ingredient-card {
+  display: flex;
+  align-items: center;
+  background: #fff;
+  border-radius: 24rpx;
+  padding: 28rpx;
+  margin-bottom: 20rpx;
+  box-shadow: 0 4rpx 20rpx rgba(255, 138, 101, 0.06);
+}
+.ing-emoji {
+  font-size: 56rpx;
+  width: 88rpx;
+  height: 88rpx;
+  background: #fff0e9;
+  border-radius: 20rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+.ing-info {
+  flex: 1;
+  margin-left: 20rpx;
+  overflow: hidden;
+}
+.ing-name {
+  font-size: 30rpx;
+  font-weight: 700;
+}
+.ing-nutrition {
+  font-size: 24rpx;
+  color: #999;
+  margin-top: 4rpx;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.ing-right {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 8rpx;
+}
+.ing-risk {
+  font-size: 22rpx;
+  color: #43a047;
+}
+.ing-risk.risk-mid {
+  color: #fb8c00;
+}
+.ing-risk.risk-high {
+  color: #e53935;
+}

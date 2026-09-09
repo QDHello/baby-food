@@ -1,0 +1,56 @@
+<view class="page">
+
+  <!-- 头像 emoji 选择 -->
+  <view class="card">
+    <view class="form-label">头像</view>
+    <view class="emoji-row">
+      <view class="emoji-opt {{emoji === item ? 'active' : ''}}"
+            wx:for="{{emojis}}" wx:key="*this"
+            data-emoji="{{item}}" bindtap="onEmoji">{{item}}</view>
+    </view>
+  </view>
+
+  <!-- 基本信息 -->
+  <view class="card">
+    <view class="form-item">
+      <text class="form-label">昵称</text>
+      <input class="form-input" placeholder="如：团团" value="{{name}}" bindinput="onName" />
+    </view>
+    <view class="form-item">
+      <text class="form-label">生日</text>
+      <picker mode="date" value="{{birthday}}" end="{{today}}" bindchange="onBirthday">
+        <view class="form-picker {{birthday ? '' : 'placeholder'}}">
+          {{birthday || '请选择生日'}}
+        </view>
+      </picker>
+    </view>
+    <view class="form-item" wx:if="{{agePreview}}">
+      <text class="form-label">当前月龄</text>
+      <text class="age-preview">{{agePreview}}</text>
+    </view>
+    <view class="form-item">
+      <text class="form-label">性别</text>
+      <view class="gender-group">
+        <view class="gender-opt {{gender === '男' ? 'active' : ''}}" data-gender="男" bindtap="onGender">男</view>
+        <view class="gender-opt {{gender === '女' ? 'active' : ''}}" data-gender="女" bindtap="onGender">女</view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 过敏原 -->
+  <view class="card">
+    <view class="form-label">过敏原（多选，用于食谱冲突提醒）</view>
+    <view class="allergen-list">
+      <view class="allergen-chip {{item.checked ? 'checked' : ''}}"
+            wx:for="{{allergenItems}}" wx:key="name"
+            data-name="{{item.name}}" bindtap="toggleAllergen">
+        {{item.name}}
+        <text wx:if="{{item.major}}" class="star">★</text>
+      </view>
+    </view>
+    <view class="allergen-hint">带 ★ 为常见 8 大过敏原</view>
+  </view>
+
+  <view class="save-btn" bindtap="save">保存</view>
+
+</view>

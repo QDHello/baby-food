@@ -1,0 +1,74 @@
+.page {
+  padding: 24rpx;
+  padding-bottom: 160rpx;
+}
+
+.baby-card {
+  display: flex;
+  align-items: center;
+  background: #fff;
+  border-radius: 24rpx;
+  padding: 28rpx;
+  margin-bottom: 20rpx;
+  box-shadow: 0 4rpx 20rpx rgba(255, 138, 101, 0.06);
+}
+.baby-card.current {
+  border: 3rpx solid #ff8a65;
+}
+.baby-emoji {
+  font-size: 56rpx;
+  width: 88rpx;
+  height: 88rpx;
+  background: #fff0e9;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+.baby-info {
+  flex: 1;
+  margin-left: 20rpx;
+}
+.baby-name {
+  font-size: 32rpx;
+  font-weight: 700;
+}
+.badge {
+  font-size: 20rpx;
+  background: #ff7043;
+  color: #fff;
+  border-radius: 16rpx;
+  padding: 2rpx 14rpx;
+  margin-left: 8rpx;
+}
+.baby-age {
+  font-size: 24rpx;
+  color: #999;
+  margin-top: 4rpx;
+}
+.baby-ops {
+  display: flex;
+  gap: 20rpx;
+}
+.op {
+  font-size: 26rpx;
+  color: #ff7043;
+}
+.op.del {
+  color: #e53935;
+}
+
+.add-btn {
+  position: fixed;
+  left: 40rpx;
+  right: 40rpx;
+  bottom: 60rpx;
+  text-align: center;
+  line-height: 88rpx;
+  background: linear-gradient(135deg, #ff8a65, #ff7043);
+  color: #fff;
+  border-radius: 44rpx;
+  font-size: 30rpx;
+  font-weight: 600;
+}
