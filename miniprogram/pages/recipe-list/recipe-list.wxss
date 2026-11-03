@@ -58,6 +58,13 @@
   justify-content: center;
   flex-shrink: 0;
 }
+.row-cover {
+  width: 100rpx;
+  height: 100rpx;
+  border-radius: 20rpx;
+  background: #fff0e9;
+  flex-shrink: 0;
+}
 .row-info {
   flex: 1;
   margin-left: 20rpx;

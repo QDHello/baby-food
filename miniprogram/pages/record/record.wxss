@@ -56,6 +56,16 @@
   margin-left: 16rpx;
   overflow: hidden;
 }
+.log-thumbs {
+  display: flex;
+  margin-top: 12rpx;
+}
+.log-thumb {
+  width: 120rpx;
+  height: 120rpx;
+  border-radius: 12rpx;
+  margin-right: 12rpx;
+}
 .log-title {
   font-size: 30rpx;
   font-weight: 600;

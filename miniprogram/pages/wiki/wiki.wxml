@@ -12,6 +12,9 @@
     <text class="search-clear" wx:if="{{keyword}}" bindtap="onClear">✕</text>
   </view>
 
+  <!-- 排序说明 -->
+  <view class="sort-tip" wx:if="{{sortTip}}">{{sortTip}}</view>
+
   <!-- 食材列表 -->
   <view class="ingredient-list">
     <view

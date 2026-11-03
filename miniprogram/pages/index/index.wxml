@@ -12,7 +12,7 @@
     </view>
     <view class="hero-tip">💡 {{stage.tip}}</view>
     <view class="hero-actions">
-      <view class="action-btn" bindtap="goAddRecord">➕ 今日打卡</view>
+      <view class="action-btn" bindtap="goAddRecord">➕ 记一笔</view>
       <view class="action-btn ghost" bindtap="goWiki">📖 食物百科</view>
     </view>
   </view>
@@ -27,40 +27,78 @@
     <view class="hero-arrow">›</view>
   </view>
 
-  <!-- 按月龄推荐 -->
-  <view class="section" wx:if="{{baby}}">
+  <!-- 今日概览：最近一天的记录 -->
+  <view class="section">
     <view class="flex-between section-head">
-      <text class="section-title">适合 {{baby.name}} 的食谱</text>
-      <text class="more" bindtap="goRecipeList">全部 ›</text>
+      <text class="section-title">今日概览</text>
+      <text class="more" wx:if="{{overview.state === 'ready'}}" bindtap="goRecord">查看全部 ›</text>
+    </view>
+    <view class="ov-date" wx:if="{{overview.state === 'ready'}}">{{overview.dateLabel}}</view>
+
+    <!-- 有记录 -->
+    <view class="overview-list" wx:if="{{overview.state === 'ready'}}">
+      <view class="ov-row" wx:for="{{overview.items}}" wx:key="id">
+        <view class="ov-main">
+          <view class="ov-title">
+            <text class="ov-meal" wx:if="{{item.mealLabel}}">{{item.mealLabel}}</text>
+            <text>{{item.recipeTitle}}</text>
+          </view>
+          <view class="ov-note" wx:if="{{item.note}}">{{item.note}}</view>
+          <view class="ov-thumbs" wx:if="{{item.images.length}}">
+            <image
+              class="ov-thumb"
+              wx:for="{{item.images}}"
+              wx:for-item="img"
+              wx:key="*this"
+              src="{{img}}"
+              mode="aspectFill"
+            ></image>
+          </view>
+        </view>
+        <text class="reaction reaction-{{item.reaction}}">{{item.reactionLabel}}</text>
+      </view>
+    </view>
+
+    <!-- 从未记录 -->
+    <view class="ov-empty" wx:elif="{{overview.state === 'empty'}}">
+      <view class="ov-empty-text">还没有记录，从宝宝的第一口辅食开始吧</view>
+      <view class="ov-empty-btn" bindtap="goAddRecord">立即记录</view>
+    </view>
+
+    <!-- 未添加宝宝 -->
+    <view class="ov-empty" wx:elif="{{overview.state === 'noBaby'}}">
+      <view class="ov-empty-text">添加宝宝档案后开始记录喂养日常</view>
+    </view>
+  </view>
+
+  <!-- 推荐辅食 -->
+  <view class="section">
+    <view class="flex-between section-head">
+      <view class="recommend-title-wrap">
+        <text class="section-title">{{recommendTitle}}</text>
+        <text class="recommend-hint" wx:if="{{recommendHint}}" bindtap="goBaby">{{recommendHint}} ›</text>
+      </view>
+      <text class="shuffle" wx:if="{{canShuffle}}" bindtap="shuffleRecommend">换一换</text>
     </view>
     <view class="recipe-grid" wx:if="{{recommendRecipes.length}}">
       <view class="recipe-card" wx:for="{{recommendRecipes}}" wx:key="id" data-id="{{item.id}}" bindtap="goRecipe">
-        <view class="recipe-emoji">{{item.emoji}}</view>
+        <image
+          wx:if="{{item.showCover}}"
+          class="card-cover"
+          src="{{item.cover}}"
+          mode="aspectFill"
+          lazy-load="{{true}}"
+          data-id="{{item.id}}"
+          binderror="onCoverError"
+        ></image>
+        <view class="recipe-emoji" wx:else>{{item.emoji}}</view>
         <view class="recipe-title">{{item.title}}</view>
-        <view class="recipe-desc">{{item.desc}}</view>
-      </view>
-    </view>
-    <view class="empty" wx:else>暂无可推荐食谱，可去百科看看</view>
-  </view>
-
-  <!-- 热门食谱 -->
-  <view class="section">
-    <view class="flex-between section-head">
-      <text class="section-title">热门食谱</text>
-      <text class="more" bindtap="goRecipeList">全部 ›</text>
-    </view>
-    <view class="recipe-list">
-      <view class="recipe-row" wx:for="{{hotRecipes}}" wx:key="id" data-id="{{item.id}}" bindtap="goRecipe">
-        <view class="recipe-emoji sm">{{item.emoji}}</view>
-        <view class="row-info">
-          <view class="recipe-title">{{item.title}}</view>
-          <view class="row-meta">
-            <text class="tag">{{item.minMonths}}-{{item.maxMonths}}月</text>
-            <text class="row-desc">{{item.desc}}</text>
-          </view>
+        <view class="recipe-meta">
+          <text class="tag">{{item.minMonths}}-{{item.maxMonths}}月</text>
         </view>
       </view>
     </view>
+    <view class="empty" wx:else>暂无可推荐食谱，可去百科看看</view>
   </view>
 
 </view>

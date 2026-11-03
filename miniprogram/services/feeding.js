@@ -15,6 +15,25 @@ function addLog(log) {
   return log;
 }
 
+// 按 id 查询单条记录
+function getLog(id) {
+  const all = wx.getStorageSync(KEY) || [];
+  return all.find((l) => l.id === id) || null;
+}
+
+// 更新喂养记录（仅覆盖允许编辑的字段）
+function updateLog(id, patch) {
+  const all = wx.getStorageSync(KEY) || [];
+  const idx = all.findIndex((l) => l.id === id);
+  if (idx === -1) return null;
+  const allow = ['date', 'recipeId', 'recipeTitle', 'emoji', 'reaction', 'note', 'images'];
+  allow.forEach((k) => {
+    if (patch && patch[k] !== undefined) all[idx][k] = patch[k];
+  });
+  wx.setStorageSync(KEY, all);
+  return all[idx];
+}
+
 // 删除喂养记录
 function removeLog(id) {
   let all = wx.getStorageSync(KEY) || [];
@@ -22,4 +41,4 @@ function removeLog(id) {
   wx.setStorageSync(KEY, all);
 }
 
-module.exports = { getLogs, addLog, removeLog };
+module.exports = { getLogs, addLog, getLog, updateLog, removeLog };

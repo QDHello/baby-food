@@ -36,6 +36,15 @@ function formatAge(birthday) {
   return restMonths === 0 ? `${years}岁` : `${years}岁${restMonths}个月`;
 }
 
+// 辅食起始月龄：满 6 个月才能添加辅食（全局规则）
+const MIN_SOLID_MONTHS = 6;
+
+// 宝宝是否已满辅食起始月龄
+function canAddSolidFood(birthday) {
+  const { months } = calcMonthAge(birthday);
+  return months >= MIN_SOLID_MONTHS;
+}
+
 // 格式化日期为 YYYY-MM-DD
 function formatDate(date) {
   const d = date instanceof Date ? date : new Date(date);
@@ -50,4 +59,4 @@ function genId(prefix = '') {
   return `${prefix}${Date.now()}_${Math.random().toString(36).slice(2, 8)}`;
 }
 
-module.exports = { calcMonthAge, getStage, formatAge, formatDate, genId };
+module.exports = { calcMonthAge, getStage, formatAge, formatDate, genId, MIN_SOLID_MONTHS, canAddSolidFood };

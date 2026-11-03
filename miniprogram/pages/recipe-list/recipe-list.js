@@ -46,7 +46,25 @@ Page({
           (r.tags || []).some((t) => t.includes(keyword))
       );
     }
+    // 视图数据：带封面图标记（加载失败回退 emoji）
+    list = list.map((r) => ({
+      ...r,
+      cover: r.cover || '',
+      showCover: !!r.cover
+    }));
     this.setData({ list });
+  },
+
+  // 封面图加载失败 → 回退 emoji
+  onCoverError(e) {
+    const id = e.currentTarget.dataset.id;
+    const list = this.data.list;
+    for (let i = 0; i < list.length; i++) {
+      if (list[i].id === id && list[i].showCover) {
+        this.setData({ ['list[' + i + '].showCover']: false });
+        break;
+      }
+    }
   },
 
   goRecipe(e) {

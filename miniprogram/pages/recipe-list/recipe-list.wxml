@@ -32,7 +32,16 @@
   <!-- 食谱列表 -->
   <view class="recipe-list">
     <view class="recipe-row" wx:for="{{list}}" wx:key="id" data-id="{{item.id}}" bindtap="goRecipe">
-      <view class="recipe-emoji">{{item.emoji}}</view>
+      <image
+        wx:if="{{item.showCover}}"
+        class="row-cover"
+        src="{{item.cover}}"
+        mode="aspectFill"
+        lazy-load="{{true}}"
+        data-id="{{item.id}}"
+        binderror="onCoverError"
+      ></image>
+      <view class="recipe-emoji" wx:else>{{item.emoji}}</view>
       <view class="row-info">
         <view class="recipe-title">{{item.title}}</view>
         <view class="recipe-desc">{{item.desc}}</view>

@@ -2,16 +2,16 @@
 
   <!-- 宝宝提示 -->
   <view class="baby-tip" wx:if="{{!baby}}">⚠️ 请先在「宝宝档案」中添加宝宝</view>
+  <view class="baby-tip warn-solid" wx:elif="{{solidBlocked}}">🍼 {{baby.name}}还未满6月龄，暂不能记录辅食（建议纯母乳/配方奶喂养）</view>
   <view class="baby-tip ok" wx:else>👶 {{baby.name}} · 今天的记录</view>
 
-  <!-- 选择食谱 -->
+  <!-- 选择食谱（点击拉起半屏弹窗） -->
   <view class="card">
     <view class="form-label">食谱</view>
-    <picker range="{{recipes}}" range-key="title" value="{{recipeIndex >= 0 ? recipeIndex : 0}}" bindchange="onRecipe">
-      <view class="form-picker {{recipe ? '' : 'placeholder'}}">
-        {{recipe ? recipe.emoji + ' ' + recipe.title : '请选择食谱'}}
-      </view>
-    </picker>
+    <view class="recipe-field {{recipe ? '' : 'placeholder'}}" bindtap="onOpenRecipePicker">
+      {{recipe ? recipe.emoji + ' ' + recipe.title : '点击选择食谱'}}
+      <view class="recipe-clear" wx:if="{{recipe}}" catchtap="onClearRecipe">×</view>
+    </view>
   </view>
 
   <!-- 日期与反应 -->
@@ -20,6 +20,12 @@
       <text class="form-label">日期</text>
       <picker mode="date" value="{{date}}" end="{{today}}" bindchange="onDate">
         <view class="form-picker">{{date}}</view>
+      </picker>
+    </view>
+    <view class="form-item">
+      <text class="form-label">餐次</text>
+      <picker range="{{meals}}" range-key="label" value="{{mealIndex}}" bindchange="onMeal">
+        <view class="form-picker">{{meals[mealIndex].label}}</view>
       </picker>
     </view>
     <view class="form-item">
@@ -32,6 +38,18 @@
     </view>
   </view>
 
+  <!-- 图片（最多 3 张） -->
+  <view class="card">
+    <view class="form-label">图片（{{images.length}}/3，可选）</view>
+    <view class="img-grid">
+      <view class="img-item" wx:for="{{images}}" wx:key="*this">
+        <image class="img-thumb" src="{{item}}" mode="aspectFill" data-src="{{item}}" bindtap="onPreviewImage"></image>
+        <view class="img-del" data-index="{{index}}" catchtap="onRemoveImage">×</view>
+      </view>
+      <view class="img-add {{images.length >= 3 ? 'disabled' : ''}}" bindtap="onAddImage">＋</view>
+    </view>
+  </view>
+
   <!-- 备注 -->
   <view class="card">
     <view class="form-label">备注</view>
@@ -39,6 +57,34 @@
               value="{{note}}" bindinput="onNote" maxlength="200"></textarea>
   </view>
 
-  <view class="save-btn" bindtap="save">保存打卡</view>
+  <view class="save-btn {{solidBlocked ? 'disabled' : ''}}" bindtap="save">{{isEdit ? '保存修改' : '保存打卡'}}</view>
+
+  <!-- 食谱选择半屏弹窗 -->
+  <view class="picker-mask" wx:if="{{showRecipePicker}}" catchtap="onCloseRecipePicker" catchtouchmove="noop">
+    <view class="picker-sheet" catchtap="noop">
+      <view class="picker-header">
+        <view class="picker-title">选择食谱</view>
+        <view class="picker-close" catchtap="onCloseRecipePicker">✕</view>
+      </view>
+      <view class="picker-search">
+        <input class="picker-search-input" placeholder="输入名称/食材/标签搜索" placeholder-class="ph"
+               value="{{recipeKeyword}}" focus="{{showRecipePicker}}" confirm-type="search"
+               bindinput="onRecipeInput" />
+      </view>
+      <view class="recipe-add" wx:if="{{recipeKeyword}}" bindtap="onAddCustomRecipe">
+        ＋ 添加自定义食谱「{{recipeKeyword}}」
+      </view>
+      <scroll-view scroll-y class="picker-list">
+        <view class="recipe-opt {{recipe && recipe.id === item.id ? 'active' : ''}}"
+              wx:for="{{recipeOptions}}" wx:key="id"
+              data-id="{{item.id}}" bindtap="onPickRecipe">
+          <view class="recipe-opt-title">{{item.emoji}} {{item.title}}</view>
+          <view class="recipe-opt-sub">{{item.custom ? '自定义' : item.minMonths + '-' + item.maxMonths + '月龄'}}</view>
+        </view>
+        <view class="recipe-empty" wx:if="{{!recipeKeyword && !recipeOptions.length}}">食谱库为空</view>
+        <view class="recipe-more" wx:if="{{recipeMatchCount > recipeOptions.length}}">共 {{recipeMatchCount}} 条匹配，输入更多关键词缩小范围</view>
+      </scroll-view>
+    </view>
+  </view>
 
 </view>

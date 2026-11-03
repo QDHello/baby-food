@@ -22,6 +22,12 @@
   padding: 10rpx;
 }
 
+.sort-tip {
+  margin: -8rpx 32rpx 16rpx;
+  font-size: 22rpx;
+  color: #b0a49c;
+}
+
 .ingredient-list {
   margin: 0 24rpx;
 }

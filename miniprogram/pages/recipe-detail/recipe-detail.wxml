@@ -1,7 +1,19 @@
 <view class="page" wx:if="{{recipe}}">
 
   <!-- 头图 -->
-  <view class="cover">{{recipe.emoji}}</view>
+  <view class="cover">
+    <image
+      wx:if="{{recipe.showCover}}"
+      class="cover-img"
+      src="{{recipe.cover}}"
+      mode="aspectFill"
+      binderror="onCoverError"
+    ></image>
+    <text wx:else>{{recipe.emoji}}</text>
+  </view>
+
+  <!-- 来源标注 -->
+  <view class="source-note" wx:if="{{recipe.sourceNote}}">来源：{{recipe.sourceNote}}</view>
 
   <!-- 标题区 -->
   <view class="card">
@@ -32,6 +44,12 @@
       <view class="step-num">{{index + 1}}</view>
       <view class="step-text">{{item}}</view>
     </view>
+  </view>
+
+  <!-- 做法说明 -->
+  <view class="card" wx:if="{{recipe.tips.length}}">
+    <view class="section-title">做法说明</view>
+    <view class="tip-item" wx:for="{{recipe.tips}}" wx:key="*this">💡 {{item}}</view>
   </view>
 
   <!-- 营养 -->
