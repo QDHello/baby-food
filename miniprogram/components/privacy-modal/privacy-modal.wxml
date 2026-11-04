@@ -1,0 +1,18 @@
+<!-- 隐私授权弹窗：调用 wx.chooseMedia（相册/相机）前由平台触发授权 -->
+<view class="privacy-mask" wx:if="{{show}}" catchtouchmove="noop">
+  <view class="privacy-dialog">
+    <view class="privacy-title">用户隐私保护提示</view>
+    <view class="privacy-content">
+      感谢您使用「宝宝辅食」。添加打卡图片需要使用相册/相机能力，使用前请阅读并同意
+      <text class="privacy-link" bindtap="openContract">{{contractName}}</text>
+      。您选择的图片仅用于喂养记录展示，当前版本保存在您的设备本地。
+    </view>
+    <view class="privacy-btns">
+      <button class="privacy-btn reject" bindtap="handleDisagree">不同意</button>
+      <!-- id 必须与 JS 中 resolve({ buttonId: 'agree-btn' }) 保持一致 -->
+      <button id="agree-btn" class="privacy-btn agree"
+              open-type="agreePrivacyAuthorization"
+              bindagreeprivacyauthorization="handleAgree">同意并继续</button>
+    </view>
+  </view>
+</view>

@@ -15,11 +15,13 @@ function getCurrentBaby() {
 }
 
 // 同步到全局状态
+// 所有档案写操作（create/update/remove/setCurrent）都会经过这里，统一提升数据版本号
 function syncGlobal() {
   const app = getApp();
   if (app) {
     app.globalData.babies = getBabies();
     app.globalData.currentBaby = getCurrentBaby();
+    if (typeof app.bumpDataVersion === 'function') app.bumpDataVersion();
   }
 }
 

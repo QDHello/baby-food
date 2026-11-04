@@ -1,6 +1,12 @@
 // 喂养记录本地数据服务（云开发接入后替换为数据库调用）
 const KEY = 'feedingLogs';
 
+// 写操作后提升数据版本号，让首页 onShow 绕过节流立即刷新概览
+function bump() {
+  const app = getApp();
+  if (app && typeof app.bumpDataVersion === 'function') app.bumpDataVersion();
+}
+
 // 获取喂养记录（可按宝宝过滤）
 function getLogs(babyId) {
   const all = wx.getStorageSync(KEY) || [];
@@ -12,6 +18,7 @@ function addLog(log) {
   const all = wx.getStorageSync(KEY) || [];
   all.unshift(log);
   wx.setStorageSync(KEY, all);
+  bump();
   return log;
 }
 
@@ -31,6 +38,7 @@ function updateLog(id, patch) {
     if (patch && patch[k] !== undefined) all[idx][k] = patch[k];
   });
   wx.setStorageSync(KEY, all);
+  bump();
   return all[idx];
 }
 
@@ -39,6 +47,7 @@ function removeLog(id) {
   let all = wx.getStorageSync(KEY) || [];
   all = all.filter((l) => l.id !== id);
   wx.setStorageSync(KEY, all);
+  bump();
 }
 
 module.exports = { getLogs, addLog, getLog, updateLog, removeLog };
