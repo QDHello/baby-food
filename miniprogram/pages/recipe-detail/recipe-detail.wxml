@@ -61,6 +61,7 @@
   <!-- 底部操作栏 -->
   <view class="bottom-bar">
     <view class="fav-btn" bindtap="addFavorite">⭐ 收藏</view>
+    <button class="share-btn" open-type="share" plain>↗ 分享</button>
     <view class="add-btn" bindtap="goAdd">✓ 吃过了，打卡</view>
   </view>
 

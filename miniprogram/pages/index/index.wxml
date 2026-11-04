@@ -73,7 +73,7 @@
 
   <!-- 推荐辅食 -->
   <view class="section">
-    <view class="flex-between section-head">
+    <view class="section-head">
       <view class="recommend-title-wrap">
         <text class="section-title">{{recommendTitle}}</text>
         <text class="recommend-hint" wx:if="{{recommendHint}}" bindtap="goBaby">{{recommendHint}} ›</text>
@@ -98,6 +98,7 @@
         </view>
       </view>
     </view>
+    <view class="view-all" wx:if="{{recommendRecipes.length}}" bindtap="goRecipeList">查看全部 ›</view>
     <view class="empty" wx:else>暂无可推荐食谱，可去百科看看</view>
   </view>
 

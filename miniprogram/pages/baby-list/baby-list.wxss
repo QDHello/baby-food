@@ -10,16 +10,16 @@
   border-radius: 24rpx;
   padding: 28rpx;
   margin-bottom: 20rpx;
-  box-shadow: 0 4rpx 20rpx rgba(255, 138, 101, 0.06);
+  box-shadow: 0 4rpx 20rpx rgba(82, 196, 26, 0.06);
 }
 .baby-card.current {
-  border: 3rpx solid #ff8a65;
+  border: 3rpx solid #95DE64;
 }
 .baby-emoji {
   font-size: 56rpx;
   width: 88rpx;
   height: 88rpx;
-  background: #fff0e9;
+  background: #E4F3D7;
   border-radius: 50%;
   display: flex;
   align-items: center;
@@ -36,7 +36,7 @@
 }
 .badge {
   font-size: 20rpx;
-  background: #ff7043;
+  background: #52C41A;
   color: #fff;
   border-radius: 16rpx;
   padding: 2rpx 14rpx;
@@ -53,7 +53,7 @@
 }
 .op {
   font-size: 26rpx;
-  color: #ff7043;
+  color: #52C41A;
 }
 .op.del {
   color: #e53935;
@@ -66,7 +66,7 @@
   bottom: 60rpx;
   text-align: center;
   line-height: 88rpx;
-  background: linear-gradient(135deg, #ff8a65, #ff7043);
+  background: linear-gradient(135deg, #95DE64, #52C41A);
   color: #fff;
   border-radius: 44rpx;
   font-size: 30rpx;

@@ -8,6 +8,8 @@ REACTIONS.forEach((r) => { REACTION_LABEL[r.key] = r.label; });
 
 const WEEK_DAYS = ['周日', '周一', '周二', '周三', '周四', '周五', '周六'];
 const RECOMMEND_COUNT = 6;
+// onShow 节流窗口：30 秒内且数据无变更时不重复刷新
+const RELOAD_INTERVAL = 30 * 1000;
 
 function mealOrder(meal) {
   return MEAL_ORDER[meal] === undefined ? 9 : MEAL_ORDER[meal];
@@ -38,8 +40,31 @@ Page({
     canShuffle: false
   },
 
+  // 转发给好友：分享首页入口
+  onShareAppMessage() {
+    return {
+      title: '蹦Food·记录宝宝每一口辅食',
+      path: '/pages/index/index'
+    };
+  },
+
   onShow() {
+    const app = getApp();
+    const version = app.globalData.dataVersion || 0;
+    const babyId = (app.globalData.currentBaby && app.globalData.currentBaby.id) || null;
+    const now = Date.now();
+    const unchanged = this._lastVersion === version && this._babyId === babyId;
+
+    // 数据有变更（新增/编辑/删除记录、宝宝档案变动）或切换宝宝 → 立即刷新；
+    // 否则 30 秒内不重复刷新，避免 tab 来回切换时反复读缓存 + 重洗推荐
+    if (unchanged && this._lastLoadAt && now - this._lastLoadAt < RELOAD_INTERVAL) {
+      return;
+    }
+
     this.load();
+    this._lastVersion = version;
+    this._babyId = babyId;
+    this._lastLoadAt = now;
   },
 
   load() {
@@ -47,6 +72,7 @@ Page({
     const baby = app.globalData.currentBaby;
     this.loadOverview(baby);
 
+    let poolKey;
     if (baby) {
       const { months } = calcMonthAge(baby.birthday);
       const stage = getStage(months);
@@ -62,16 +88,18 @@ Page({
           canShuffle: false
         });
         this.recommendPool = [];
-      } else {
-        this.setData({
-          baby,
-          stage,
-          ageText: formatAge(baby.birthday),
-          recommendTitle: '适合 ' + baby.name + '（' + months + '月龄）',
-          recommendHint: ''
-        });
-        this.recommendPool = RECIPES.filter((r) => months >= r.minMonths && months <= r.maxMonths);
+        this._poolKey = 'under6:' + baby.id;
+        return;
       }
+      this.setData({
+        baby,
+        stage,
+        ageText: formatAge(baby.birthday),
+        recommendTitle: '适合 ' + baby.name + '（' + months + '月龄）',
+        recommendHint: ''
+      });
+      this.recommendPool = RECIPES.filter((r) => months >= r.minMonths && months <= r.maxMonths);
+      poolKey = baby.id + ':' + months + ':' + this.recommendPool.map((r) => r.id).join(',');
     } else {
       this.setData({
         baby: null,
@@ -81,7 +109,16 @@ Page({
         recommendHint: '设置宝宝月龄，推荐更精准'
       });
       this.recommendPool = RECIPES.slice();
+      poolKey = 'no-baby';
     }
+
+    // 会话内推荐缓存：宝宝/月龄/食谱池未变时沿用上一批，
+    // 切 tab 回来不会再随机换一批；「换一换」仍由用户主动触发
+    if (this._poolKey === poolKey && this.data.recommendRecipes.length) {
+      this.setData({ canShuffle: this.recommendPool.length > RECOMMEND_COUNT });
+      return;
+    }
+    this._poolKey = poolKey;
     this.shuffleRecommend(true);
   },
 
@@ -116,7 +153,9 @@ Page({
   },
 
   // 推荐辅食：随机取一批，换一换时避开上一批
-  shuffleRecommend(first) {
+  // 注意：WXML 直接 bindtap 本方法，此时入参是事件对象；只有 load() 显式传 true 才是首屏
+  shuffleRecommend(e) {
+    const first = e === true;
     const pool = this.recommendPool || [];
     const prev = this._lastRecommendIds || [];
     let candidates = first ? pool : pool.filter((r) => prev.indexOf(r.id) === -1);

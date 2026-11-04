@@ -38,13 +38,13 @@
   border-radius: 24rpx;
   padding: 28rpx;
   margin-bottom: 20rpx;
-  box-shadow: 0 4rpx 20rpx rgba(255, 138, 101, 0.06);
+  box-shadow: 0 4rpx 20rpx rgba(82, 196, 26, 0.06);
 }
 .ing-emoji {
   font-size: 56rpx;
   width: 88rpx;
   height: 88rpx;
-  background: #fff0e9;
+  background: #E4F3D7;
   border-radius: 20rpx;
   display: flex;
   align-items: center;
@@ -79,7 +79,7 @@
   color: #43a047;
 }
 .ing-risk.risk-mid {
-  color: #fb8c00;
+  color: #FFA726;
 }
 .ing-risk.risk-high {
   color: #e53935;

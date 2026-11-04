@@ -12,14 +12,14 @@
   ],
   "window": {
     "backgroundTextStyle": "dark",
-    "navigationBarBackgroundColor": "#FF8A65",
+    "navigationBarBackgroundColor": "#95DE64",
     "navigationBarTitleText": "宝宝辅食",
     "navigationBarTextStyle": "white",
-    "backgroundColor": "#FFF6F0"
+    "backgroundColor": "#F5F5F5"
   },
   "tabBar": {
     "color": "#999999",
-    "selectedColor": "#FF7043",
+    "selectedColor": "#52C41A",
     "backgroundColor": "#ffffff",
     "borderStyle": "white",
     "list": [
@@ -51,5 +51,6 @@
   },
   "style": "v2",
   "sitemapLocation": "sitemap.json",
-  "lazyCodeLoading": "requiredComponents"
+  "lazyCodeLoading": "requiredComponents",
+  "__usePrivacyCheck__": true
 }

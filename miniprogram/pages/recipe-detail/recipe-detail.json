@@ -1,4 +1,6 @@
 {
   "navigationBarTitleText": "食谱详情",
+  "navigationBarBackgroundColor": "#F5F5F5",
+  "navigationBarTextStyle": "black",
   "usingComponents": {}
 }

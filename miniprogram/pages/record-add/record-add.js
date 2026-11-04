@@ -50,7 +50,25 @@ Page({
       if (log) {
         const recipeIndex = RECIPES.findIndex((r) => r.id === log.recipeId);
         const mealIndex = MEALS.findIndex((m) => m.key === (log.meal || 'lunch'));
-        const editRecipe = recipeIndex >= 0 ? RECIPES[recipeIndex] : null;
+        // 自定义食谱不在 RECIPES 中，必须合并本地自定义列表一起查，
+        // 否则编辑时 recipe 为 null，保存会被「请选择食谱」拦截
+        const source = RECIPES.concat(customRecipe.list());
+        let editRecipe = source.find((r) => r.id === log.recipeId) || null;
+        // 自定义食谱已被删除时，用记录里存下来的标题兜底，保证旧记录仍可编辑
+        if (!editRecipe && log.recipeId) {
+          editRecipe = {
+            id: log.recipeId,
+            title: log.recipeTitle || '自定义食谱',
+            emoji: log.emoji || '🍽️',
+            cover: '',
+            minMonths: 0,
+            maxMonths: 36,
+            desc: '',
+            ingredients: [],
+            tags: [],
+            custom: true
+          };
+        }
         this.setData({
           isEdit: true,
           logId: log.id,

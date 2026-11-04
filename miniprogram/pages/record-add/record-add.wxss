@@ -4,8 +4,8 @@
 
 .baby-tip {
   margin: 24rpx;
-  background: #fff3e0;
-  color: #fb8c00;
+  background: #FFF6E3;
+  color: #FFA726;
   padding: 20rpx 28rpx;
   border-radius: 16rpx;
   font-size: 26rpx;
@@ -39,7 +39,7 @@
   font-size: 30rpx;
   margin-top: 16rpx;
   min-height: 72rpx;
-  background: #f7f3f0;
+  background: #F0F6E8;
   border-radius: 16rpx;
   padding: 0 20rpx;
   box-sizing: border-box;
@@ -101,7 +101,7 @@
   font-size: 32rpx;
 }
 .picker-search {
-  background: #f7f3f0;
+  background: #F0F6E8;
   border-radius: 16rpx;
   padding: 0 20rpx;
   margin-bottom: 16rpx;
@@ -118,13 +118,13 @@
   align-items: center;
   justify-content: space-between;
   padding: 24rpx 8rpx;
-  border-bottom: 2rpx solid #f7f3f0;
+  border-bottom: 2rpx solid #F0F6E8;
 }
 .recipe-opt:last-of-type {
   border-bottom: none;
 }
 .recipe-opt.active {
-  background: #fff0e9;
+  background: #E4F3D7;
   border-radius: 12rpx;
   padding-left: 20rpx;
   padding-right: 20rpx;
@@ -134,7 +134,7 @@
   color: #333;
 }
 .recipe-opt.active .recipe-opt-title {
-  color: #ff7043;
+  color: #52C41A;
   font-weight: 600;
 }
 .recipe-opt-sub {
@@ -155,8 +155,8 @@
   padding: 18rpx 24rpx;
   text-align: center;
   font-size: 26rpx;
-  color: #ff7043;
-  background: #fff0e9;
+  color: #52C41A;
+  background: #E4F3D7;
   border-radius: 16rpx;
   font-weight: 600;
 }
@@ -165,7 +165,7 @@
   display: flex;
   align-items: center;
   padding: 16rpx 0;
-  border-bottom: 2rpx solid #f7f3f0;
+  border-bottom: 2rpx solid #F0F6E8;
 }
 .form-item:last-child {
   border-bottom: none;
@@ -181,7 +181,7 @@
 .reaction-opt {
   padding: 10rpx 40rpx;
   border-radius: 32rpx;
-  background: #f7f3f0;
+  background: #F0F6E8;
   font-size: 28rpx;
 }
 .reaction-opt.active {
@@ -194,8 +194,8 @@
   color: #e53935;
 }
 .reaction-opt.active.reaction-discomfort {
-  background: #fff3e0;
-  color: #fb8c00;
+  background: #FFF6E3;
+  color: #FFA726;
 }
 
 .note-input {
@@ -258,7 +258,7 @@
   bottom: 60rpx;
   text-align: center;
   line-height: 88rpx;
-  background: linear-gradient(135deg, #ff8a65, #ff7043);
+  background: linear-gradient(135deg, #95DE64, #52C41A);
   color: #fff;
   border-radius: 44rpx;
   font-size: 30rpx;

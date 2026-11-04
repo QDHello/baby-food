@@ -1,7 +1,7 @@
 .user-card {
   margin: 24rpx;
   padding: 48rpx 32rpx;
-  background: linear-gradient(135deg, #ff8a65, #ff7043);
+  background: linear-gradient(135deg, #95DE64, #52C41A);
   border-radius: 28rpx;
   display: flex;
   align-items: center;
@@ -40,7 +40,7 @@
   display: flex;
   align-items: center;
   padding: 32rpx;
-  border-bottom: 2rpx solid #f7f3f0;
+  border-bottom: 2rpx solid #F0F6E8;
 }
 .menu-item:last-child {
   border-bottom: none;

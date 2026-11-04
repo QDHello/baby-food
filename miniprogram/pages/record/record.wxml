@@ -44,6 +44,12 @@
   <view class="empty" wx:if="{{!baby}}">请先添加宝宝档案</view>
   <view class="empty" wx:elif="{{!groupedLogs.length}}">还没有喂养记录，点右下角开始打卡</view>
 
+  <!-- 分页状态提示 -->
+  <view class="load-more" wx:if="{{baby && groupedLogs.length}}">
+    <text wx:if="{{hasMore}}" bindtap="loadMore">上拉或点击加载更多 · 共 {{totalCount}} 条记录</text>
+    <text wx:else>已显示全部 {{totalCount}} 条记录</text>
+  </view>
+
   <!-- 悬浮打卡按钮 -->
   <view class="fab" bindtap="goAdd">＋</view>
 

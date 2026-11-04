@@ -87,4 +87,7 @@
     </view>
   </view>
 
+  <!-- 相册/相机隐私授权弹窗（chooseMedia 调用前由平台触发） -->
+  <privacy-modal />
+
 </view>

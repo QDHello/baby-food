@@ -10,7 +10,7 @@
   display: flex;
   align-items: center;
   padding: 20rpx 0;
-  border-bottom: 2rpx solid #f7f3f0;
+  border-bottom: 2rpx solid #F0F6E8;
 }
 .form-item:last-child {
   border-bottom: none;
@@ -31,7 +31,7 @@
   color: #bbb;
 }
 .age-preview {
-  color: #ff7043;
+  color: #52C41A;
   font-weight: 600;
 }
 
@@ -45,15 +45,15 @@
   width: 84rpx;
   height: 84rpx;
   border-radius: 50%;
-  background: #f7f3f0;
+  background: #F0F6E8;
   display: flex;
   align-items: center;
   justify-content: center;
   font-size: 44rpx;
 }
 .emoji-opt.active {
-  background: #fff0e9;
-  border: 3rpx solid #ff8a65;
+  background: #E4F3D7;
+  border: 3rpx solid #95DE64;
 }
 
 .gender-group {
@@ -63,11 +63,11 @@
 .gender-opt {
   padding: 10rpx 48rpx;
   border-radius: 32rpx;
-  background: #f7f3f0;
+  background: #F0F6E8;
   font-size: 28rpx;
 }
 .gender-opt.active {
-  background: linear-gradient(135deg, #ff8a65, #ff7043);
+  background: linear-gradient(135deg, #95DE64, #52C41A);
   color: #fff;
 }
 
@@ -80,7 +80,7 @@
 .allergen-chip {
   padding: 12rpx 28rpx;
   border-radius: 32rpx;
-  background: #f7f3f0;
+  background: #F0F6E8;
   font-size: 26rpx;
 }
 .allergen-chip.checked {
@@ -89,7 +89,7 @@
   font-weight: 600;
 }
 .star {
-  color: #ff7043;
+  color: #52C41A;
   font-size: 22rpx;
 }
 .allergen-hint {
@@ -105,7 +105,7 @@
   bottom: 60rpx;
   text-align: center;
   line-height: 88rpx;
-  background: linear-gradient(135deg, #ff8a65, #ff7043);
+  background: linear-gradient(135deg, #95DE64, #52C41A);
   color: #fff;
   border-radius: 44rpx;
   font-size: 30rpx;
