@@ -178,10 +178,20 @@
 }
 
 /* 今日概览 */
+.ov-head-left {
+  display: flex;
+  align-items: baseline;
+  /* 补回 section-title 清掉的下边距，保持与下方列表的间距 */
+  margin-bottom: 20rpx;
+}
+/* 标题右侧中括号日期 */
+.ov-head-left .section-title {
+  margin-bottom: 0;
+}
 .ov-date {
   font-size: 24rpx;
   color: #999;
-  margin: 8rpx 8rpx 16rpx;
+  margin-left: 12rpx;
 }
 .overview-list {
   background: #fff;
@@ -190,7 +200,8 @@
 }
 .ov-row {
   display: flex;
-  align-items: center;
+  /* 反应标签与标题行顶端对齐，不随缩略图垂直居中 */
+  align-items: flex-start;
   padding: 24rpx 28rpx;
   border-bottom: 2rpx solid #F0F6E8;
 }
@@ -215,14 +226,6 @@
   padding: 4rpx 12rpx;
   margin-right: 12rpx;
   flex-shrink: 0;
-}
-.ov-note {
-  font-size: 24rpx;
-  color: #999;
-  margin-top: 6rpx;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
 }
 .ov-thumbs {
   display: flex;

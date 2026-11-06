@@ -1,19 +1,21 @@
 <view class="page">
 
-  <!-- 搜索框 -->
-  <view class="search-bar">
-    <input
-      class="search-input"
-      placeholder="搜索食材名称"
-      value="{{keyword}}"
-      bindinput="onSearch"
-      confirm-type="search"
-    />
-    <text class="search-clear" wx:if="{{keyword}}" bindtap="onClear">✕</text>
+  <!-- 固定头部：搜索框 + 排序说明（滑动时保持不动） -->
+  <view class="fixed-header">
+    <view class="search-bar">
+      <input
+        class="search-input"
+        placeholder="搜索食材名称"
+        value="{{keyword}}"
+        bindinput="onSearch"
+        confirm-type="search"
+      />
+      <text class="search-clear" wx:if="{{keyword}}" bindtap="onClear">✕</text>
+    </view>
+    <view class="sort-tip" wx:if="{{sortTip}}">{{sortTip}}</view>
   </view>
-
-  <!-- 排序说明 -->
-  <view class="sort-tip" wx:if="{{sortTip}}">{{sortTip}}</view>
+  <!-- 占位块：高度与 fixed-header 一致，撑起内容起始位置 -->
+  <view class="header-placeholder"></view>
 
   <!-- 食材列表 -->
   <view class="ingredient-list">
@@ -30,12 +32,27 @@
         <view class="ing-nutrition">{{item.nutrition}}</view>
       </view>
       <view class="ing-right">
-        <text class="tag tag-green">{{item.addMonths}}月+</text>
         <text class="ing-risk risk-{{item.riskKey}}">过敏{{item.allergenRisk}}</text>
+        <text class="tag tag-green">{{item.addMonths}}月+</text>
       </view>
     </view>
   </view>
 
   <view class="empty" wx:if="{{!ingredients.length}}">未找到相关食材</view>
+
+  <!-- 食材详情弹窗：标题居中、内容左对齐 -->
+  <view class="modal-mask" wx:if="{{modalIngredient}}" bindtap="closeIngredient">
+    <view class="modal-card" catchtap="noop">
+      <view class="modal-title">{{modalIngredient.emoji}} {{modalIngredient.name}}</view>
+      <view class="modal-content">
+        <view class="modal-row">建议添加：{{modalIngredient.addMonths}}月龄起</view>
+        <view class="modal-row">营养：{{modalIngredient.nutrition}}</view>
+        <view class="modal-row">功效：{{modalIngredient.benefit}}</view>
+        <view class="modal-row">过敏风险：{{modalIngredient.allergenRisk}}</view>
+        <view class="modal-row">小贴士：{{modalIngredient.tips}}</view>
+      </view>
+      <button class="modal-btn" bindtap="closeIngredient">知道了</button>
+    </view>
+  </view>
 
 </view>

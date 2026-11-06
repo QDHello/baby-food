@@ -1,7 +1,7 @@
 const { RECIPES } = require('../../data/mock');
 const feeding = require('../../services/feeding');
 const customRecipe = require('../../services/custom-recipe');
-const { genId, formatDate, canAddSolidFood } = require('../../utils/util');
+const { genId, formatDate, canAddSolidFood, calcMonthAge } = require('../../utils/util');
 const { REACTIONS, MEALS, MEAL_LABEL } = require('../../utils/constants');
 const imageStore = require('../../utils/image-store');
 
@@ -127,9 +127,23 @@ Page({
   },
   applyRecipeOptions(keyword) {
     const matched = this.filterRecipes(keyword);
+    // 有宝宝档案时，按宝宝实际月龄与食谱适用区间的距离升序（区间内为 0，越接近越靠前）
+    const baby = getApp().globalData.currentBaby;
+    const age = baby && baby.birthday ? calcMonthAge(baby.birthday).months : null;
+    const sorted = matched
+      .map((r) => {
+        let dist = 0;
+        if (age !== null) {
+          if (age < r.minMonths) dist = r.minMonths - age;
+          else if (age > r.maxMonths) dist = age - r.maxMonths;
+        }
+        return { r, dist };
+      })
+      .sort((a, b) => a.dist - b.dist)
+      .map((x) => x.r);
     this.setData({
-      recipeOptions: matched.slice(0, 50),
-      recipeMatchCount: matched.length
+      recipeOptions: sorted.slice(0, 50),
+      recipeMatchCount: sorted.length
     });
   },
   // 拉起半屏弹窗（重置关键词，展示全部食谱）
@@ -202,6 +216,36 @@ Page({
       wx.showToast({ title: '最多 3 张', icon: 'none' });
       return;
     }
+    // 先查权限：相册/相机都被明确拒绝时，引导去设置开启
+    wx.getSetting({
+      success: (res) => {
+        const auth = res.authSetting || {};
+        const albumDenied = auth['scope.album'] === false;
+        const cameraDenied = auth['scope.camera'] === false;
+        if (albumDenied && cameraDenied) {
+          wx.showToast({
+            title: '相册权限未开启，请到小程序设置中开启后重试',
+            icon: 'none',
+            duration: 2500
+          });
+          return;
+        }
+        this.chooseImages(remain);
+      },
+      fail: () => this.chooseImages(remain) // 查不到权限就不拦截，交给系统询问
+    });
+  },
+
+  // 拉起选图（相册/拍照）
+  // 网络状态检测：offline=true 表示无网络连接
+  getNetworkType(cb) {
+    wx.getNetworkType({
+      success: (res) => cb(res.networkType === 'none'),
+      fail: () => cb(false)
+    });
+  },
+
+  chooseImages(remain) {
     wx.chooseMedia({
       count: remain,
       mediaType: ['image'],
@@ -214,6 +258,17 @@ Page({
           wx.showToast({ title: '部分图片保存失败', icon: 'none' });
         }
         this.setData({ images: this.data.images.concat(saved).slice(0, MAX_IMAGES) });
+      },
+      // 静默失败时给出提示（区分无网络 / 权限等其他原因）
+      fail: (err) => {
+        if (err && /cancel/i.test(err.errMsg || '')) return; // 用户主动取消不算错
+        console.error('chooseMedia fail:', err);
+        this.getNetworkType((offline) => {
+          wx.showToast({
+            title: offline ? '当前无网络，无法选择图片' : '无法打开相册，请稍后重试',
+            icon: 'none'
+          });
+        });
       }
     });
   },
@@ -289,7 +344,14 @@ Page({
         setTimeout(() => wx.switchTab({ url: '/pages/record/record' }), 600);
       }
     } catch (e) {
-      wx.showToast({ title: '保存失败，请重试', icon: 'none' });
+      console.error('save fail:', e);
+      // 失败不跳转、不清空表单，已填内容保留在页面中可重试
+      this.getNetworkType((offline) => {
+        wx.showToast({
+          title: offline ? '当前无网络，内容已保留，请联网后重试' : '保存失败，请重试',
+          icon: 'none'
+        });
+      });
       this.setData({ saving: false });
     }
   }

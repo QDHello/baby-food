@@ -71,17 +71,21 @@
   color: #fff;
 }
 
+/* 过敏原：固定 5 列栅格，每行数量一致且左右对齐（15 项正好 3 整行） */
 .allergen-list {
-  display: flex;
-  flex-wrap: wrap;
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
   gap: 16rpx;
   margin-top: 20rpx;
 }
 .allergen-chip {
-  padding: 12rpx 28rpx;
+  padding: 12rpx 0;
   border-radius: 32rpx;
   background: #F0F6E8;
   font-size: 26rpx;
+  text-align: center;
+  white-space: nowrap;
+  overflow: hidden;
 }
 .allergen-chip.checked {
   background: #ffebee;
@@ -91,6 +95,10 @@
 .star {
   color: #52C41A;
   font-size: 22rpx;
+}
+/* 选中态：星星跟随文字变红 */
+.allergen-chip.checked .star {
+  color: #e53935;
 }
 .allergen-hint {
   font-size: 22rpx;

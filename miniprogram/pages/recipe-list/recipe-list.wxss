@@ -2,19 +2,36 @@
   padding-bottom: 40rpx;
 }
 
+/* 固定头部：搜索 + 阶段筛选，白底一体容器 */
+.fixed-header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 10;
+  background: #fff;
+  padding-bottom: 12rpx;
+  box-shadow: 0 4rpx 20rpx rgba(82, 196, 26, 0.08);
+}
+/* 占位：撑出与固定头部等高的空间（24 + 80 + 8 + 60 + 12） */
+.header-placeholder {
+  height: 184rpx;
+}
 .search-bar {
-  margin: 24rpx;
+  margin: 24rpx 24rpx 0;
 }
 .search-input {
   background: #fff;
+  border: 2rpx solid #52C41A;
   border-radius: 40rpx;
-  padding: 20rpx 40rpx;
+  height: 80rpx;
+  padding: 0 40rpx;
   font-size: 28rpx;
+  box-sizing: border-box;
 }
-
 .stage-scroll {
   white-space: nowrap;
-  margin-bottom: 8rpx;
+  padding: 8rpx 0 0;
 }
 .stage-chips {
   display: inline-flex;
@@ -23,8 +40,8 @@
 .chip {
   display: inline-block;
   padding: 12rpx 32rpx;
-  background: #fff;
-  color: #666;
+  background: #F0F6E8;
+  color: #52C41A;
   border-radius: 32rpx;
   font-size: 26rpx;
   margin-right: 16rpx;
@@ -86,4 +103,10 @@
   color: #ccc;
   font-size: 40rpx;
   margin-left: 12rpx;
+}
+.list-end {
+  text-align: center;
+  padding: 24rpx 0 40rpx;
+  font-size: 24rpx;
+  color: #bbb;
 }

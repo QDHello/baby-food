@@ -54,7 +54,7 @@
   <view class="card">
     <view class="form-label">备注</view>
     <textarea class="note-input" placeholder="记录宝宝的反应、食量等（可选）"
-              value="{{note}}" bindinput="onNote" maxlength="200"></textarea>
+              value="{{note}}" bindinput="onNote" maxlength="100"></textarea>
   </view>
 
   <view class="save-btn {{solidBlocked ? 'disabled' : ''}}" bindtap="save">{{isEdit ? '保存修改' : '保存打卡'}}</view>
@@ -68,7 +68,7 @@
       </view>
       <view class="picker-search">
         <input class="picker-search-input" placeholder="输入名称/食材/标签搜索" placeholder-class="ph"
-               value="{{recipeKeyword}}" focus="{{showRecipePicker}}" confirm-type="search"
+               value="{{recipeKeyword}}" confirm-type="search"
                bindinput="onRecipeInput" />
       </view>
       <view class="recipe-add" wx:if="{{recipeKeyword}}" bindtap="onAddCustomRecipe">

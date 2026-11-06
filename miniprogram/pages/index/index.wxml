@@ -30,10 +30,12 @@
   <!-- 今日概览：最近一天的记录 -->
   <view class="section">
     <view class="flex-between section-head">
-      <text class="section-title">今日概览</text>
+      <view class="ov-head-left">
+        <text class="section-title">今日概览</text>
+        <text class="ov-date" wx:if="{{overview.state === 'ready'}}">「{{overview.dateLabel}}」</text>
+      </view>
       <text class="more" wx:if="{{overview.state === 'ready'}}" bindtap="goRecord">查看全部 ›</text>
     </view>
-    <view class="ov-date" wx:if="{{overview.state === 'ready'}}">{{overview.dateLabel}}</view>
 
     <!-- 有记录 -->
     <view class="overview-list" wx:if="{{overview.state === 'ready'}}">
@@ -43,7 +45,6 @@
             <text class="ov-meal" wx:if="{{item.mealLabel}}">{{item.mealLabel}}</text>
             <text>{{item.recipeTitle}}</text>
           </view>
-          <view class="ov-note" wx:if="{{item.note}}">{{item.note}}</view>
           <view class="ov-thumbs" wx:if="{{item.images.length}}">
             <image
               class="ov-thumb"
@@ -62,6 +63,12 @@
     <!-- 从未记录 -->
     <view class="ov-empty" wx:elif="{{overview.state === 'empty'}}">
       <view class="ov-empty-text">还没有记录，从宝宝的第一口辅食开始吧</view>
+      <view class="ov-empty-btn" bindtap="goAddRecord">立即记录</view>
+    </view>
+
+    <!-- 历史有记录但今天还没有 -->
+    <view class="ov-empty" wx:elif="{{overview.state === 'noToday'}}">
+      <view class="ov-empty-text">今天还没有喂养记录</view>
       <view class="ov-empty-btn" bindtap="goAddRecord">立即记录</view>
     </view>
 

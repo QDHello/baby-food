@@ -1,5 +1,5 @@
 const { ALLERGENS, MAJOR_ALLERGENS } = require('../../utils/constants');
-const { formatAge, formatDate } = require('../../utils/util');
+const { formatAge, formatDate, canAddSolidFood } = require('../../utils/util');
 const babyService = require('../../services/baby');
 
 const EMOJIS = ['👶', '👧', '👦', '🐣', '🍼', '😊'];
@@ -39,6 +39,8 @@ Page({
           allergenItems: ALLERGEN_ITEMS.map((i) => ({ ...i, checked: allergens.indexOf(i.name) >= 0 }))
         });
         this.updateAge();
+        // 编辑模式：进入页面时头像与月龄/性别规则对齐（<6 月龄→奶瓶，否则按性别）
+        this.syncAvatarEmoji(false);
       }
     }
   },
@@ -47,11 +49,29 @@ Page({
     this.setData({ name: e.detail.value });
   },
   onBirthday(e) {
-    this.setData({ birthday: e.detail.value });
+    const birthday = e.detail.value;
+    this.setData({ birthday });
     this.updateAge();
+    // 联动头像：未满 6 月龄→奶瓶；满 6 月龄→按性别匹配（静默，不 toast）
+    this.syncAvatarEmoji(false);
   },
   onGender(e) {
-    this.setData({ gender: e.currentTarget.dataset.gender });
+    const gender = e.currentTarget.dataset.gender;
+    this.setData({ gender });
+    // 用户主动点性别：按性别匹配并提示
+    this.syncAvatarEmoji(true);
+  },
+  // 头像自动匹配统一入口：月龄规则优先（<6 月龄→🍼 奶瓶），否则按性别→👧/👦
+  syncAvatarEmoji(showToast) {
+    const { birthday, gender, emoji } = this.data;
+    const underSix = birthday && typeof canAddSolidFood === 'function' && !canAddSolidFood(birthday);
+    const next = underSix ? '🍼' : (gender === '女' ? '👧' : '👦');
+    if (next !== emoji) {
+      this.setData({ emoji: next });
+      if (showToast && !underSix) {
+        wx.showToast({ title: `已匹配${gender === '女' ? '女' : '男'}宝宝头像`, icon: 'none' });
+      }
+    }
   },
   onEmoji(e) {
     this.setData({ emoji: e.currentTarget.dataset.emoji });

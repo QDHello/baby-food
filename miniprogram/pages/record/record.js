@@ -8,6 +8,9 @@ REACTIONS.forEach((r) => { REACTION_LABEL[r.key] = r.label; });
 // 首屏渲染条数，每次触底再追加一页（阶段 1 本地数据；阶段 2 可对接 feedingLog.list 的 skip/limit）
 const PAGE_SIZE = 20;
 
+// 左滑删除按钮宽度，与 record.wxss 中 .swipe-del 的 width 保持一致
+const DEL_WIDTH_RPX = 140;
+
 function mealOrder(meal) {
   return MEAL_ORDER[meal] === undefined ? 9 : MEAL_ORDER[meal];
 }
@@ -18,7 +21,14 @@ Page({
     ageText: '',
     groupedLogs: [],
     totalCount: 0,
-    hasMore: false
+    hasMore: false,
+    draggingId: ''
+  },
+
+  onLoad() {
+    const { windowWidth } = wx.getSystemInfoSync();
+    this._delWidth = (DEL_WIDTH_RPX * windowWidth) / 750;
+    this._openIndex = null;
   },
 
   onShow() {
@@ -31,7 +41,7 @@ Page({
     this.loadMore();
   },
 
-  // keepCount：是否保留当前已加载条数（onShow / 删除后使用）
+    // keepCount：是否保留当前已加载条数（onShow / 删除后使用）
   load(keepCount) {
     const app = getApp();
     const baby = app.globalData.currentBaby;
@@ -43,15 +53,22 @@ Page({
       return mealOrder(a.meal) - mealOrder(b.meal);            // 组内按餐次正序
     });
 
-    const prevCount = keepCount && this._renderCount ? this._renderCount : PAGE_SIZE;
-    this._renderCount = Math.min(prevCount, this._allLogs.length);
+    const total = this._allLogs.length;
+    // 保留已加载页数，但保底渲染满一页（或全部）：新增记录返回后不会因
+    // 旧 _renderCount 偏小而被隐藏，也不会误报“加载更多”
+    const prevCount = keepCount && this._renderCount ? this._renderCount : 0;
+    this._renderCount = Math.min(Math.max(prevCount, Math.min(PAGE_SIZE, total)), total);
 
+    this._openIndex = null;
     this.setData({
       baby,
       ageText: baby ? formatAge(baby.birthday) : '',
       groupedLogs: this.buildGroups(),
-      totalCount: this._allLogs.length,
-      hasMore: this._renderCount < this._allLogs.length
+      totalCount: total,
+      hasMore: this._renderCount < total,
+      // 单页内容（未超过一页）不显示任何分页提示
+      showPaging: total > PAGE_SIZE,
+      draggingId: ''
     });
   },
 
@@ -75,7 +92,8 @@ Page({
       ...l,
       reactionLabel: REACTION_LABEL[l.reaction] || l.reaction,
       mealLabel: MEAL_LABEL[l.meal] || '',
-      images: Array.isArray(l.images) ? l.images : []
+      images: Array.isArray(l.images) ? l.images : [],
+      offset: 0
     }));
     return this.groupByDate(list);
   },
@@ -106,8 +124,95 @@ Page({
   },
   // 点击记录进入编辑
   goEdit(e) {
+    // 刚结束滑动手势时忽略点击，避免误进编辑页
+    if (this._ignoreTap) return;
+    // 有滑开的行时，点击任意行只做收起
+    if (this._openIndex) {
+      this.closeOpen();
+      return;
+    }
     const id = e.currentTarget.dataset.id;
     wx.navigateTo({ url: `/pages/record-add/record-add?logId=${id}` });
+  },
+
+  // ---- 左滑删除手势 ----
+  onTouchStart(e) {
+    const gi = Number(e.currentTarget.dataset.gi);
+    const ii = Number(e.currentTarget.dataset.ii);
+    const t = e.touches[0];
+
+    if (this._openIndex && (this._openIndex.gi !== gi || this._openIndex.ii !== ii)) {
+      this.closeOpen();
+    }
+    const item = this._itemAt(gi, ii);
+    this._touch = {
+      gi,
+      ii,
+      startX: t.clientX,
+      startY: t.clientY,
+      startOffset: item ? item.offset || 0 : 0,
+      horizontal: false,
+      moved: false
+    };
+  },
+
+  onTouchMove(e) {
+    const touch = this._touch;
+    if (!touch) return;
+    const t = e.touches[0];
+    const dx = t.clientX - touch.startX;
+    const dy = t.clientY - touch.startY;
+
+    if (!touch.horizontal) {
+      if (Math.abs(dx) < 6) return;
+      // 纵向移动优先交给页面滚动
+      if (Math.abs(dy) > Math.abs(dx)) return;
+      touch.horizontal = true;
+      const item = this._itemAt(touch.gi, touch.ii);
+      if (!item) return;
+      this.setData({ draggingId: item.id });
+    }
+
+    touch.moved = true;
+    const width = this._delWidth || 70;
+    const offset = Math.max(-width, Math.min(0, touch.startOffset + dx));
+    this._setOffset(touch.gi, touch.ii, offset);
+  },
+
+  onTouchEnd() {
+    const touch = this._touch;
+    this._touch = null;
+    if (!touch || !touch.horizontal || !touch.moved) return;
+
+    const width = this._delWidth || 70;
+    const item = this._itemAt(touch.gi, touch.ii);
+    const offset = item ? item.offset || 0 : 0;
+    const open = offset < -width / 2;
+
+    this._openIndex = open ? { gi: touch.gi, ii: touch.ii } : null;
+    // 先恢复过渡，再落位，松手时才有吸附动画
+    this.setData({ draggingId: '' }, () => {
+      this._setOffset(touch.gi, touch.ii, open ? -width : 0);
+    });
+
+    this._ignoreTap = true;
+    setTimeout(() => { this._ignoreTap = false; }, 300);
+  },
+
+  closeOpen() {
+    if (!this._openIndex) return;
+    const { gi, ii } = this._openIndex;
+    this._openIndex = null;
+    this._setOffset(gi, ii, 0);
+  },
+
+  _itemAt(gi, ii) {
+    const group = this.data.groupedLogs[gi];
+    return group && group.items ? group.items[ii] : null;
+  },
+
+  _setOffset(gi, ii, offset) {
+    this.setData({ [`groupedLogs[${gi}].items[${ii}].offset`]: offset });
   },
   // 预览记录图片
   onPreviewImage(e) {

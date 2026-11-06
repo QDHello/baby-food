@@ -36,17 +36,49 @@
   color: #999;
   margin: 16rpx 8rpx;
 }
-.log-item {
+.swipe-item {
+  position: relative;
+  overflow: hidden;
+  border-radius: 20rpx;
+  margin-bottom: 16rpx;
+  /* 红底只放在 .swipe-del 上；容器铺红会在四角透出（真机圆角抗锯齿对不齐） */
+  background: transparent;
+  box-shadow: 0 4rpx 20rpx rgba(82, 196, 26, 0.06);
+}
+.swipe-content {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  /* 与今日概览一致：内容顶端对齐，不随缩略图/备注垂直居中 */
+  align-items: flex-start;
+  background: #fff;
+  /* 左圆右直：滑动后右缘与红色删除块平齐拼接 */
+  border-radius: 20rpx 0 0 20rpx;
+  padding: 24rpx;
+  transition: transform 0.2s ease;
+}
+.swipe-content.no-transition {
+  transition: none;
+}
+.swipe-del {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  width: 140rpx;
   display: flex;
   align-items: center;
-  background: #fff;
-  border-radius: 20rpx;
-  padding: 24rpx;
-  margin-bottom: 16rpx;
-  box-shadow: 0 4rpx 20rpx rgba(82, 196, 26, 0.06);
+  justify-content: center;
+  background: #e53935;
+  color: #fff;
+  font-size: 26rpx;
+  /* 自带右侧圆角：不依赖容器 overflow:hidden（真机裁剪不可靠） */
+  border-radius: 0 20rpx 20rpx 0;
+  z-index: 0;
 }
 .log-emoji {
   font-size: 48rpx;
+  line-height: 1;
   width: 72rpx;
   text-align: center;
   flex-shrink: 0;
@@ -66,25 +98,37 @@
   border-radius: 12rpx;
   margin-right: 12rpx;
 }
+/* 标题行：标题左、反应标签右对齐，中间留白隔开 */
+.log-title-row {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 24rpx;
+}
 .log-title {
+  flex: 1;
   font-size: 30rpx;
   font-weight: 600;
+  min-width: 0;
 }
 .log-note {
   font-size: 24rpx;
   color: #999;
   margin-top: 4rpx;
-}
-.log-right {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-end;
-  gap: 8rpx;
+  /* 最多两行，超出省略 */
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  overflow: hidden;
+  word-break: break-all;
 }
 .reaction {
   font-size: 22rpx;
   padding: 2rpx 16rpx;
   border-radius: 20rpx;
+  flex-shrink: 0;
+  /* 标题行 flex-start 对齐时补偿行高差，使标签文字与标题首行视觉齐平 */
+  margin-top: 4rpx;
 }
 .reaction-none {
   background: #e8f5e9;
@@ -97,10 +141,6 @@
 .reaction-discomfort {
   background: #FFF6E3;
   color: #FFA726;
-}
-.log-del {
-  font-size: 22rpx;
-  color: #bbb;
 }
 
 .load-more {

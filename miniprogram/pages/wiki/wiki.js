@@ -22,7 +22,8 @@ Page({
   data: {
     ingredients: [],
     keyword: '',
-    sortTip: ''
+    sortTip: '',
+    modalIngredient: null
   },
 
   onLoad() {
@@ -48,29 +49,38 @@ Page({
     });
   },
 
+  // 列表回到顶部（搜索结果变化时展示最新的从头开始）
+  scrollTop() {
+    wx.pageScrollTo({ scrollTop: 0, duration: 0 });
+  },
+
   onSearch(e) {
     const keyword = e.detail.value.trim();
     const baby = getApp().globalData.currentBaby;
     const babyMonths = baby ? calcMonthAge(baby.birthday).months : null;
     const filtered = keyword ? INGREDIENTS.filter((i) => i.name.includes(keyword)) : INGREDIENTS;
     this.setData({ keyword, ingredients: sortByAge(withRiskKey(filtered), babyMonths) });
+    this.scrollTop();
   },
 
   onClear() {
     this.setData({ keyword: '' });
     this.render();
+    this.scrollTop();
   },
 
-  // 点击食材查看详情（暂用弹窗展示要点）
+  // 点击食材打开详情弹窗（标题居中、内容左对齐）
   goIngredient(e) {
     const id = e.currentTarget.dataset.id;
     const item = INGREDIENTS.find((i) => i.id === id);
     if (!item) return;
-    wx.showModal({
-      title: `${item.emoji} ${item.name}`,
-      content: `建议添加：${item.addMonths}月龄起\n营养：${item.nutrition}\n功效：${item.benefit}\n过敏风险：${item.allergenRisk}\n小贴士：${item.tips}`,
-      showCancel: false,
-      confirmText: '知道了'
-    });
-  }
+    this.setData({ modalIngredient: item });
+  },
+
+  closeIngredient() {
+    this.setData({ modalIngredient: null });
+  },
+
+  // 阻止弹窗卡片点击冒泡到遮罩
+  noop() {}
 });

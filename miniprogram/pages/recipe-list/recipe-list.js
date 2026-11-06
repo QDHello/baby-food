@@ -65,6 +65,8 @@ Page({
     this.clearPendingApply();
     this.setData({ activeStage });
     this.apply();
+    // 切换筛选后回到顶部，从第一条开始看
+    wx.pageScrollTo({ scrollTop: 0, duration: 0 });
   },
 
   onSearch(e) {

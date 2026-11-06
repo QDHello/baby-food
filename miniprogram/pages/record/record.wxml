@@ -12,31 +12,43 @@
 
   <!-- 记录列表 -->
   <block wx:if="{{baby && groupedLogs.length}}">
-    <view class="date-group" wx:for="{{groupedLogs}}" wx:key="date" wx:for-item="group">
+    <view class="date-group" wx:for="{{groupedLogs}}" wx:key="date" wx:for-item="group" wx:for-index="gi">
       <view class="date-title">{{group.date}}</view>
-      <view class="log-item" wx:for="{{group.items}}" wx:key="id" data-id="{{item.id}}" bindtap="goEdit">
-        <view class="log-emoji">{{item.emoji || '🍽️'}}</view>
-        <view class="log-info">
-          <view class="log-title">{{item.mealLabel ? item.mealLabel + ' · ' : ''}}{{item.recipeTitle}}</view>
-          <view class="log-note" wx:if="{{item.note}}">{{item.note}}</view>
-          <view class="log-thumbs" wx:if="{{item.images.length}}">
-            <image
-              class="log-thumb"
-              wx:for="{{item.images}}"
-              wx:for-item="img"
-              wx:key="*this"
-              src="{{img}}"
-              mode="aspectFill"
-              data-urls="{{item.images}}"
-              data-current="{{img}}"
-              catchtap="onPreviewImage"
-            ></image>
+      <view class="swipe-item" wx:for="{{group.items}}" wx:key="id" wx:for-index="ii">
+        <view
+          class="swipe-content {{draggingId === item.id ? 'no-transition' : ''}}"
+          style="transform: translateX({{item.offset || 0}}px);"
+          data-gi="{{gi}}"
+          data-ii="{{ii}}"
+          data-id="{{item.id}}"
+          bindtouchstart="onTouchStart"
+          bindtouchmove="onTouchMove"
+          bindtouchend="onTouchEnd"
+          bindtap="goEdit"
+        >
+          <view class="log-emoji">{{item.emoji || '🍽️'}}</view>
+          <view class="log-info">
+            <view class="log-title-row">
+              <view class="log-title">{{item.mealLabel ? item.mealLabel + ' · ' : ''}}{{item.recipeTitle}}</view>
+              <text class="reaction reaction-{{item.reaction}}" wx:if="{{item.reaction && item.reaction !== 'none'}}">{{item.reactionLabel}}</text>
+            </view>
+            <view class="log-note" wx:if="{{item.note}}">{{item.note}}</view>
+            <view class="log-thumbs" wx:if="{{item.images.length}}">
+              <image
+                class="log-thumb"
+                wx:for="{{item.images}}"
+                wx:for-item="img"
+                wx:key="*this"
+                src="{{img}}"
+                mode="aspectFill"
+                data-urls="{{item.images}}"
+                data-current="{{img}}"
+                catchtap="onPreviewImage"
+              ></image>
+            </view>
           </view>
         </view>
-        <view class="log-right">
-          <text class="reaction reaction-{{item.reaction}}">{{item.reactionLabel}}</text>
-          <text class="log-del" data-id="{{item.id}}" catchtap="removeLog">删除</text>
-        </view>
+        <view class="swipe-del" data-id="{{item.id}}" catchtap="removeLog">删除</view>
       </view>
     </view>
   </block>
@@ -44,8 +56,8 @@
   <view class="empty" wx:if="{{!baby}}">请先添加宝宝档案</view>
   <view class="empty" wx:elif="{{!groupedLogs.length}}">还没有喂养记录，点右下角开始打卡</view>
 
-  <!-- 分页状态提示 -->
-  <view class="load-more" wx:if="{{baby && groupedLogs.length}}">
+  <!-- 分页状态提示：仅在记录数超过一页（PAGE_SIZE）时显示 -->
+  <view class="load-more" wx:if="{{baby && showPaging}}">
     <text wx:if="{{hasMore}}" bindtap="loadMore">上拉或点击加载更多 · 共 {{totalCount}} 条记录</text>
     <text wx:else>已显示全部 {{totalCount}} 条记录</text>
   </view>

@@ -1,6 +1,6 @@
 const { RECIPES } = require('../../data/mock');
 const feeding = require('../../services/feeding');
-const { calcMonthAge, getStage, formatAge, canAddSolidFood, MIN_SOLID_MONTHS } = require('../../utils/util');
+const { calcMonthAge, getStage, formatAge, canAddSolidFood, MIN_SOLID_MONTHS, formatDate } = require('../../utils/util');
 const { REACTIONS, MEAL_LABEL, MEAL_ORDER } = require('../../utils/constants');
 
 const REACTION_LABEL = {};
@@ -122,34 +122,38 @@ Page({
     this.shuffleRecommend(true);
   },
 
-  // 今日概览：只取最近一天
+  // 今日概览：只展示今天（date === 当天）的记录，最多 3 条
   loadOverview(baby) {
-    const logs = baby ? feeding.getLogs(baby.id) : [];
     if (!baby) {
       this.setData({ overview: { dateLabel: '', items: [], state: 'noBaby' } });
       return;
     }
+    const logs = feeding.getLogs(baby.id);
     if (!logs.length) {
       this.setData({ overview: { dateLabel: '', items: [], state: 'empty' } });
       return;
     }
-    const latestDate = logs
-      .map((l) => l.date)
-      .sort()
-      .reverse()[0];
-    const items = logs
-      .filter((l) => l.date === latestDate)
-      .sort((a, b) => mealOrder(a.meal) - mealOrder(b.meal))
-      .map((l) => ({
-        id: l.id,
-        recipeTitle: l.recipeTitle,
-        mealLabel: MEAL_LABEL[l.meal] || '',
-        reactionLabel: REACTION_LABEL[l.reaction] || '',
-        reaction: l.reaction || 'none',
-        note: l.note || '',
-        images: Array.isArray(l.images) ? l.images : []
-      }));
-    this.setData({ overview: { dateLabel: dateLabel(latestDate), items, state: 'ready' } });
+    // 只匹配今天的记录（date 与记录添加页同源，均由 formatDate 产出 YYYY-MM-DD）
+    const todayStr = formatDate(new Date());
+    const todayLogs = logs.filter((l) => l.date === todayStr);
+    if (!todayLogs.length) {
+      // 历史有记录但今天还没有 → 提示今天可记录
+      this.setData({ overview: { dateLabel: '', items: [], state: 'noToday' } });
+      return;
+    }
+    const OVERVIEW_MAX = 3;
+    const items = todayLogs.slice(0, OVERVIEW_MAX).map((l) => ({
+      id: l.id,
+      recipeTitle: l.recipeTitle,
+      mealLabel: MEAL_LABEL[l.meal] || '',
+      reactionLabel: REACTION_LABEL[l.reaction] || '',
+      reaction: l.reaction || 'none',
+      note: l.note || '',
+      images: Array.isArray(l.images) ? l.images : []
+    }));
+    // 日期与主标题同行展示（中括号在 wxml 中拼接），去掉「今天」前缀
+    // （修复：原先取 items[0].date 但 map 未映射 date，标题一直为空）
+    this.setData({ overview: { dateLabel: dateLabel(todayStr), items, state: 'ready' } });
   },
 
   // 推荐辅食：随机取一批，换一换时避开上一批

@@ -1,33 +1,35 @@
 <view class="page">
 
-  <!-- 搜索 -->
-  <view class="search-bar">
-    <input
-      class="search-input"
-      placeholder="搜索食谱或食材"
-      value="{{keyword}}"
-      bindinput="onSearch"
-      confirm-type="search"
-    />
-  </view>
-
-  <!-- 阶段筛选 -->
-  <scroll-view scroll-x class="stage-scroll" show-scrollbar="{{false}}">
-    <view class="stage-chips">
-      <view
-        class="chip {{activeStage === '' ? 'active' : ''}}"
-        data-stage=""
-        bindtap="onStage"
-      >全部</view>
-      <view
-        class="chip {{activeStage === item.key ? 'active' : ''}}"
-        wx:for="{{stages}}"
-        wx:key="key"
-        data-stage="{{item.key}}"
-        bindtap="onStage"
-      >{{item.label}}</view>
+  <!-- 固定头部：搜索 + 阶段筛选（fixed 避开 sticky 滚动后点击失效的问题） -->
+  <view class="fixed-header">
+    <view class="search-bar">
+      <input
+        class="search-input"
+        placeholder="搜索食谱或食材"
+        value="{{keyword}}"
+        bindinput="onSearch"
+        confirm-type="search"
+      />
     </view>
-  </scroll-view>
+
+    <scroll-view scroll-x class="stage-scroll" show-scrollbar="{{false}}">
+      <view class="stage-chips">
+        <view
+          class="chip {{activeStage === '' ? 'active' : ''}}"
+          data-stage=""
+          bindtap="onStage"
+        >全部</view>
+        <view
+          class="chip {{activeStage === item.key ? 'active' : ''}}"
+          wx:for="{{stages}}"
+          wx:key="key"
+          data-stage="{{item.key}}"
+          bindtap="onStage"
+        >{{item.label}}</view>
+      </view>
+    </scroll-view>
+  </view>
+  <view class="header-placeholder"></view>
 
   <!-- 食谱列表 -->
   <view class="recipe-list">
@@ -53,6 +55,9 @@
       <view class="row-arrow">›</view>
     </view>
   </view>
+
+  <!-- 列表到底提示 -->
+  <view class="list-end" wx:if="{{list.length}}">— 暂无更多数据 —</view>
 
   <view class="empty" wx:if="{{!list.length}}">没有找到匹配的食谱</view>
 
