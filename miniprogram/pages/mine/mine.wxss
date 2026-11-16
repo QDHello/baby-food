@@ -58,6 +58,12 @@
   color: #999;
   margin-right: 12rpx;
 }
+/* 未设宝宝档案时收藏入口置灰 */
+.menu-item.menu-disabled .menu-icon,
+.menu-item.menu-disabled .menu-label,
+.menu-item.menu-disabled .menu-arrow {
+  opacity: 0.4;
+}
 .menu-arrow {
   color: #ccc;
   font-size: 36rpx;

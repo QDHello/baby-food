@@ -106,6 +106,12 @@
   font-size: 28rpx;
   margin-right: 20rpx;
 }
+/* 已收藏态：红心 + 浅红底，与绿边收藏按钮区分 */
+.fav-btn.fav-active {
+  border-color: #ffc1c4;
+  background: #fff5f5;
+  color: #e53935;
+}
 /* 用 .bottom-bar 提升优先级，压过基础库的 button:not([size='mini']) 默认宽度 */
 .bottom-bar .share-btn {
   width: 150rpx;

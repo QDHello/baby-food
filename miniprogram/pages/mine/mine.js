@@ -1,19 +1,44 @@
+const favorites = require('../../services/favorites');
+
 Page({
   data: {
     userInfo: null,
-    babyCount: 0
+    babyCount: 0,
+    hasBaby: false,
+    favCount: 0
   },
 
   onShow() {
     const app = getApp();
+    const baby = app.globalData.currentBaby;
     this.setData({
       userInfo: app.globalData.userInfo,
-      babyCount: app.globalData.babies.length
+      babyCount: app.globalData.babies.length,
+      hasBaby: !!baby,
+      favCount: baby ? favorites.count(baby.id) : 0
     });
   },
 
   goBaby() {
     wx.navigateTo({ url: '/pages/baby-list/baby-list' });
+  },
+
+  goFavorites() {
+    const baby = getApp().globalData.currentBaby;
+    if (!baby) {
+      wx.showToast({ title: '请先创建宝宝档案，再收藏食谱', icon: 'none' });
+      return;
+    }
+    wx.navigateTo({ url: '/pages/favorites/favorites' });
+  },
+
+  goStats() {
+    const baby = getApp().globalData.currentBaby;
+    if (!baby) {
+      wx.showToast({ title: '请先创建宝宝档案，再查看统计', icon: 'none' });
+      return;
+    }
+    wx.navigateTo({ url: '/pages/stats/stats' });
   },
   goLogin() {
     // 阶段一暂用演示登录，云开发接入后替换为 wx.getUserProfile + 云函数

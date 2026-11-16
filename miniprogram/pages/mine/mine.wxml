@@ -17,9 +17,15 @@
       <text class="menu-count" wx:if="{{babyCount}}">{{babyCount}}个</text>
       <text class="menu-arrow">›</text>
     </view>
-    <view class="menu-item" bindtap="comingSoon">
+    <view class="menu-item {{hasBaby ? '' : 'menu-disabled'}}" bindtap="goFavorites">
       <text class="menu-icon">⭐</text>
       <text class="menu-label">我的收藏</text>
+      <text class="menu-count" wx:if="{{favCount}}">{{favCount}}个</text>
+      <text class="menu-arrow">›</text>
+    </view>
+    <view class="menu-item" bindtap="goStats">
+      <text class="menu-icon">📊</text>
+      <text class="menu-label">喂养统计</text>
       <text class="menu-arrow">›</text>
     </view>
     <view class="menu-item" bindtap="comingSoon">

@@ -1,0 +1,44 @@
+<view class="page">
+
+  <!-- 收藏列表 -->
+  <block wx:if="{{state === 'ready'}}">
+    <view class="fav-list">
+      <view class="recipe-row" wx:for="{{list}}" wx:key="id" data-id="{{item.id}}" bindtap="goRecipe">
+        <image
+          wx:if="{{item.showCover}}"
+          class="row-cover"
+          src="{{item.cover}}"
+          mode="aspectFill"
+          lazy-load="{{true}}"
+        ></image>
+        <view class="recipe-emoji" wx:else>{{item.emoji}}</view>
+        <view class="row-info">
+          <view class="recipe-title">{{item.title}}</view>
+          <view class="recipe-desc">{{item.desc}}</view>
+          <view class="row-tags">
+            <text class="tag">{{item.minMonths}}-{{item.maxMonths}}月</text>
+          </view>
+        </view>
+        <!-- 点击红心 = 取消收藏 -->
+        <view class="fav-heart" data-id="{{item.id}}" catchtap="onRemove">♥</view>
+      </view>
+    </view>
+    <view class="list-end" wx:if="{{allLoaded}}">— 共 {{total}} 条收藏 —</view>
+    <view class="list-end" wx:else>上拉加载更多</view>
+  </block>
+
+  <!-- 空态：未设宝宝档案 -->
+  <view class="empty" wx:elif="{{state === 'noBaby'}}">
+    <view class="empty-emoji">👶</view>
+    <view class="empty-text">先创建宝宝档案，才能收藏食谱</view>
+    <view class="empty-btn" bindtap="goBabyEdit">去创建</view>
+  </view>
+
+  <!-- 空态：还没有收藏 -->
+  <view class="empty" wx:else>
+    <view class="empty-emoji">🤍</view>
+    <view class="empty-text">还没有收藏的食谱</view>
+    <view class="empty-btn" bindtap="goRecipeList">去逛逛食谱</view>
+  </view>
+
+</view>

@@ -12,15 +12,17 @@
       />
     </view>
 
-    <scroll-view scroll-x class="stage-scroll" show-scrollbar="{{false}}">
+    <scroll-view scroll-x class="stage-scroll" show-scrollbar="{{false}}" scroll-into-view="{{scrollInto}}" scroll-with-animation>
       <view class="stage-chips">
         <view
           class="chip {{activeStage === '' ? 'active' : ''}}"
+          id="chip-all"
           data-stage=""
           bindtap="onStage"
         >全部</view>
         <view
           class="chip {{activeStage === item.key ? 'active' : ''}}"
+          id="chip-{{item.key}}"
           wx:for="{{stages}}"
           wx:key="key"
           data-stage="{{item.key}}"

@@ -8,7 +8,9 @@
     "pages/recipe-detail/recipe-detail",
     "pages/baby-list/baby-list",
     "pages/baby-edit/baby-edit",
-    "pages/record-add/record-add"
+    "pages/record-add/record-add",
+    "pages/favorites/favorites",
+    "pages/stats/stats"
   ],
   "window": {
     "backgroundTextStyle": "dark",
