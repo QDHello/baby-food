@@ -47,4 +47,7 @@ const MEAL_ORDER = { breakfast: 0, lunch: 1, dinner: 2, snack: 3 };
 // 过敏风险等级 → 样式 key
 const RISK_LEVELS = { '低': 'low', '中': 'mid', '高': 'high' };
 
-module.exports = { STAGES, ALLERGENS, MAJOR_ALLERGENS, DIFFICULTY, REACTIONS, MEALS, MEAL_LABEL, MEAL_ORDER, RISK_LEVELS };
+// 分享卡片统一封面图（5:4）
+const SHARE_IMAGE = '/images/share/share-cover.jpg';
+
+module.exports = { STAGES, ALLERGENS, MAJOR_ALLERGENS, DIFFICULTY, REACTIONS, MEALS, MEAL_LABEL, MEAL_ORDER, RISK_LEVELS, SHARE_IMAGE };

@@ -1,7 +1,7 @@
 const { RECIPES } = require('../../data/mock');
 const feeding = require('../../services/feeding');
 const { calcMonthAge, getStage, formatAge, canAddSolidFood, MIN_SOLID_MONTHS, formatDate } = require('../../utils/util');
-const { REACTIONS, MEAL_LABEL, MEAL_ORDER } = require('../../utils/constants');
+const { REACTIONS, MEAL_LABEL, MEAL_ORDER, SHARE_IMAGE } = require('../../utils/constants');
 
 const REACTION_LABEL = {};
 REACTIONS.forEach((r) => { REACTION_LABEL[r.key] = r.label; });
@@ -40,11 +40,24 @@ Page({
     canShuffle: false
   },
 
+  onLoad() {
+    wx.showShareMenu({ menus: ['shareAppMessage', 'shareTimeline'] });
+  },
+
   // 转发给好友：分享首页入口
   onShareAppMessage() {
     return {
       title: '蹦Food·记录宝宝每一口辅食',
-      path: '/pages/index/index'
+      path: '/pages/index/index',
+      imageUrl: SHARE_IMAGE
+    };
+  },
+
+  // 分享到朋友圈：单页模式打开首页
+  onShareTimeline() {
+    return {
+      title: '蹦Food·记录宝宝每一口辅食',
+      imageUrl: SHARE_IMAGE
     };
   },
 

@@ -1,6 +1,6 @@
 const feeding = require('../../services/feeding');
 const { formatAge, canAddSolidFood, MIN_SOLID_MONTHS } = require('../../utils/util');
-const { REACTIONS, MEAL_LABEL, MEAL_ORDER } = require('../../utils/constants');
+const { REACTIONS, MEAL_LABEL, MEAL_ORDER, SHARE_IMAGE } = require('../../utils/constants');
 
 const REACTION_LABEL = {};
 REACTIONS.forEach((r) => { REACTION_LABEL[r.key] = r.label; });
@@ -26,9 +26,27 @@ Page({
   },
 
   onLoad() {
+    wx.showShareMenu({ menus: ['shareAppMessage', 'shareTimeline'] });
     const { windowWidth } = wx.getSystemInfoSync();
     this._delWidth = (DEL_WIDTH_RPX * windowWidth) / 750;
     this._openIndex = null;
+  },
+
+  // 转发给好友：分享记录页入口（不携带本地喂养记录）
+  onShareAppMessage() {
+    return {
+      title: '蹦Food·宝宝喂养记录',
+      path: '/pages/record/record',
+      imageUrl: SHARE_IMAGE
+    };
+  },
+
+  // 分享到朋友圈：单页模式打开记录页
+  onShareTimeline() {
+    return {
+      title: '蹦Food·宝宝喂养记录',
+      imageUrl: SHARE_IMAGE
+    };
   },
 
   onShow() {

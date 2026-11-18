@@ -1,5 +1,5 @@
 const { INGREDIENTS } = require('../../data/mock');
-const { RISK_LEVELS } = require('../../utils/constants');
+const { RISK_LEVELS, SHARE_IMAGE } = require('../../utils/constants');
 const { calcMonthAge } = require('../../utils/util');
 
 function withRiskKey(list) {
@@ -27,7 +27,25 @@ Page({
   },
 
   onLoad() {
+    wx.showShareMenu({ menus: ['shareAppMessage', 'shareTimeline'] });
     this.render();
+  },
+
+  // 转发给好友：分享辅食食材百科入口
+  onShareAppMessage() {
+    return {
+      title: '蹦Food·宝宝辅食食材百科',
+      path: '/pages/wiki/wiki',
+      imageUrl: SHARE_IMAGE
+    };
+  },
+
+  // 分享到朋友圈：单页模式打开食材百科
+  onShareTimeline() {
+    return {
+      title: '蹦Food·宝宝辅食食材百科',
+      imageUrl: SHARE_IMAGE
+    };
   },
 
   onShow() {

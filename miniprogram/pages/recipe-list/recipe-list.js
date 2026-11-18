@@ -1,5 +1,5 @@
 const { RECIPES } = require('../../data/mock');
-const { STAGES } = require('../../utils/constants');
+const { STAGES, SHARE_IMAGE } = require('../../utils/constants');
 const { calcMonthAge } = require('../../utils/util');
 
 // 搜索防抖间隔：输入停止 300ms 后才做全量筛选
@@ -15,6 +15,7 @@ Page({
   },
 
   onLoad(options) {
+    wx.showShareMenu({ menus: ['shareAppMessage', 'shareTimeline'] });
     if (options.stage) {
       this.setData({ activeStage: options.stage });
     } else {
@@ -45,7 +46,16 @@ Page({
   onShareAppMessage() {
     return {
       title: '蹦Food·宝宝辅食食谱库',
-      path: '/pages/recipe-list/recipe-list'
+      path: '/pages/recipe-list/recipe-list',
+      imageUrl: SHARE_IMAGE
+    };
+  },
+
+  // 分享到朋友圈：单页模式打开食谱库
+  onShareTimeline() {
+    return {
+      title: '蹦Food·宝宝辅食食谱库',
+      imageUrl: SHARE_IMAGE
     };
   },
 

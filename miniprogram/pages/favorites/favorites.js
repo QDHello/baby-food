@@ -1,5 +1,6 @@
 const { RECIPES } = require('../../data/mock');
 const favorites = require('../../services/favorites');
+const { SHARE_IMAGE } = require('../../utils/constants');
 
 const PAGE_SIZE = 15;
 
@@ -11,6 +12,27 @@ Page({
     // 分页提示：false=还有更多（上拉加载） / true=已全部加载
     allLoaded: false,
     total: 0
+  },
+
+  onLoad() {
+    wx.showShareMenu({ menus: ['shareAppMessage', 'shareTimeline'] });
+  },
+
+  // 转发给好友：分享收藏列表入口（不携带本地收藏数据）
+  onShareAppMessage() {
+    return {
+      title: '蹦Food·我的辅食收藏',
+      path: '/pages/favorites/favorites',
+      imageUrl: SHARE_IMAGE
+    };
+  },
+
+  // 分享到朋友圈：单页模式打开收藏列表
+  onShareTimeline() {
+    return {
+      title: '蹦Food·我的辅食收藏',
+      imageUrl: SHARE_IMAGE
+    };
   },
 
   onShow() {
