@@ -23,6 +23,11 @@
       <text class="menu-count" wx:if="{{favCount}}">{{favCount}}个</text>
       <text class="menu-arrow">›</text>
     </view>
+    <view class="menu-item" bindtap="goMenu">
+      <text class="menu-icon">📅</text>
+      <text class="menu-label">一周菜单</text>
+      <text class="menu-arrow">›</text>
+    </view>
     <view class="menu-item" bindtap="goStats">
       <text class="menu-icon">📊</text>
       <text class="menu-label">喂养统计</text>

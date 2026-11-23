@@ -23,6 +23,15 @@ Page({
     wx.navigateTo({ url: '/pages/baby-list/baby-list' });
   },
 
+  goMenu() {
+    const baby = getApp().globalData.currentBaby;
+    if (!baby) {
+      wx.showToast({ title: '请先创建宝宝档案，再生成菜单', icon: 'none' });
+      return;
+    }
+    wx.navigateTo({ url: '/pages/menu/menu' });
+  },
+
   goFavorites() {
     const baby = getApp().globalData.currentBaby;
     if (!baby) {

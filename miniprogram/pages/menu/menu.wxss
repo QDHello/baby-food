@@ -1,0 +1,272 @@
+.page {
+  padding: 24rpx 24rpx 60rpx;
+}
+
+/* ===== 引导态 ===== */
+.guide {
+  padding: 160rpx 60rpx;
+  text-align: center;
+}
+.guide-emoji {
+  font-size: 96rpx;
+  margin-bottom: 24rpx;
+}
+.guide-text {
+  font-size: 28rpx;
+  color: #999;
+  line-height: 1.7;
+  margin-bottom: 40rpx;
+}
+.guide-btn {
+  display: inline-block;
+  background: #52C41A;
+  color: #fff;
+  font-size: 28rpx;
+  padding: 18rpx 64rpx;
+  border-radius: 44rpx;
+}
+
+/* ===== 周标题栏 ===== */
+.week-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 8rpx;
+}
+.week-head-left {
+  display: flex;
+  align-items: baseline;
+  gap: 16rpx;
+}
+.week-title {
+  font-size: 36rpx;
+  font-weight: bold;
+  color: #333;
+}
+.week-range {
+  font-size: 24rpx;
+  color: #999;
+}
+.gen-btn {
+  background: #52C41A;
+  color: #fff;
+  font-size: 26rpx;
+  padding: 14rpx 30rpx;
+  border-radius: 40rpx;
+  flex-shrink: 0;
+}
+.meal-summary {
+  font-size: 22rpx;
+  color: #b0a49c;
+  margin: 0 8rpx 20rpx;
+}
+
+.archived-tip {
+  background: #fffbe6;
+  border: 2rpx solid #ffe58f;
+  color: #ad6800;
+  font-size: 24rpx;
+  padding: 16rpx 24rpx;
+  border-radius: 16rpx;
+  margin-bottom: 20rpx;
+}
+
+/* ===== 天卡片 ===== */
+.day-card {
+  background: #fff;
+  border-radius: 24rpx;
+  padding: 24rpx;
+  margin-bottom: 20rpx;
+}
+.day-card.day-past {
+  opacity: 0.55;
+}
+.day-head {
+  display: flex;
+  align-items: center;
+  gap: 12rpx;
+  margin-bottom: 16rpx;
+}
+.day-name {
+  font-size: 30rpx;
+  font-weight: bold;
+  color: #333;
+}
+.day-name-today {
+  color: #52C41A;
+}
+.day-date {
+  font-size: 24rpx;
+  color: #999;
+}
+.today-flag {
+  font-size: 20rpx;
+  color: #52C41A;
+  border: 2rpx solid #52C41A;
+  border-radius: 16rpx;
+  padding: 2rpx 12rpx;
+}
+
+.cells {
+  display: flex;
+  flex-direction: column;
+  gap: 12rpx;
+}
+.cell {
+  display: flex;
+  align-items: center;
+  gap: 16rpx;
+  border-radius: 16rpx;
+  padding: 16rpx 20rpx;
+  min-height: 64rpx;
+  box-sizing: border-box;
+}
+.cell-filled {
+  background: #f6ffed;
+  border: 2rpx solid #b7eb8f;
+}
+.cell-empty {
+  background: #fafafa;
+  border: 2rpx dashed #d9d9d9;
+  justify-content: space-between;
+}
+.cell-emoji {
+  font-size: 36rpx;
+}
+.cell-info {
+  display: flex;
+  flex-direction: column;
+  gap: 4rpx;
+  flex: 1;
+  min-width: 0;
+}
+.cell-meal {
+  font-size: 22rpx;
+  color: #999;
+}
+.cell-title {
+  font-size: 28rpx;
+  color: #333;
+  font-weight: 500;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.cell-plus {
+  font-size: 24rpx;
+  color: #bbb;
+}
+
+/* ===== 清空 / 尾注 ===== */
+.clear-btn {
+  text-align: center;
+  color: #e53935;
+  font-size: 26rpx;
+  padding: 24rpx;
+}
+.list-end {
+  text-align: center;
+  font-size: 22rpx;
+  color: #bbb;
+  padding: 8rpx 0 20rpx;
+}
+
+/* ===== 选择弹窗 ===== */
+.picker-mask {
+  position: fixed;
+  left: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.45);
+  z-index: 100;
+}
+.picker-card {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: #fff;
+  border-radius: 32rpx 32rpx 0 0;
+  padding: 32rpx 32rpx calc(32rpx + env(safe-area-inset-bottom));
+}
+.picker-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 24rpx;
+}
+.picker-title {
+  font-size: 32rpx;
+  font-weight: bold;
+  color: #333;
+}
+.picker-close {
+  color: #bbb;
+  font-size: 32rpx;
+  padding: 10rpx;
+}
+.picker-tabs {
+  display: flex;
+  gap: 16rpx;
+  margin-bottom: 20rpx;
+}
+.picker-tab {
+  flex: 1;
+  text-align: center;
+  font-size: 26rpx;
+  color: #666;
+  background: #f5f5f5;
+  border-radius: 32rpx;
+  padding: 14rpx 0;
+}
+.picker-tab.tab-active {
+  background: #f6ffed;
+  color: #52C41A;
+  font-weight: bold;
+  border: 2rpx solid #b7eb8f;
+}
+.picker-list {
+  height: 56vh;
+}
+.picker-empty {
+  text-align: center;
+  color: #999;
+  font-size: 26rpx;
+  padding: 80rpx 40rpx;
+  line-height: 1.7;
+}
+.picker-row {
+  display: flex;
+  align-items: center;
+  gap: 16rpx;
+  padding: 22rpx 8rpx;
+  border-bottom: 2rpx solid #f5f5f5;
+}
+.picker-emoji {
+  font-size: 36rpx;
+}
+.picker-name {
+  flex: 1;
+  font-size: 28rpx;
+  color: #333;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.picker-used {
+  font-size: 20rpx;
+  color: #bbb;
+  border: 2rpx solid #d9d9d9;
+  border-radius: 14rpx;
+  padding: 2rpx 10rpx;
+  flex-shrink: 0;
+}
+.picker-month {
+  font-size: 22rpx;
+  color: #52C41A;
+  background: #f6ffed;
+  border-radius: 14rpx;
+  padding: 4rpx 14rpx;
+  flex-shrink: 0;
+}

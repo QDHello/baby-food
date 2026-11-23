@@ -1,0 +1,105 @@
+<view class="page">
+
+  <!-- 未设宝宝 -->
+  <view class="guide" wx:if="{{state === 'noBaby'}}">
+    <view class="guide-emoji">📅</view>
+    <view class="guide-text">一周菜单按宝宝月龄生成，先创建宝宝档案吧</view>
+    <view class="guide-btn" bindtap="goBaby">去创建</view>
+  </view>
+
+  <!-- 月龄不足 -->
+  <view class="guide" wx:elif="{{state === 'tooYoung'}}">
+    <view class="guide-emoji">🍼</view>
+    <view class="guide-text">宝宝 {{babyMonths}} 个月，还没到辅食时间~满 6 月龄后才有辅食菜单哦</view>
+  </view>
+
+  <!-- 菜单主体 -->
+  <block wx:else>
+
+    <!-- 周标题栏 -->
+    <view class="week-head">
+      <view class="week-head-left">
+        <view class="week-title">本周菜单</view>
+        <view class="week-range">{{weekLabel}}</view>
+      </view>
+      <view class="gen-btn" bindtap="onGenerate">{{hasMenu ? '重新生成' : '一键生成'}}</view>
+    </view>
+    <view class="meal-summary">{{mealSummary}} · 点格子可调整</view>
+
+    <!-- 归档提示 -->
+    <view class="archived-tip" wx:if="{{expired}}">上周菜单已归档，生成新一周菜单吧</view>
+
+    <!-- 7 天卡片 -->
+    <view class="day-card {{item.isPast ? 'day-past' : ''}} {{item.isToday ? 'day-today' : ''}}"
+          wx:for="{{daysList}}" wx:key="day">
+      <view class="day-head">
+        <text class="day-name {{item.isToday ? 'day-name-today' : ''}}">{{item.dayLabel}}</text>
+        <text class="day-date">{{item.dateLabel}}</text>
+        <text class="today-flag" wx:if="{{item.isToday}}">今天</text>
+      </view>
+      <view class="cells">
+        <view class="cell {{cell.recipeId ? 'cell-filled' : 'cell-empty'}}"
+              wx:for="{{item.cells}}" wx:for-item="cell" wx:key="meal"
+              data-day="{{item.day}}" data-meal="{{cell.meal}}" bindtap="onCellTap">
+          <block wx:if="{{cell.recipeId}}">
+            <text class="cell-emoji">{{cell.emoji}}</text>
+            <view class="cell-info">
+              <text class="cell-meal">{{cell.mealLabel}}</text>
+              <text class="cell-title">{{cell.title}}</text>
+            </view>
+          </block>
+          <block wx:else>
+            <text class="cell-meal">{{cell.mealLabel}}</text>
+            <text class="cell-plus">＋ 待安排</text>
+          </block>
+        </view>
+      </view>
+    </view>
+
+    <!-- 清空 -->
+    <view class="clear-btn" wx:if="{{hasMenu}}" bindtap="onClearAll">清空本周菜单</view>
+    <view class="list-end" wx:if="{{hasMenu}}">— 本周菜单 —</view>
+
+  </block>
+
+  <!-- 手动指定弹窗 -->
+  <view class="picker-mask" wx:if="{{pickerShow}}" bindtap="closePicker">
+    <view class="picker-card" catchtap="noop">
+      <view class="picker-head">
+        <text class="picker-title">选择食谱 · {{pickerTitle}}</text>
+        <text class="picker-close" bindtap="closePicker">✕</text>
+      </view>
+      <view class="picker-tabs">
+        <view class="picker-tab {{pickerTab === 'fav' ? 'tab-active' : ''}}" data-tab="fav" bindtap="onPickerTab">
+          我的收藏（{{pickerFav.length}}）
+        </view>
+        <view class="picker-tab {{pickerTab === 'app' ? 'tab-active' : ''}}" data-tab="app" bindtap="onPickerTab">
+          月龄适用（{{pickerApp.length}}）
+        </view>
+      </view>
+      <scroll-view scroll-y class="picker-list">
+        <block wx:if="{{pickerTab === 'fav'}}">
+          <view class="picker-empty" wx:if="{{!pickerFav.length}}">还没有收藏的食谱，去收藏几个宝宝爱吃的吧</view>
+          <view class="picker-row" wx:for="{{pickerFav}}" wx:key="id"
+                data-id="{{item.id}}" bindtap="onPick">
+            <text class="picker-emoji">{{item.emoji}}</text>
+            <text class="picker-name">{{item.title}}</text>
+            <text class="picker-used" wx:if="{{item.used}}">本周已用</text>
+            <text class="picker-month">{{item.monthLabel}}</text>
+          </view>
+        </block>
+        <block wx:else>
+          <view class="picker-empty" wx:if="{{!pickerApp.length}}">当前月龄暂无适用食谱</view>
+          <view class="picker-row" wx:for="{{pickerApp}}" wx:key="id"
+                data-id="{{item.id}}" bindtap="onPick">
+            <text class="picker-emoji">{{item.emoji}}</text>
+            <text class="picker-name">{{item.title}}</text>
+            <text class="picker-used" wx:if="{{item.used}}">本周已用</text>
+            <text class="picker-month">{{item.monthLabel}}</text>
+          </view>
+        </block>
+      </scroll-view>
+    </view>
+  </view>
+
+</view>

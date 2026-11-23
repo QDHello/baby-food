@@ -154,6 +154,7 @@
   position: fixed;
   right: 40rpx;
   bottom: 60rpx;
+  z-index: 99;
   width: 110rpx;
   height: 110rpx;
   border-radius: 50%;

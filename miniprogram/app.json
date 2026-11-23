@@ -10,7 +10,8 @@
     "pages/baby-edit/baby-edit",
     "pages/record-add/record-add",
     "pages/favorites/favorites",
-    "pages/stats/stats"
+    "pages/stats/stats",
+    "pages/menu/menu"
   ],
   "window": {
     "backgroundTextStyle": "dark",
