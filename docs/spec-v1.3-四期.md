@@ -25,7 +25,7 @@
 
 - `pages/mine/mine.wxml`：菜单末尾新增「📮 意见反馈」项——外层 `.menu-item`（view）正常渲染图标/文字/箭头，内嵌 `button.feedback-cover`（`position:absolute` 铺满整行 + `opacity:0`）仅承接 `open-type="feedback"` 原生能力；这是 open-type 按钮的标准做法，彻底规避 button 默认字体/行高污染（前两版直接把 button 当菜单行用，真机上图标缩小、文字居中无法完全重置）
 - 图标选 📮（红色邮筒，自带色块），与 ℹ️ 蓝底图标风格一致；💬 灰色空心气泡偏淡被否
-- `pages/mine/mine.wxss`：`.menu-item` 加 `position:relative` 作锚点；`.feedback-cover` 隐形铺满（0 透明度、无边框无内边距、::after 边框清除）
+- `pages/mine/mine.wxss`：`.menu-item` 加 `position:relative` 作锚点；`.feedback-cover` 隐形铺满（无边框无内边距、::after 边框清除）。**坑（2026-11-25 真机）**：`opacity: 0` 时真机点击无反应（原生组件事件被丢弃），改用「近零透明度背景 rgba(255,255,255,0.005) + font-size:0」的可见但不可见方式——保留组件真实渲染才有事件
 - 反馈数据查看路径：mp.weixin.qq.com → 管理 → 用户反馈；微信公众平台公众号会推送新反馈提醒
 
 **验收标准**：
