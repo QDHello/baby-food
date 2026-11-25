@@ -25,7 +25,8 @@
 
 - `pages/mine/mine.wxml`：菜单末尾新增「📮 意见反馈」项——外层 `.menu-item`（view）正常渲染图标/文字/箭头，内嵌 `button.feedback-cover`（`position:absolute` 铺满整行 + `opacity:0`）仅承接 `open-type="feedback"` 原生能力；这是 open-type 按钮的标准做法，彻底规避 button 默认字体/行高污染（前两版直接把 button 当菜单行用，真机上图标缩小、文字居中无法完全重置）
 - 图标选 📮（红色邮筒，自带色块），与 ℹ️ 蓝底图标风格一致；💬 灰色空心气泡偏淡被否
-- `pages/mine/mine.wxss`：`.menu-item` 加 `position:relative` 作锚点；`.feedback-cover` 隐形铺满（无边框无内边距、::after 边框清除）。**坑（2026-11-25 真机）**：`opacity: 0` 时真机点击无反应（原生组件事件被丢弃），改用「近零透明度背景 rgba(255,255,255,0.005) + font-size:0」的可见但不可见方式——保留组件真实渲染才有事件
+- `pages/mine/mine.wxss`：`.menu-item` 加 `position:relative`（保留给后续可能的行内覆盖用途）
+- **方案定稿（2026-11-25 三轮真机迭代）**：①button 当菜单行+样式重置 → 真机图标文字形态不对；②view 渲染 + button 覆盖层 → `opacity:0` 真机点击丢弃、改近零透明背景后热区仍不可靠（点文字有反应、点箭头无反应）；③**定稿：button 本体做菜单行**——热区必然全行可靠，默认样式逐项清零（::after 边框/font-size 18px/行高 2.55555/内边距/圆角/hover 底色）+ `hover-class="none"` 去点击灰底 + `.menu .feedback-btn:last-child` 对齐 view 的去分隔线规则 + 子元素按菜单规格显式设置。教训：open-type 按钮别做覆盖层，热区不可控，老实重置样式
 - 反馈数据查看路径：mp.weixin.qq.com → 管理 → 用户反馈；微信公众平台公众号会推送新反馈提醒
 
 **验收标准**：

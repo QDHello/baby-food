@@ -43,13 +43,12 @@
       <text class="menu-label">关于我们</text>
       <text class="menu-arrow">›</text>
     </view>
-    <view class="menu-item">
+    <!-- button 本体做菜单行：热区必然全行可靠；默认样式全量重置后与 view 菜单项一致 -->
+    <button class="menu-item feedback-btn" open-type="feedback" hover-class="none">
       <text class="menu-icon">📮</text>
       <text class="menu-label">意见反馈</text>
       <text class="menu-arrow">›</text>
-      <!-- 隐形 button 仅承载 open-type=feedback 原生能力，视觉由外层 view 渲染 -->
-      <button class="feedback-cover" open-type="feedback"></button>
-    </view>
+    </button>
   </view>
 
 </view>
