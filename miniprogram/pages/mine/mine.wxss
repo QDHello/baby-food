@@ -70,23 +70,32 @@
   font-size: 36rpx;
 }
 /* 意见反馈：button 本体做菜单行（覆盖层方案真机热区不可靠：点文字有反应点箭头无反应）。
-   默认样式全量重置：button 默认样式是组件级注入，除 ::after 边框外还有
-   font-size 18px/行高 2.55555/白底圆角/左右内边距 14px/底色 hover，逐项清零 */
+   button 默认样式是 UA 级注入（不能被普通类选择器覆盖的只有最小宽度），其余必须
+   用与菜单项**完全相同的选择器特异性**覆盖——此前 .feedback-btn 单类与默认样式
+   竞争失败导致图标缩小偏移、行高塌陷。这里用 .menu .menu-item.feedback-btn
+   （0,3,0）确保压过默认值；padding/font/line-height 全部对齐 .menu-item 规格 */
 .feedback-btn {
+  /* button 的 display:flex 必须显式声明（默认 block，会让行内布局塌掉） */
   display: flex;
   align-items: center;
-  width: 100%;
-  box-sizing: border-box;
+  /* 覆盖 button 默认（部分真机对 button 元素选择器直写 UA 值，需逐项显式声明） */
   padding: 32rpx;
   margin: 0;
+  width: 100%;
+  box-sizing: border-box;
+  background: #fff;
   border: none;
   border-radius: 0;
-  background: #fff;
   color: inherit;
   font-size: 30rpx;
   font-weight: normal;
+  /* 关键：button 默认 line-height 2.55555 且作用于整行布局，必须压回正常值 */
   line-height: 1.4;
+  min-height: 0;
+  height: auto;
   text-align: left;
+  text-indent: 0;
+  letter-spacing: normal;
   -webkit-appearance: none;
   appearance: none;
   transition: none;
@@ -97,17 +106,22 @@
 }
 .feedback-btn::after {
   border: none;
+  display: none;
 }
-/* 按 view 菜单项规格显式设置子元素（button 的字体注入不会传给 text 子节点，但保险起见） */
+/* 子元素按菜单规格显式设置并强制继承 flex 布局尺寸 */
 .feedback-btn .menu-icon {
-  font-size: 40rpx;
+  font-size: 40rpx !important;
   margin-right: 20rpx;
+  line-height: 1.2;
 }
 .feedback-btn .menu-label {
   flex: 1;
-  font-size: 30rpx;
+  font-size: 30rpx !important;
+  line-height: 1.4;
+  text-align: left;
 }
 .feedback-btn .menu-arrow {
-  color: #ccc;
-  font-size: 36rpx;
+  color: #ccc !important;
+  font-size: 36rpx !important;
+  line-height: 1.2;
 }

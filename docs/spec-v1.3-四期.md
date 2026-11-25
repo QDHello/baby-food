@@ -26,7 +26,7 @@
 - `pages/mine/mine.wxml`：菜单末尾新增「📮 意见反馈」项——外层 `.menu-item`（view）正常渲染图标/文字/箭头，内嵌 `button.feedback-cover`（`position:absolute` 铺满整行 + `opacity:0`）仅承接 `open-type="feedback"` 原生能力；这是 open-type 按钮的标准做法，彻底规避 button 默认字体/行高污染（前两版直接把 button 当菜单行用，真机上图标缩小、文字居中无法完全重置）
 - 图标选 📮（红色邮筒，自带色块），与 ℹ️ 蓝底图标风格一致；💬 灰色空心气泡偏淡被否
 - `pages/mine/mine.wxss`：`.menu-item` 加 `position:relative`（保留给后续可能的行内覆盖用途）
-- **方案定稿（2026-11-25 三轮真机迭代）**：①button 当菜单行+样式重置 → 真机图标文字形态不对；②view 渲染 + button 覆盖层 → `opacity:0` 真机点击丢弃、改近零透明背景后热区仍不可靠（点文字有反应、点箭头无反应）；③**定稿：button 本体做菜单行**——热区必然全行可靠，默认样式逐项清零（::after 边框/font-size 18px/行高 2.55555/内边距/圆角/hover 底色）+ `hover-class="none"` 去点击灰底 + `.menu .feedback-btn:last-child` 对齐 view 的去分隔线规则 + 子元素按菜单规格显式设置。教训：open-type 按钮别做覆盖层，热区不可控，老实重置样式
+- **方案定稿（2026-11-25 四轮真机迭代）**：①button 当菜单行+样式重置 → 真机形态不对；②view 渲染 + button 覆盖层 → opacity:0 真机点击丢弃、透明背景热区仍不可靠（点箭头无反应）；③button 本体做行+单类重置 → 部分默认样式竞争失败，图标/文案/箭头仍不对齐；④**定稿：button 本体 + 全量样式声明**——display:flex 显式声明（默认 block 行内塌陷）、line-height 压回 1.4（默认 2.55555 把行撑高）、height:auto/min-height:0 解固定高、padding 32rpx 对齐菜单、::after display:none、子元素图标 40rpx/文字 30rpx flex:1/箭头 36rpx 显式设置（带 !important 防真机 UA 注入竞争）、hover-class="none" 去灰底、.menu .feedback-btn:last-child 对齐分隔线规则。教训：open-type 按钮别做覆盖层（热区不可控）；button 默认样式需逐项显式覆盖不能指望继承
 - 反馈数据查看路径：mp.weixin.qq.com → 管理 → 用户反馈；微信公众平台公众号会推送新反馈提醒
 
 **验收标准**：
