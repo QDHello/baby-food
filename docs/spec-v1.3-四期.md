@@ -24,7 +24,7 @@
 **实现**（2026-11-25）：
 
 - `pages/mine/mine.wxml`：菜单末尾新增 `<button class="menu-item feedback-btn" open-type="feedback">`（原生 button 承载 open-type，无需自建反馈页/后端）
-- `pages/mine/mine.wxss`：`.feedback-btn` 重置 button 默认样式（去边框 ::after、白底、行内对齐），与相邻菜单项视觉完全一致
+- `pages/mine/mine.wxss`：`.feedback-btn` 重置 button 默认样式——border/margin/font/line-height/appearance 全量清零 + 显式设置子元素 `.menu-icon`（40rpx）/`.menu-label`（flex:1, 30rpx）继承菜单规格；首次实现仅重置部分样式导致真机上图标缩小、文字居中，2026-11-25 二次修正后与 view 菜单项完全一致
 - 反馈数据查看路径：mp.weixin.qq.com → 管理 → 用户反馈；微信公众平台公众号会推送新反馈提醒
 
 **验收标准**：

@@ -68,20 +68,38 @@
   color: #ccc;
   font-size: 36rpx;
 }
-/* 意见反馈：用原生 button(open-type=feedback) 承载菜单行，重置按钮默认样式与 view 菜单项对齐 */
+/* 意见反馈：用原生 button(open-type=feedback) 承载菜单行，彻底重置按钮默认样式，与 view 菜单项完全一致 */
 .feedback-btn {
   display: flex;
   align-items: center;
   width: 100%;
+  box-sizing: border-box;
   padding: 32rpx;
+  border: none;
   border-bottom: 2rpx solid #F0F6E8;
   border-radius: 0;
   background: #fff;
+  color: inherit;
+  font-family: inherit;
   font-size: 30rpx;
-  line-height: inherit;
+  font-weight: normal;
+  line-height: normal;
   text-align: left;
+  text-decoration: none;
   margin: 0;
+  outline: none;
+  -webkit-appearance: none;
+  appearance: none;
 }
 .feedback-btn::after {
   border: none;
+}
+.feedback-btn .menu-icon {
+  font-size: 40rpx;
+  margin-right: 20rpx;
+  line-height: 1;
+}
+.feedback-btn .menu-label {
+  flex: 1;
+  font-size: 30rpx;
 }
