@@ -1,6 +1,7 @@
 const { RECIPES } = require('../../data/mock');
 const { STAGES, SHARE_IMAGE } = require('../../utils/constants');
 const { calcMonthAge } = require('../../utils/util');
+const favorites = require('../../services/favorites');
 
 // 搜索防抖间隔：输入停止 300ms 后才做全量筛选
 const SEARCH_DELAY = 300;
@@ -11,7 +12,8 @@ Page({
     activeStage: '', // '' 表示全部
     scrollInto: '', // scroll-view 的 scroll-into-view 目标 id
     keyword: '',
-    list: []
+    list: [],
+    favCount: 0 // 收藏角标显示用
   },
 
   onLoad(options) {
@@ -62,6 +64,11 @@ Page({
   onHide() {
     // 离开页面前把未执行的搜索落一次，避免返回后列表与输入框不一致
     this.flushPendingApply();
+  },
+
+  // 返回本页时刷新收藏角标（详情页/收藏页可能新增或取消了收藏）
+  onShow() {
+    if (this.data.list.length) this.apply();
   },
 
   onUnload() {
@@ -128,6 +135,9 @@ Page({
       );
     }
     // 只投影列表实际用到的字段：steps/tips/ingredients 等大字段不进 setData
+    // isFav：已收藏角标（FR-22）；未设宝宝时收藏服务按空处理，全部 false
+    const baby = getApp().globalData.currentBaby;
+    const favSet = new Set(baby ? favorites.getFavorites(baby.id).map((f) => f.id) : []);
     list = list.map((r) => ({
       id: r.id,
       title: r.title,
@@ -137,9 +147,10 @@ Page({
       showCover: !!r.cover,
       minMonths: r.minMonths,
       maxMonths: r.maxMonths,
-      tags: r.tags || []
+      tags: r.tags || [],
+      isFav: favSet.has(r.id)
     }));
-    this.setData({ list });
+    this.setData({ list, favCount: favSet.size });
   },
 
   // 封面图加载失败 → 回退 emoji（局部路径更新，不整表 setData）

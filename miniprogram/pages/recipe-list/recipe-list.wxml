@@ -47,7 +47,10 @@
       ></image>
       <view class="recipe-emoji" wx:else>{{item.emoji}}</view>
       <view class="row-info">
-        <view class="recipe-title">{{item.title}}</view>
+        <view class="recipe-title">
+          {{item.title}}
+          <text class="fav-badge" wx:if="{{item.isFav}}">♥</text>
+        </view>
         <view class="recipe-desc">{{item.desc}}</view>
         <view class="row-tags">
           <text class="tag">{{item.minMonths}}-{{item.maxMonths}}月</text>

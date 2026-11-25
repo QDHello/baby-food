@@ -91,6 +91,12 @@
   font-size: 30rpx;
   font-weight: 700;
 }
+/* 已收藏红心角标（FR-22）：紧跟标题行内右侧，不占额外空间 */
+.fav-badge {
+  color: #e53935;
+  font-size: 26rpx;
+  margin-left: 8rpx;
+}
 .recipe-desc {
   font-size: 24rpx;
   color: #999;
