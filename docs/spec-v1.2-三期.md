@@ -47,6 +47,7 @@
   - 修复（2026-11-18）：`render` 对清空后 `getMenu` 返回 null 的场景取 `menu.weekStart` 抛 `weekStart of null`；改为 `expired || !menu` 时统一用 `currentWeekStart()` 渲染空周，清空后正常回到待安排状态
   - 修复（2026-11-25）：**过敏食谱混入菜单**——宝宝档案勾「海鲜」大类，食谱 allergens 记「鱼」「虾」具体值，交集恒空拦不住。`utils/constants.js` 新增 `ALLERGEN_EXPANSION` 大类扩展映射 + `expandAllergens()`，`services/menu.js hasConflict`（生成/换一换/手动指定弹窗）与 `pages/recipe-detail` 冲突横幅两处统一接入；宝宝只勾「虾」仍只拦虾不误伤鱼
   - 存量兜底（2026-11-25）：过敏原修复前已生成的菜单不会自动消失——`render` 逐格重校验冲突，冲突格红色边框标红，页面顶部红色提示条「本周菜单有 N 处与宝宝过敏原冲突，已标红」+「重新生成」快捷按钮（复用 onGenerate）
+  - 口径增强（2026-11-25）：**过敏史排除**——菜单池（收藏池/适用池，即生成/换一换/手动指定共用）除过敏原冲突外，同时排除宝宝喂养记录中标记过「过敏」反应的食谱（`services/menu.js allergyRecipeIds`，按宝宝维度隔离）；格子标红校验同步扩展为「过敏原冲突 ∪ 过敏史」，提示条文案改为「与宝宝过敏原或过敏史冲突」。口径：档案过敏原=预防性排除（还没吃就知道会过敏），过敏史=实证排除（吃过真过敏）
   - 手动指定：底部自绘弹层（遮罩+白卡圆角顶+catchtap），两 tab「我的收藏（N）/ 月龄适用（N）」，行内「本周已用」灰标（仍可选），scroll-view 56vh，点选即写入并 toast
   - 清空：页面底部红字按钮（仅有内容时显示），`wx.showModal` 二次确认
 - **`pages/mine/`**：新增「📅 一周菜单」入口（排在收藏与统计之间），未设宝宝 toast 引导；`app.json` 注册 `pages/menu/menu`

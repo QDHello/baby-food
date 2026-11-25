@@ -5,6 +5,7 @@ const { RECIPES } = require('../data/mock');
 const { STAGES, expandAllergens } = require('../utils/constants');
 const { calcMonthAge, formatDate } = require('../utils/util');
 const favorites = require('./favorites');
+const feeding = require('./feeding');
 
 const DAY_KEYS = ['mon', 'tue', 'wed', 'thu', 'fri', 'sat', 'sun'];
 const DAY_LABELS = { mon: '周一', tue: '周二', wed: '周三', thu: '周四', fri: '周五', sat: '周六', sun: '周日' };
@@ -57,6 +58,15 @@ function hasConflict(recipe, baby) {
   return (recipe.allergens || []).some((a) => ba.includes(a));
 }
 
+// 过敏史：宝宝喂养记录中实际标记过「过敏」反应的食谱 id 集合
+// （2026-11-25 口径增强——档案过敏原之外，吃了真过敏的食谱也不该再进菜单）
+function allergyRecipeIds(babyId) {
+  if (!babyId) return [];
+  return feeding.getLogs(babyId)
+    .filter((l) => l.reaction === 'allergy' && l.recipeId)
+    .map((l) => l.recipeId);
+}
+
 // 空周骨架
 function emptyDays(meals) {
   const days = {};
@@ -101,12 +111,14 @@ function applicableRecipes(baby, excludeIds) {
 }
 
 // 手动指定弹窗数据：收藏池 + 适用池（含本周已用标记在页面侧计算）
+// 两池均排除：过敏原冲突 + 过敏史（喂养记录标记过「过敏」反应的食谱）
 function listPool(baby) {
   if (!baby) return { favPool: [], appPool: [] };
+  const allergyIds = allergyRecipeIds(baby.id);
   const favs = favorites.getFavorites(baby.id)
     .map((f) => RECIPES.find((r) => r.id === f.id))
-    .filter((r) => r && !hasConflict(r, baby));
-  const appPool = applicableRecipes(baby, favs.map((r) => r.id));
+    .filter((r) => r && !hasConflict(r, baby) && !allergyIds.includes(r.id));
+  const appPool = applicableRecipes(baby, favs.map((r) => r.id).concat(allergyIds));
   return { favPool: favs, appPool };
 }
 
@@ -182,7 +194,7 @@ function swapOne(baby, menu, day, meal) {
 
 module.exports = {
   DAY_KEYS, DAY_LABELS, MEAL_LABELS,
-  weekStartOf, currentWeekStart, mealsForBaby, stageOfBaby, hasConflict,
+  weekStartOf, currentWeekStart, mealsForBaby, stageOfBaby, hasConflict, allergyRecipeIds,
   getMenu, saveMenu, clearMenu, emptyDays, applicableRecipes, listPool,
   generateMenu, swapOne
 };

@@ -29,9 +29,9 @@
     <!-- 归档提示 -->
     <view class="archived-tip" wx:if="{{expired}}">上周菜单已归档，生成新一周菜单吧</view>
 
-    <!-- 过敏冲突提示（存量菜单兜底：宝宝过敏原变更后已排格子可能冲突） -->
+    <!-- 过敏冲突提示（存量菜单兜底：过敏原/过敏史变更后已排格子可能不适宜） -->
     <view class="conflict-tip" wx:if="{{conflictCount > 0}}">
-      <text class="conflict-text">⚠️ 本周菜单有 {{conflictCount}} 处与宝宝过敏原冲突，已标红</text>
+      <text class="conflict-text">⚠️ 本周菜单有 {{conflictCount}} 处与宝宝过敏原或过敏史冲突，已标红</text>
       <text class="conflict-action" bindtap="onGenerate">重新生成</text>
     </view>
 

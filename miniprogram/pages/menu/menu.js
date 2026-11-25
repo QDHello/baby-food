@@ -53,6 +53,8 @@ Page({
     const we = new Date(ws); we.setDate(we.getDate() + 6);
     const todayStr = formatDate(new Date());
 
+    // 存量菜单兜底：宝宝过敏原后来变更、或新添了过敏史记录时，已排格子可能含不适宜食谱
+    const allergyIds = menuService.allergyRecipeIds(baby.id);
     const daysList = menuService.DAY_KEYS.map((d, i) => {
       const date = new Date(ws); date.setDate(date.getDate() + i);
       const dateStr = formatDate(date);
@@ -65,8 +67,8 @@ Page({
           recipeId: recipe ? recipe.id : '',
           title: recipe ? recipe.title : '',
           emoji: recipe ? recipe.emoji : '',
-          // 存量菜单兜底：宝宝过敏原后来变更时，已排格子可能含冲突食谱，标红提示
-          conflict: recipe ? menuService.hasConflict(recipe, baby) : false
+          // 不适宜 = 过敏原冲突（含大类扩展）∪ 过敏史（吃过标记过敏）
+          conflict: recipe ? (menuService.hasConflict(recipe, baby) || allergyIds.includes(recipe.id)) : false
         };
       });
       return {
