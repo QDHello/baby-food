@@ -68,3 +68,20 @@
   color: #ccc;
   font-size: 36rpx;
 }
+/* 意见反馈：用原生 button(open-type=feedback) 承载菜单行，重置按钮默认样式与 view 菜单项对齐 */
+.feedback-btn {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  padding: 32rpx;
+  border-bottom: 2rpx solid #F0F6E8;
+  border-radius: 0;
+  background: #fff;
+  font-size: 30rpx;
+  line-height: inherit;
+  text-align: left;
+  margin: 0;
+}
+.feedback-btn::after {
+  border: none;
+}

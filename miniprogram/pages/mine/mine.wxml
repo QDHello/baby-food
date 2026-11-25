@@ -43,6 +43,11 @@
       <text class="menu-label">关于我们</text>
       <text class="menu-arrow">›</text>
     </view>
+    <button class="menu-item feedback-btn" open-type="feedback">
+      <text class="menu-icon">💬</text>
+      <text class="menu-label">意见反馈</text>
+      <text class="menu-arrow">›</text>
+    </button>
   </view>
 
 </view>
