@@ -43,11 +43,13 @@
       <text class="menu-label">关于我们</text>
       <text class="menu-arrow">›</text>
     </view>
-    <button class="menu-item feedback-btn" open-type="feedback">
-      <text class="menu-icon">💬</text>
+    <view class="menu-item">
+      <text class="menu-icon">📮</text>
       <text class="menu-label">意见反馈</text>
       <text class="menu-arrow">›</text>
-    </button>
+      <!-- 隐形 button 仅承载 open-type=feedback 原生能力，视觉由外层 view 渲染 -->
+      <button class="feedback-cover" open-type="feedback"></button>
+    </view>
   </view>
 
 </view>
