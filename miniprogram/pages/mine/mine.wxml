@@ -43,7 +43,7 @@
       <text class="menu-label">关于我们</text>
       <text class="menu-arrow">›</text>
     </view>
-    <!-- button 本体做菜单行：热区必然全行可靠；默认样式全量重置后与 view 菜单项一致 -->
+    <!-- button 本体做菜单行：重置配方照抄详情页 share-btn（真机已验证可完美重置），再加 flex 行内布局 -->
     <button class="menu-item feedback-btn" open-type="feedback" hover-class="none">
       <text class="menu-icon">📮</text>
       <text class="menu-label">意见反馈</text>
