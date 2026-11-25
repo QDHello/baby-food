@@ -1,5 +1,5 @@
 const { RECIPES } = require('../../data/mock');
-const { DIFFICULTY } = require('../../utils/constants');
+const { DIFFICULTY, expandAllergens } = require('../../utils/constants');
 const { canAddSolidFood, MIN_SOLID_MONTHS } = require('../../utils/util');
 const favorites = require('../../services/favorites');
 
@@ -21,8 +21,8 @@ Page({
     }
     const app = getApp();
     const baby = app.globalData.currentBaby;
-    // 检测宝宝过敏原与食谱食材的冲突
-    const babyAllergens = (baby && baby.allergens) || [];
+    // 检测宝宝过敏原与食谱食材的冲突（大类经 expandAllergens 扩展，如「海鲜」拦住鱼/虾/蟹）
+    const babyAllergens = expandAllergens((baby && baby.allergens) || []);
     const conflictAllergens = (recipe.allergens || []).filter((a) =>
       babyAllergens.includes(a)
     );

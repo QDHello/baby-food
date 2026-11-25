@@ -2,7 +2,7 @@
 // storage 键：babyfood_menu_{babyId}，结构 { weekStart: 'YYYY-MM-DD', days: { mon~sun: { meal: recipeId } } }
 // 口径：月龄适用 = 起始月归属（同食谱列表页 tab）；过敏冲突 = recipe.allergens ∩ baby.allergens（同详情页横幅）
 const { RECIPES } = require('../data/mock');
-const { STAGES } = require('../utils/constants');
+const { STAGES, expandAllergens } = require('../utils/constants');
 const { calcMonthAge, formatDate } = require('../utils/util');
 const favorites = require('./favorites');
 
@@ -50,9 +50,10 @@ function stageOfBaby(baby) {
   return hit;
 }
 
-// 过敏冲突：食谱过敏原与宝宝过敏原有交集
+// 过敏冲突：食谱过敏原与宝宝过敏原有交集（宝宝大类先经 expandAllergens 扩展，
+// 如「海鲜」→ 鱼/虾/蟹/贝类，否则大类勾选拦不住具体过敏原食谱）
 function hasConflict(recipe, baby) {
-  const ba = (baby && baby.allergens) || [];
+  const ba = expandAllergens((baby && baby.allergens) || []);
   return (recipe.allergens || []).some((a) => ba.includes(a));
 }
 

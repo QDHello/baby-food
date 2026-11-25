@@ -19,6 +19,24 @@ const ALLERGENS = [
 // 8 大常见过敏原（重点标注）
 const MAJOR_ALLERGENS = ['牛奶', '鸡蛋', '花生', '大豆', '小麦', '坚果', '海鲜', '芝麻'];
 
+// 过敏原冲突扩展（2026-11-25）：宝宝档案勾选的是大类（如「海鲜」），食谱 allergens 记录的是
+// 具体过敏原（如「鱼」「虾」「蟹」），直接求交集会漏拦。冲突判断前先把宝宝勾选的大类扩展为
+// 等价的具体过敏原集合（菜单生成/换一换、详情页冲突横幅共用此口径）。
+const ALLERGEN_EXPANSION = {
+  '海鲜': ['鱼', '虾', '蟹', '贝类'],
+  '坚果': ['花生', '核桃', '腰果', '开心果', '杏仁']
+};
+
+// 扩展宝宝过敏原列表：原样保留 + 大类展开
+function expandAllergens(list) {
+  const out = new Set();
+  (list || []).forEach((a) => {
+    out.add(a);
+    (ALLERGEN_EXPANSION[a] || []).forEach((x) => out.add(x));
+  });
+  return Array.from(out);
+}
+
 // 食谱难度
 const DIFFICULTY = {
   easy: { key: 'easy', label: '简单', color: 'tag-green' },
@@ -50,4 +68,4 @@ const RISK_LEVELS = { '低': 'low', '中': 'mid', '高': 'high' };
 // 分享卡片统一封面图（5:4）
 const SHARE_IMAGE = '/images/share/share-cover.jpg';
 
-module.exports = { STAGES, ALLERGENS, MAJOR_ALLERGENS, DIFFICULTY, REACTIONS, MEALS, MEAL_LABEL, MEAL_ORDER, RISK_LEVELS, SHARE_IMAGE };
+module.exports = { STAGES, ALLERGENS, MAJOR_ALLERGENS, ALLERGEN_EXPANSION, expandAllergens, DIFFICULTY, REACTIONS, MEALS, MEAL_LABEL, MEAL_ORDER, RISK_LEVELS, SHARE_IMAGE };

@@ -29,6 +29,12 @@
     <!-- 归档提示 -->
     <view class="archived-tip" wx:if="{{expired}}">上周菜单已归档，生成新一周菜单吧</view>
 
+    <!-- 过敏冲突提示（存量菜单兜底：宝宝过敏原变更后已排格子可能冲突） -->
+    <view class="conflict-tip" wx:if="{{conflictCount > 0}}">
+      <text class="conflict-text">⚠️ 本周菜单有 {{conflictCount}} 处与宝宝过敏原冲突，已标红</text>
+      <text class="conflict-action" bindtap="onGenerate">重新生成</text>
+    </view>
+
     <!-- 7 天卡片 -->
     <view class="day-card {{item.isPast ? 'day-past' : ''}} {{item.isToday ? 'day-today' : ''}}"
           wx:for="{{daysList}}" wx:key="day">
@@ -38,7 +44,7 @@
         <text class="today-flag" wx:if="{{item.isToday}}">今天</text>
       </view>
       <view class="cells">
-        <view class="cell {{cell.recipeId ? 'cell-filled' : 'cell-empty'}}"
+        <view class="cell {{cell.recipeId ? 'cell-filled' : 'cell-empty'}} {{cell.conflict ? 'cell-conflict' : ''}}"
               wx:for="{{item.cells}}" wx:for-item="cell" wx:key="meal"
               data-day="{{item.day}}" data-meal="{{cell.meal}}" bindtap="onCellTap">
           <block wx:if="{{cell.recipeId}}">

@@ -27,7 +27,7 @@
 
 **需求**：「我的」页进入菜单页；周标题栏 + 月龄餐次说明 + 7 天卡片（每格显示餐次与菜名，未安排为虚线占位）；一键生成整周；点格子弹操作单（详情/换一换/手动指定/清除）；手动指定弹窗分「我的收藏」「月龄适用」两 tab；清空与重新生成；跨周自动进入新周（空周 + 归档提示）；菜名点击进详情。
 
-**数据字段**：storage 键 `babyfood_menu_{babyId}`，结构 `{ weekStart: 'YYYY-MM-DD', days: { mon~sun: { breakfast/lunch/dinner: recipeId } } }`；生成逻辑收敛在新增 `services/menu.js`（读收藏 + RECIPES + 宝宝档案现算）；月龄适用 = 起始月归属口径（同食谱列表页 tab），过敏冲突 = `recipe.allergens ∩ baby.allergens`（同详情页横幅）。
+**数据字段**：storage 键 `babyfood_menu_{babyId}`，结构 `{ weekStart: 'YYYY-MM-DD', days: { mon~sun: { breakfast/lunch/dinner: recipeId } } }`；生成逻辑收敛在新增 `services/menu.js`（读收藏 + RECIPES + 宝宝档案现算）；月龄适用 = 起始月归属口径（同食谱列表页 tab），过敏冲突 = `recipe.allergens ∩ expandAllergens(baby.allergens)`（宝宝勾选的大类先扩展为具体过敏原——「海鲜」→鱼/虾/蟹/贝类、「坚果」→花生/核桃等，2026-11-25 修正；同详情页横幅口径）。
 
 **实现**：
 
@@ -45,6 +45,8 @@
   - 点已安排格 → `wx.showActionSheet`（查看详情/换一换/手动指定/清除）；点待安排格 → 直接弹手动指定
   - 修复（2026-11-18）：`goDetail` 兼容两种入参——WXML 事件对象取 `e.currentTarget.dataset.id`，操作单回调直接传 recipeId 字符串；原写法对字符串取 `e.currentTarget` 抛 `dataset of undefined` 异常导致「查看详情」无法跳详情
   - 修复（2026-11-18）：`render` 对清空后 `getMenu` 返回 null 的场景取 `menu.weekStart` 抛 `weekStart of null`；改为 `expired || !menu` 时统一用 `currentWeekStart()` 渲染空周，清空后正常回到待安排状态
+  - 修复（2026-11-25）：**过敏食谱混入菜单**——宝宝档案勾「海鲜」大类，食谱 allergens 记「鱼」「虾」具体值，交集恒空拦不住。`utils/constants.js` 新增 `ALLERGEN_EXPANSION` 大类扩展映射 + `expandAllergens()`，`services/menu.js hasConflict`（生成/换一换/手动指定弹窗）与 `pages/recipe-detail` 冲突横幅两处统一接入；宝宝只勾「虾」仍只拦虾不误伤鱼
+  - 存量兜底（2026-11-25）：过敏原修复前已生成的菜单不会自动消失——`render` 逐格重校验冲突，冲突格红色边框标红，页面顶部红色提示条「本周菜单有 N 处与宝宝过敏原冲突，已标红」+「重新生成」快捷按钮（复用 onGenerate）
   - 手动指定：底部自绘弹层（遮罩+白卡圆角顶+catchtap），两 tab「我的收藏（N）/ 月龄适用（N）」，行内「本周已用」灰标（仍可选），scroll-view 56vh，点选即写入并 toast
   - 清空：页面底部红字按钮（仅有内容时显示），`wx.showModal` 二次确认
 - **`pages/mine/`**：新增「📅 一周菜单」入口（排在收藏与统计之间），未设宝宝 toast 引导；`app.json` 注册 `pages/menu/menu`

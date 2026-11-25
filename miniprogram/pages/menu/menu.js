@@ -20,6 +20,7 @@ Page({
     pickerFav: [],
     pickerApp: [],
     usedIds: [],
+    conflictCount: 0, // 存量菜单中与宝宝过敏原冲突的格子数
     activeCell: null // { day, meal }
   },
 
@@ -63,7 +64,9 @@ Page({
           mealLabel: menuService.MEAL_LABELS[meal],
           recipeId: recipe ? recipe.id : '',
           title: recipe ? recipe.title : '',
-          emoji: recipe ? recipe.emoji : ''
+          emoji: recipe ? recipe.emoji : '',
+          // 存量菜单兜底：宝宝过敏原后来变更时，已排格子可能含冲突食谱，标红提示
+          conflict: recipe ? menuService.hasConflict(recipe, baby) : false
         };
       });
       return {
@@ -76,6 +79,8 @@ Page({
       };
     });
 
+    const conflictCount = daysList.reduce((n, d) => n + d.cells.filter((c) => c.conflict).length, 0);
+
     this.setData({
       state: 'ready',
       babyMonths: months,
@@ -84,6 +89,7 @@ Page({
       weekLabel: `${ws.getMonth() + 1}月${ws.getDate()}日-${we.getMonth() + 1}月${we.getDate()}日`,
       hasMenu,
       expired,
+      conflictCount,
       daysList
     });
   },

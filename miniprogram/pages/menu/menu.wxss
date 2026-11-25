@@ -71,6 +71,26 @@
   margin-bottom: 20rpx;
 }
 
+/* 过敏冲突提示条 + 冲突格子标红 */
+.conflict-tip {
+  background: #fff1f0;
+  border: 2rpx solid #ffa39e;
+  color: #cf1322;
+  font-size: 24rpx;
+  padding: 16rpx 24rpx;
+  border-radius: 16rpx;
+  margin-bottom: 20rpx;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.conflict-action {
+  color: #e53935;
+  font-weight: bold;
+  flex-shrink: 0;
+  padding-left: 16rpx;
+}
+
 /* ===== 天卡片 ===== */
 .day-card {
   background: #fff;
@@ -124,6 +144,13 @@
 .cell-filled {
   background: #f6ffed;
   border: 2rpx solid #b7eb8f;
+}
+.cell-filled.cell-conflict {
+  background: #fff1f0;
+  border: 2rpx solid #e53935;
+}
+.cell-filled.cell-conflict .cell-title {
+  color: #cf1322;
 }
 .cell-empty {
   background: #fafafa;
