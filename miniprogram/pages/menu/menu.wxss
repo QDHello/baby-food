@@ -55,10 +55,33 @@
   border-radius: 40rpx;
   flex-shrink: 0;
 }
+.meal-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin: 0 8rpx 20rpx;
+}
 .meal-summary {
   font-size: 22rpx;
   color: #b0a49c;
-  margin: 0 8rpx 20rpx;
+}
+/* 分享给家人：open-type=share 按钮，样式弱化为行内文字链（重置配方沿用 mine 页反馈按钮经验：min-height:0） */
+.menu-share-btn {
+  flex-shrink: 0;
+  min-height: 0;
+  height: auto;
+  padding: 0;
+  margin: 0;
+  border: none;
+  border-radius: 0;
+  background: transparent;
+  color: #52C41A;
+  font-size: 22rpx;
+  line-height: 1.4;
+}
+.menu-share-btn::after {
+  border: none;
+  display: none;
 }
 
 .archived-tip {

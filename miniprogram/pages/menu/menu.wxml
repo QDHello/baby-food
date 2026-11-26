@@ -24,7 +24,10 @@
       </view>
       <view class="gen-btn" bindtap="onGenerate">{{hasMenu ? '重新生成' : '一键生成'}}</view>
     </view>
-    <view class="meal-summary">{{mealSummary}} · 点格子可调整</view>
+    <view class="meal-row">
+      <view class="meal-summary">{{mealSummary}} · 点格子可调整</view>
+      <button class="menu-share-btn" open-type="share" hover-class="none">分享给家人 ›</button>
+    </view>
 
     <!-- 归档提示 -->
     <view class="archived-tip" wx:if="{{expired}}">上周菜单已归档，生成新一周菜单吧</view>

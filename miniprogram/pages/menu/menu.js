@@ -1,6 +1,7 @@
 // 一周菜单页（三期 FR-30~35，规格见 docs/spec-v1.2-三期.md）
 const { RECIPES } = require('../../data/mock');
 const { calcMonthAge, formatDate } = require('../../utils/util');
+const { SHARE_IMAGE } = require('../../utils/constants');
 const menuService = require('../../services/menu');
 
 Page({
@@ -25,7 +26,25 @@ Page({
   },
 
   onShow() {
+    wx.showShareMenu({ menus: ['shareAppMessage', 'shareTimeline'] });
     this.render();
+  },
+
+  // 转发给好友：分享菜单页入口（不携带本地菜单数据——对方打开看到自己的菜单）
+  onShareAppMessage() {
+    return {
+      title: '蹦Food·本周宝宝辅食菜单',
+      path: '/pages/menu/menu',
+      imageUrl: SHARE_IMAGE
+    };
+  },
+
+  // 分享到朋友圈：单页模式打开菜单页
+  onShareTimeline() {
+    return {
+      title: '蹦Food·本周宝宝辅食菜单',
+      imageUrl: SHARE_IMAGE
+    };
   },
 
   render() {
