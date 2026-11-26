@@ -264,6 +264,30 @@
   font-size: 26rpx;
   color: #389e0d;
 }
+/* 小月龄空态引导卡：替代干巴巴的灰色 empty 行 */
+.under6-empty {
+  background: #fff;
+  border-radius: 24rpx;
+  padding: 48rpx 32rpx 56rpx;
+  text-align: center;
+  box-shadow: 0 4rpx 20rpx rgba(82, 196, 26, 0.06);
+}
+.under6-empty-icon {
+  font-size: 88rpx;
+  line-height: 1;
+  margin-bottom: 24rpx;
+}
+.under6-empty-title {
+  font-size: 30rpx;
+  font-weight: 600;
+  color: #333;
+  margin-bottom: 12rpx;
+}
+.under6-empty-desc {
+  font-size: 24rpx;
+  color: #999;
+  line-height: 1.6;
+}
 /* 推荐列表底部"查看全部"出口 */
 .view-all {
   text-align: center;

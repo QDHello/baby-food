@@ -103,6 +103,12 @@
       </view>
     </view>
     <view class="view-all" wx:if="{{recommendRecipes.length}}" bindtap="goRecipeList">查看全部 ›</view>
+    <!-- 小月龄空态：奶类喂养引导卡 -->
+    <view class="under6-empty" wx:elif="{{baby && stage && stage.min === 0}}">
+      <view class="under6-empty-icon">🍼</view>
+      <view class="under6-empty-title">辅食之旅将在满6月龄后开启</view>
+      <view class="under6-empty-desc">当前以母乳/配方奶为主，记得按顿记录哦</view>
+    </view>
     <view class="empty" wx:else>暂无可推荐食谱，可去百科看看</view>
   </view>
 
