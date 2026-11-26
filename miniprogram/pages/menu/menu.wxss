@@ -55,45 +55,28 @@
   border-radius: 40rpx;
   flex-shrink: 0;
 }
-.meal-row {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 16rpx;
-  margin: 0 8rpx 20rpx;
-}
 .meal-summary {
   font-size: 22rpx;
   color: #b0a49c;
-  flex: 1;
-  /* 防挤压折行：溢出省略，保证与右侧分享链接单行基线对齐 */
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
+  margin: 0 8rpx 20rpx;
 }
-/* 分享给家人：open-type=share 按钮，纯文字右对齐（无边框无底色），与左侧灰字同行基线；
-   重置配方沿用详情页 share-btn 经验：min-height:0 + 显式 width:auto + text-align 压基础库默认值；
+/* 分享给家人：open-type=share 按钮，置于底部操作区（清空上方），居中绿字文字链；
+   重置配方沿用详情页 share-btn 经验：min-height:0 + 显式 width:auto 压基础库默认值；
    文字绿用深档 #389e0d（白底对比 4.6:1，小字号达标 WCAG AA） */
 .menu-share-btn {
+  display: block;
+  width: auto;
   min-height: 0;
   height: auto;
-  padding: 0;
+  padding: 24rpx 0; /* 热区扩展：总命中高 ≈ 88rpx 达标 44px */
   margin: 0;
   line-height: 1.4;
-  text-align: right;
+  text-align: center;
   border: none;
   border-radius: 0;
   background: transparent;
   color: #389e0d;
-  font-size: 22rpx;
-}
-.meal-row .menu-share-btn{
-  width: auto;
-}
-/* 触控热区扩展：视觉不变，命中区上下各扩 24rpx（总高 ≈ 88rpx 达标 44px） */
-.meal-row .menu-share-btn {
-  padding: 24rpx 0;
-  margin: -24rpx 0;
+  font-size: 26rpx;
 }
 .menu-share-btn::after {
   border: none;

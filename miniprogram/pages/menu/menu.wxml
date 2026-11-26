@@ -24,10 +24,7 @@
       </view>
       <view class="gen-btn" hover-class="press" bindtap="onGenerate">{{hasMenu ? '重新生成' : '一键生成'}}</view>
     </view>
-    <view class="meal-row">
-      <view class="meal-summary">{{mealSummary}} · 点格子可调整</view>
-      <button class="menu-share-btn" open-type="share" hover-class="none">分享给家人 ›</button>
-    </view>
+    <view class="meal-summary">{{mealSummary}} · 点格子可调整</view>
 
     <!-- 归档提示 -->
     <view class="archived-tip" wx:if="{{expired}}">上周菜单已归档，生成新一周菜单吧</view>
@@ -65,7 +62,8 @@
       </view>
     </view>
 
-    <!-- 清空 -->
+    <!-- 底部操作区：分享（浏览完菜单后的自然动作位）+ 清空 -->
+    <button class="menu-share-btn" wx:if="{{hasMenu}}" open-type="share" hover-class="none">分享给家人 ›</button>
     <view class="clear-btn" hover-class="press" wx:if="{{hasMenu}}" bindtap="onClearAll">清空本周菜单</view>
     <view class="list-end" wx:if="{{hasMenu}}">— 本周菜单 —</view>
 
