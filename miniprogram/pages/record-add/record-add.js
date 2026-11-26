@@ -105,9 +105,14 @@ Page({
     const baby = getApp().globalData.currentBaby;
     this.setData({
       baby,
-      // 全局规则：未满 6 月龄不允许添加辅食
+      // 未满 6 月龄：可记一笔但食谱仅限奶类（母乳/配方奶），辅食仍不可选
       solidBlocked: !!baby && !canAddSolidFood(baby.birthday)
     });
+  },
+
+  // 奶类食谱（0-6 月龄小月龄记录用）：统一走 RECIPES 数据流，统计/列表天然兼容
+  milkRecipes() {
+    return RECIPES.filter((r) => (r.tags || []).includes('奶类'));
   },
 
   // 食谱搜索：内置 + 自定义，按名称/食材/标签过滤
@@ -116,6 +121,10 @@ Page({
   },
   filterRecipes(keyword) {
     const kw = (keyword || '').trim();
+    // 小月龄只允许奶类（母乳/配方奶），自定义食谱也排除
+    if (this.data.solidBlocked) {
+      return this.milkRecipes().filter((r) => !kw || r.title.includes(kw));
+    }
     const all = this.allRecipes();
     if (!kw) return all;
     return all.filter(
@@ -174,8 +183,12 @@ Page({
       showRecipePicker: false
     });
   },
-  // 搜索无结果时，把关键词添加为自定义食谱并选中
+  // 搜索无结果时，把关键词添加为自定义食谱并选中（小月龄仅奶类，不开放自定义）
   onAddCustomRecipe() {
+    if (this.data.solidBlocked) {
+      wx.showToast({ title: '未满6月龄仅记录母乳/配方奶', icon: 'none' });
+      return;
+    }
     const name = (this.data.recipeKeyword || '').trim();
     if (!name) return;
     const recipe = customRecipe.add(name);
@@ -292,10 +305,6 @@ Page({
 
   save() {
     if (this.data.saving) return;
-    if (this.data.solidBlocked) {
-      wx.showToast({ title: '宝宝满6月龄后才能添加辅食', icon: 'none' });
-      return;
-    }
     const baby = this.data.baby;
     if (!this.data.isEdit && !baby) {
       wx.showToast({ title: '请先添加宝宝档案', icon: 'none' });
@@ -303,6 +312,11 @@ Page({
     }
     if (!this.data.recipe) {
       wx.showToast({ title: '请选择食谱', icon: 'none' });
+      return;
+    }
+    // 小月龄守卫：只拦辅食不拦记录——选了非奶类食谱时给出明确提示
+    if (this.data.solidBlocked && !(this.data.recipe.tags || []).includes('奶类')) {
+      wx.showToast({ title: '未满6月龄仅支持记录母乳/配方奶', icon: 'none' });
       return;
     }
     const { recipe, date, reaction, note, images } = this.data;

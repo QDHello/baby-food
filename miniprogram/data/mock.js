@@ -3,6 +3,61 @@
 module.exports = {
   "RECIPES": [
     {
+      "id": "milk-bf",
+      "title": "母乳",
+      "emoji": "🤱",
+      "minMonths": 0,
+      "maxMonths": 6,
+      "desc": "0-6 月龄宝宝的主要营养来源，按需喂养",
+      "difficulty": "easy",
+      "allergens": [],
+      "ingredients": [
+        "母乳 按需"
+      ],
+      "steps": [
+        "按需哺乳，通常每 2-3 小时一次",
+        "喂后竖抱拍嗝 10-15 分钟"
+      ],
+      "tips": [
+        "纯母乳宝宝无需额外喂水",
+        "记录时可选单侧/双侧写在备注里"
+      ],
+      "nutrition": "蛋白质、脂肪、免疫活性物质",
+      "tags": [
+        "奶类",
+        "0-6月"
+      ],
+      "cover": ""
+    },
+    {
+      "id": "milk-formula",
+      "title": "配方奶",
+      "emoji": "🍼",
+      "minMonths": 0,
+      "maxMonths": 6,
+      "desc": "无法母乳喂养时的替代选择，按月龄定量",
+      "difficulty": "easy",
+      "allergens": ["牛奶"],
+      "ingredients": [
+        "配方奶 按月龄定量",
+        "温水 适量"
+      ],
+      "steps": [
+        "先加水后加粉，按罐体说明比例冲调",
+        "摇匀后滴在手腕内侧试温，不烫即可喂"
+      ],
+      "tips": [
+        "严格按说明比例冲调，不随意加浓/稀释",
+        "牛奶过敏宝宝请遵医嘱选特殊配方"
+      ],
+      "nutrition": "蛋白质、脂肪、钙、维生素D",
+      "tags": [
+        "奶类",
+        "0-6月"
+      ],
+      "cover": ""
+    },
+    {
       "id": "r1",
       "title": "高铁米粉糊",
       "emoji": "🥣",

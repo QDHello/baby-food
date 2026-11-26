@@ -2,7 +2,7 @@
 
   <!-- 宝宝提示 -->
   <view class="baby-tip" wx:if="{{!baby}}">⚠️ 请先在「宝宝档案」中添加宝宝</view>
-  <view class="baby-tip warn-solid" wx:elif="{{solidBlocked}}">🍼 {{baby.name}}还未满6月龄，暂不能记录辅食（建议纯母乳/配方奶喂养）</view>
+  <view class="baby-tip warn-solid" wx:elif="{{solidBlocked}}">🍼 {{baby.name}}还未满6月龄，此阶段以奶为主，食谱仅可选择母乳/配方奶</view>
   <view class="baby-tip ok" wx:else>👶 {{baby.name}} · 今天的记录</view>
 
   <!-- 选择食谱（点击拉起半屏弹窗） -->
@@ -57,7 +57,7 @@
               value="{{note}}" bindinput="onNote" maxlength="100"></textarea>
   </view>
 
-  <view class="save-btn {{solidBlocked ? 'disabled' : ''}}" bindtap="save">{{isEdit ? '保存修改' : '保存打卡'}}</view>
+  <view class="save-btn" bindtap="save">{{isEdit ? '保存修改' : '保存打卡'}}</view>
 
   <!-- 食谱选择半屏弹窗 -->
   <view class="picker-mask" wx:if="{{showRecipePicker}}" catchtap="onCloseRecipePicker" catchtouchmove="noop">
@@ -71,7 +71,7 @@
                value="{{recipeKeyword}}" confirm-type="search"
                bindinput="onRecipeInput" />
       </view>
-      <view class="recipe-add" wx:if="{{recipeKeyword}}" bindtap="onAddCustomRecipe">
+      <view class="recipe-add" wx:if="{{recipeKeyword && !solidBlocked}}" bindtap="onAddCustomRecipe">
         ＋ 添加自定义食谱「{{recipeKeyword}}」
       </view>
       <scroll-view scroll-y class="picker-list">
