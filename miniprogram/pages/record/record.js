@@ -133,11 +133,7 @@ Page({
   },
 
   goAdd() {
-    const baby = this.data.baby;
-    if (baby && !canAddSolidFood(baby.birthday)) {
-      wx.showToast({ title: `宝宝满${MIN_SOLID_MONTHS}月龄后才能添加辅食`, icon: 'none' });
-      return;
-    }
+    // 小月龄也可记一笔（仅奶类），拦截口径与 record-add 一致
     wx.navigateTo({ url: '/pages/record-add/record-add' });
   },
   // 点击记录进入编辑

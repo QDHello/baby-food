@@ -227,11 +227,7 @@ Page({
     wx.navigateTo({ url: `/pages/recipe-detail/recipe-detail?id=${id}` });
   },
   goAddRecord() {
-    const baby = this.data.baby;
-    if (baby && !canAddSolidFood(baby.birthday)) {
-      wx.showToast({ title: `宝宝满${MIN_SOLID_MONTHS}月龄后才能添加辅食`, icon: 'none' });
-      return;
-    }
+    // 小月龄也可记一笔（仅奶类），拦截口径与 record-add 一致：不整页拦，由记录页内提示
     wx.navigateTo({ url: '/pages/record-add/record-add' });
   },
   goWiki() {

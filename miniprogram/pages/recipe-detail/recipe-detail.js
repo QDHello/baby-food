@@ -81,10 +81,14 @@ Page({
   },
 
   goAdd() {
+    // 小月龄也可记一笔（仅奶类）——辅食详情页入口仍保留引导，但允许进记录页（小月龄宝宝看辅食详情属低频浏览场景，进去后选奶类即可）
     const baby = getApp().globalData.currentBaby;
     if (baby && !canAddSolidFood(baby.birthday)) {
-      wx.showToast({ title: `宝宝满${MIN_SOLID_MONTHS}月龄后才能添加辅食`, icon: 'none' });
-      return;
+      const isMilk = (this.data.recipe.tags || []).includes('奶类');
+      if (!isMilk) {
+        wx.showToast({ title: '未满6月龄仅支持记录母乳/配方奶', icon: 'none' });
+        return;
+      }
     }
     wx.navigateTo({
       url: `/pages/record-add/record-add?recipeId=${this.data.recipe.id}`
