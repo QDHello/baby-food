@@ -2,16 +2,35 @@
   padding-bottom: 160rpx;
 }
 
-/* 宝宝主体卡：绿色渐变（复用首页 hero 语言——绿=主体, 白=内容，与下方记录卡明确分层） */
+/* 宝宝主体条：绿色渐变通栏铺满（非卡片，与下方记录卡明确区分主体/内容） */
 .baby-bar {
-  margin: 24rpx;
   background: linear-gradient(135deg, #95DE64, #52C41A);
-  border-radius: 28rpx;
-  padding: 32rpx;
+  padding: 28rpx 32rpx;
   display: flex;
   align-items: center;
   justify-content: space-between;
   color: #fff;
+}
+.baby-emoji {
+  font-size: 44rpx;
+  margin-right: 12rpx;
+}
+.baby-name {
+  font-size: 30rpx;
+  font-weight: 600;
+}
+.no-baby {
+  color: rgba(255, 255, 255, 0.9);
+  font-size: 28rpx;
+}
+/* 切换按钮：半透明白胶囊（与首页 hero-switch 同配方） */
+.baby-switch {
+  font-size: 24rpx;
+  color: #fff;
+  background: rgba(255, 255, 255, 0.25);
+  padding: 8rpx 24rpx;
+  border-radius: 32rpx;
+  flex-shrink: 0;
 }
 .baby-emoji {
   font-size: 44rpx;
