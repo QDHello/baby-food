@@ -1,9 +1,16 @@
 .page {
+  /* fixed 宝宝条(高约136rpx)的占位，防止首条记录被遮住 */
+  padding-top: 136rpx;
   padding-bottom: 160rpx;
 }
 
-/* 宝宝主体条：浅绿底通栏——头像圆盘+双行信息+打卡徽章的档案感排版 */
+/* 宝宝主体条：浅绿底通栏固定吸顶——滚动时保持不动（fixed + 页面 padding-top 占位，避开 sticky 热区真机坑） */
 .baby-bar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 10;
   background: #e8f5e9;
   padding: 24rpx 32rpx;
   display: flex;
