@@ -45,6 +45,9 @@
         <text class="day-name {{item.isToday ? 'day-name-today' : ''}}">{{item.dayLabel}}</text>
         <text class="day-date">{{item.dateLabel}}</text>
         <text class="today-flag" wx:if="{{item.isToday}}">今天</text>
+        <!-- 单日分享：每天卡片独立分享入口（仅已排菜单的天显示） -->
+        <button class="day-share-btn" wx:if="{{item.hasRecipe}}" open-type="share"
+                data-day="{{item.day}}" hover-class="none">分享 ›</button>
       </view>
       <view class="cells">
         <view class="cell {{cell.recipeId ? 'cell-filled' : 'cell-empty'}} {{cell.conflict ? 'cell-conflict' : ''}}"

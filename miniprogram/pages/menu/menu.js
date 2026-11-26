@@ -31,7 +31,20 @@ Page({
   },
 
   // 转发给好友：分享菜单页入口（不携带本地菜单数据——对方打开看到自己的菜单）
-  onShareAppMessage() {
+  onShareAppMessage(res) {
+    // 单日分享：从天卡片「分享 ›」按钮触发时，标题带上当天菜名摘要
+    const from = res && res.from;
+    if (from === 'button' && res.target && res.target.dataset && res.target.dataset.day) {
+      const dayInfo = this.data.daysList.find((d) => d.day === res.target.dataset.day);
+      if (dayInfo) {
+        const dishes = dayInfo.cells.filter((c) => c.recipeId).map((c) => c.title).join('、');
+        return {
+          title: `${dayInfo.dayLabel}辅食菜单：${dishes || '待安排'}`,
+          path: '/pages/menu/menu',
+          imageUrl: SHARE_IMAGE
+        };
+      }
+    }
     return {
       title: '蹦Food·本周宝宝辅食菜单',
       path: '/pages/menu/menu',
@@ -96,6 +109,7 @@ Page({
         dateLabel: `${date.getMonth() + 1}月${date.getDate()}日`,
         isToday: dateStr === todayStr,
         isPast: dateStr < todayStr,
+        hasRecipe: cells.some((c) => c.recipeId), // 该天已排菜单才显示单日分享入口
         cells
       };
     });

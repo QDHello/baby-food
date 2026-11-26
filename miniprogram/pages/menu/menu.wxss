@@ -149,6 +149,24 @@
   border-radius: 16rpx;
   padding: 2rpx 12rpx;
 }
+/* 单日分享按钮：复用 menu-share-btn 重置配方（min-height:0 是关键），弱化为行内文字链 */
+.day-share-btn {
+  flex-shrink: 0;
+  margin-left: auto; /* 推到 day-head 行尾，与周标题「分享给家人」位置呼应 */
+  min-height: 0;
+  height: auto;
+  padding: 0;
+  border: none;
+  border-radius: 0;
+  background: transparent;
+  color: #52C41A;
+  font-size: 22rpx;
+  line-height: 1.4;
+}
+.day-share-btn::after {
+  border: none;
+  display: none;
+}
 
 .cells {
   display: flex;
