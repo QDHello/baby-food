@@ -264,12 +264,8 @@
   font-size: 26rpx;
   color: #389e0d;
 }
-/* 小月龄引导条：独立于标题行，浅绿底信息条（点击切换档案） */
+/* 小月龄引导条：独立于标题行，浅绿底信息条 */
 .milk-guide {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 16rpx;
   background: #f6ffed;
   border: 2rpx solid #b7eb8f;
   border-radius: 16rpx;
@@ -280,13 +276,6 @@
   font-size: 24rpx;
   color: #389e0d;
   line-height: 1.5;
-  flex: 1;
-}
-.milk-guide-arrow {
-  font-size: 24rpx;
-  color: #389e0d;
-  font-weight: 500;
-  flex-shrink: 0;
 }
 /* 推荐列表底部"查看全部"出口 */
 .view-all {
