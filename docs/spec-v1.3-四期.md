@@ -45,19 +45,15 @@
 - `pages/menu/menu.wxml`：meal-summary 与分享按钮包一层 `.meal-row`（flex 两端对齐）
 - `pages/menu/menu.wxss`：`.menu-share-btn` 弱化为行内文字链（绿字 22rpx），重置沿用 FR-40 经验（min-height:0 + ::after display:none）
 
-**单日分享增强**（2026-11-26 补）：
+**单日分享：已评估并否决**（2026-11-26）：
 
-- **需求**：支持每天菜单单独分享——转发卡片标题直接带当天菜名（如「周三辅食菜单：南瓜米糊、西蓝花泥」），比整周分享更精准触达家人（如让老人照着买某天的菜）
-- **实现**：
-  - `menu.wxml`：每张天卡片 `.day-head` 行尾新增 `button.day-share-btn`（`open-type="share"` + `data-day="{{item.day}}"`），仅 `hasRecipe` 为真的天显示（空当天无分享意义）
-  - `menu.js`：`render()` 的 daysList 项投影 `hasRecipe: cells.some((c) => c.recipeId)`；`onShareAppMessage(res)` 增加 `res.from === 'button'` 分支——按 `res.target.dataset.day` 回查 daysList，标题改为 `{dayLabel}辅食菜单：{菜名1、菜名2...}`（无已排菜名兜底「待安排」）；右上角胶囊与「分享给家人 ›」仍走整周标题
-  - `menu.wxss`：`.day-share-btn` 复用 `.menu-share-btn` 重置配方（min-height:0 关键项 + ::after display:none），`margin-left:auto` 推到 day-head 行尾，弱化为绿字 22rpx 文字链
+- 曾实现「每天天卡片行尾独立分享按钮，转发标题带当天菜名摘要」，代码完成（a800494）后经评估**撤销**——用户决策：整周分享已够用，单日入口冗余，保持天卡片行头干净（day-name/date/今天 标记紧凑排列）
+- 若未来重启此需求，技术方案已验证可复用：`onShareAppMessage(res)` 按 `res.from === 'button'` + `res.target.dataset.day` 区分按钮触发源，标题动态拼当天菜名；按钮样式沿用 min-height:0 重置配方
 
 **验收标准**：
 
 - [ ] 菜单页可转发好友/分享朋友圈，卡片带统一封面；对方打开进入其自己的菜单页（无他人数据）。
 - [ ] 「分享给家人 ›」按钮样式与 meal-summary 同行协调、无按钮默认样式残留，真机点击弹转发面板。
-- [ ] 每张已排菜单的天卡片行尾有「分享 ›」入口，转发卡片标题含当天菜名摘要；未排菜单的天不显示该入口。
 
 ### 2.2 购物清单（FR-41）
 
