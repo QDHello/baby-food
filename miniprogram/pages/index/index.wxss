@@ -264,19 +264,6 @@
   font-size: 26rpx;
   color: #389e0d;
 }
-/* 小月龄引导条：独立于标题行，浅绿底信息条 */
-.milk-guide {
-  background: #f6ffed;
-  border: 2rpx solid #b7eb8f;
-  border-radius: 16rpx;
-  padding: 16rpx 24rpx;
-  margin-bottom: 20rpx;
-}
-.milk-guide-text {
-  font-size: 24rpx;
-  color: #389e0d;
-  line-height: 1.5;
-}
 /* 推荐列表底部"查看全部"出口 */
 .view-all {
   text-align: center;
