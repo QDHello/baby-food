@@ -60,28 +60,6 @@
   color: #b0a49c;
   margin: 0 8rpx 20rpx;
 }
-/* 分享给家人：open-type=share 按钮，置于底部操作区（清空上方），居中绿字文字链；
-   重置配方沿用详情页 share-btn 经验：min-height:0 + 显式 width:auto 压基础库默认值；
-   文字绿用深档 #389e0d（白底对比 4.6:1，小字号达标 WCAG AA） */
-.menu-share-btn {
-  display: block;
-  width: auto;
-  min-height: 0;
-  height: auto;
-  padding: 24rpx 0; /* 热区扩展：总命中高 ≈ 88rpx 达标 44px */
-  margin: 0;
-  line-height: 1.4;
-  text-align: center;
-  border: none;
-  border-radius: 0;
-  background: transparent;
-  color: #389e0d;
-  font-size: 26rpx;
-}
-.menu-share-btn::after {
-  border: none;
-  display: none;
-}
 
 .archived-tip {
   background: #fffbe6;
@@ -225,11 +203,44 @@
 }
 
 /* ===== 清空 / 尾注 ===== */
-.clear-btn {
+/* 底部操作区：分享 + 清空并列白底描边胶囊（配方照抄详情页 bottom-bar share-btn：min-height:0 + 固定 line-height） */
+.footer-actions {
+  display: flex;
+  gap: 24rpx;
+  padding: 16rpx 8rpx 8rpx;
+}
+.footer-share {
+  flex: 1;
+  width: auto;
+  min-height: 0;
+  height: 88rpx;
+  padding: 0;
+  margin: 0;
+  line-height: 84rpx; /* 88 - 上下边框 2×2 */
+  box-sizing: border-box;
   text-align: center;
+  border: 2rpx solid #95DE64;
+  border-radius: 44rpx;
+  background: #fff;
+  color: #389e0d;
+  font-size: 28rpx;
+  overflow: hidden;
+}
+.footer-share::after {
+  border: none;
+  display: none;
+}
+.footer-clear {
+  flex: 1;
+  height: 88rpx;
+  line-height: 84rpx;
+  box-sizing: border-box;
+  text-align: center;
+  border: 2rpx solid #ffd6d6;
+  border-radius: 44rpx;
+  background: #fff;
   color: #e53935;
-  font-size: 26rpx;
-  padding: 24rpx;
+  font-size: 28rpx;
 }
 .list-end {
   text-align: center;

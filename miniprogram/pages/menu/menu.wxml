@@ -62,9 +62,11 @@
       </view>
     </view>
 
-    <!-- 底部操作区：分享（浏览完菜单后的自然动作位）+ 清空 -->
-    <button class="menu-share-btn" wx:if="{{hasMenu}}" open-type="share" hover-class="none">分享给家人 ›</button>
-    <view class="clear-btn" hover-class="press" wx:if="{{hasMenu}}" bindtap="onClearAll">清空本周菜单</view>
+    <!-- 底部操作区：分享 + 清空并列（白底描边胶囊，对称双列） -->
+    <view class="footer-actions" wx:if="{{hasMenu}}">
+      <button class="footer-share" open-type="share" hover-class="none">分享给家人</button>
+      <view class="footer-clear" hover-class="press" bindtap="onClearAll">清空本周菜单</view>
+    </view>
     <view class="list-end" wx:if="{{hasMenu}}">— 本周菜单 —</view>
 
   </block>
