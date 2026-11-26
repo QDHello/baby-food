@@ -90,12 +90,12 @@ Page({
       const { months } = calcMonthAge(baby.birthday);
       const stage = getStage(months);
       if (months < MIN_SOLID_MONTHS) {
-        // 未满 6 月龄：不推荐辅食（奶类记录走记一笔），标题即引导
+        // 未满 6 月龄：不推荐辅食（奶类记录走记一笔），引导信息由下方空态卡承载
         this.setData({
           baby,
           stage,
           ageText: formatAge(baby.birthday),
-          recommendTitle: `${baby.name}满${MIN_SOLID_MONTHS}月龄后开启辅食之旅`,
+          recommendTitle: '推荐辅食',
           recommendHint: '',
           recommendRecipes: [],
           canShuffle: false
