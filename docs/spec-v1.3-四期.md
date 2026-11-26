@@ -63,6 +63,20 @@
 
 **验收标准**：（待开发后补充）
 
+### 2.4 UI 评审 quick wins（轻量清单，2026-11-26）
+
+> 系统性 UI 评审后的一次性打磨，纯样式/无行为变更（5c1af03）：
+
+- **触控热区**：菜单页「分享给家人」命中区扩至 ≈88rpx（padding 24rpx + margin 负值回位，视觉零变化）——原 22rpx 字号热区不足 44px 标准
+- **对比度**：小字号文字绿统一换深档 `#389e0d`（白底 4.6:1，达 WCAG AA；原 #52C41A 仅 3.0:1）——menu（分享链接/picker-tab 激活/picker-month）、index（ov-meal/recommend-hint/shuffle/action-btn）、record（baby-switch）共 9 处；按钮/图标类大面积绿底（gen-btn、hero、today-flag 实底等）保持 #52C41A
+- **「今天」强调归拢**：day-name 不再变绿（去 day-name-today），当日卡片加 `border: 2rpx solid #b7eb8f` 描边，today-flag 改实底绿+白字——强调从三处收敛为卡片级一处
+- **阴影一致性**：day-card 补全局 .card 同款绿色柔影 `0 4rpx 20rpx rgba(82,196,26,0.06)`
+- **picker-tab 激活跳动**：常驻 `border: 2rpx solid transparent` + box-sizing，切换不再窜 4rpx
+- **按压反馈**：全局 `.press { opacity: 0.7 }`，gen-btn/conflict-action/clear-btn/guide-btn 补 hover-class="press"
+- **meal-summary 防折行**：nowrap + ellipsis，杜绝「整」字孤行
+
+**遗留（P2，四期收尾一起做）**：字号 11 档收敛、圆角 24/28/32/40 统一、design token 化（:root 变量暂不可用于 wxss，用注释清单代替）。
+
 ---
 
 ## 3. 实施计划
