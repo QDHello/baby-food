@@ -1,5 +1,5 @@
 const feeding = require('../../services/feeding');
-const { formatAge, canAddSolidFood, MIN_SOLID_MONTHS } = require('../../utils/util');
+const { formatAge, canAddSolidFood, MIN_SOLID_MONTHS, formatDate } = require('../../utils/util');
 const { REACTIONS, MEAL_LABEL, MEAL_ORDER, SHARE_IMAGE } = require('../../utils/constants');
 
 const REACTION_LABEL = {};
@@ -77,10 +77,15 @@ Page({
     const prevCount = keepCount && this._renderCount ? this._renderCount : 0;
     this._renderCount = Math.min(Math.max(prevCount, Math.min(PAGE_SIZE, total)), total);
 
+    // 今日打卡数（宝宝条徽章用）
+    const todayStr = formatDate(new Date());
+    const todayCount = this._allLogs.filter((l) => l.date === todayStr).length;
+
     this._openIndex = null;
     this.setData({
       baby,
       ageText: baby ? formatAge(baby.birthday) : '',
+      todayCount,
       groupedLogs: this.buildGroups(),
       totalCount: total,
       hasMore: this._renderCount < total,

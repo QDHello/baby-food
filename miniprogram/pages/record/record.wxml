@@ -2,12 +2,15 @@
 
   <!-- 宝宝切换 -->
   <view class="baby-bar" bindtap="goBaby">
-    <view wx:if="{{baby}}">
-      <text class="baby-emoji">{{baby.emoji || '👶'}}</text>
-      <text class="baby-name">{{baby.name}} · {{ageText}}</text>
+    <view class="baby-left" wx:if="{{baby}}">
+      <view class="baby-avatar">{{baby.emoji || '👶'}}</view>
+      <view class="baby-meta">
+        <text class="baby-name">{{baby.name}}</text>
+        <text class="baby-age">{{ageText}} · 今日 {{todayCount}} 笔</text>
+      </view>
     </view>
     <view wx:else class="no-baby">添加宝宝后开始记录 ›</view>
-    <text class="baby-switch">切换</text>
+    <text class="baby-switch" hover-class="press">切换</text>
   </view>
 
   <!-- 记录列表 -->
