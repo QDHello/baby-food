@@ -67,23 +67,21 @@
   color: #b0a49c;
   flex: 1;
 }
-/* 分享给家人：open-type=share 按钮压成小胶囊（白底绿边绿字），与右上「重新生成」同风格；
-   重置配方沿用详情页 share-btn 经验：min-height:0 + 显式 width:auto（压基础库默认宽度）+ 固定 line-height 锁垂直居中 */
+/* 分享给家人：open-type=share 按钮，纯文字右对齐（无边框无底色），与左侧灰字同行基线；
+   重置配方沿用详情页 share-btn 经验：min-height:0 + 显式 width:auto + text-align 压基础库默认值 */
 .menu-share-btn {
   width: auto;
   min-height: 0;
-  height: 48rpx;
-  padding: 0 24rpx;
+  height: auto;
+  padding: 0;
   margin: 0;
-  line-height: 44rpx; /* 48 - 上下边框 2×2 */
-  box-sizing: border-box;
-  text-align: center;
-  border: 2rpx solid #95DE64;
-  border-radius: 24rpx;
-  background: #fff;
+  line-height: 1.4;
+  text-align: right;
+  border: none;
+  border-radius: 0;
+  background: transparent;
   color: #52C41A;
   font-size: 22rpx;
-  font-weight: 500;
 }
 .menu-share-btn::after {
   border: none;
