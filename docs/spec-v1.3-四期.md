@@ -44,6 +44,7 @@
 - `pages/menu/menu.js`：`onShow` 开启 `showShareMenu` 双菜单；`onShareAppMessage`/`onShareTimeline` 标题「蹦Food·本周宝宝辅食菜单」，path 指向 `/pages/menu/menu`，统一封面 SHARE_IMAGE
 - `pages/menu/menu.wxml`：meal-summary 与分享按钮包一层 `.meal-row`（flex 两端对齐）
 - `pages/menu/menu.wxss`：`.menu-share-btn` 弱化为行内文字链（绿字 22rpx），重置沿用 FR-40 经验（min-height:0 + ::after display:none）
+- **入口位置定稿（2026-11-26，867df6d）**：分享入口从 meal-row 右侧移至**底部操作区**（清空按钮上方，居中绿字 26rpx）——用户反馈行尾位置别扭（右侧与「重新生成」双层操作叠加、左侧灰字与分享语义不相关）；底部是「浏览完菜单后的自然动作位」，与清空组成收尾操作组。仅 `hasMenu` 时显示。meal-row 容器拆除，meal-summary 恢复纯文字说明行。热区保持 ≈88rpx、文字绿 #389e0d 不变
 
 **单日分享：已评估并否决**（2026-11-26）：
 
@@ -53,7 +54,7 @@
 **验收标准**：
 
 - [ ] 菜单页可转发好友/分享朋友圈，卡片带统一封面；对方打开进入其自己的菜单页（无他人数据）。
-- [ ] 「分享给家人 ›」按钮样式与 meal-summary 同行协调、无按钮默认样式残留，真机点击弹转发面板。
+- [ ] 「分享给家人 ›」位于底部操作区（清空上方，居中绿字），无按钮默认样式残留，真机点击弹转发面板。
 
 ### 2.2 购物清单（FR-41）
 
