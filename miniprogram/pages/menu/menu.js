@@ -28,6 +28,7 @@ Page({
   onShow() {
     wx.showShareMenu({ menus: ['shareAppMessage', 'shareTimeline'] });
     this.render();
+    this.scrollToToday();
   },
 
   // 转发给好友：分享菜单页入口（不携带本地菜单数据——对方打开看到自己的菜单）
@@ -113,6 +114,31 @@ Page({
       conflictCount,
       daysList
     });
+  },
+
+  // 自动滚动到今天的天卡片：仅当今天卡片不在可视区时滚动（平滑动画），每次进入页面最多滚一次
+  scrollToToday() {
+    // 等 render 的 setData 完成后再测节点（onShow 里 scrollToToday 先于 render 调用，延迟一拍）
+    setTimeout(() => {
+      if (this.data.state !== 'ready') return; // 无宝宝/月龄不足页面无天卡片
+      const query = this.createSelectorQuery();
+      query.select('.day-today').boundingClientRect();
+      query.selectViewport().scrollOffset();
+      query.exec((res) => {
+        const rect = res && res[0];
+        const scroll = res && res[1];
+        if (!rect) return; // 今天不在本周区间（如周日在今天之前已过）等场景，跳过
+        const viewportH = wx.getSystemInfoSync().windowHeight;
+        const fullyVisible = rect.top >= 120 && rect.bottom <= viewportH;
+        if (fullyVisible) return; // 今天卡片已完整可见，不打扰
+        // 今天卡片顶部滚到距视口 120px 处（给页面标题留呼吸空间）
+        const target = (scroll ? scroll.scrollTop : 0) + rect.top - 120;
+        wx.pageScrollTo({
+          scrollTop: Math.max(0, target),
+          duration: 300
+        });
+      });
+    }, 300); // setData 渲染 + 布局稳定的兜底延时
   },
 
   // 一键生成 / 重新生成整周
