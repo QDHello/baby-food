@@ -66,11 +66,15 @@
   font-size: 22rpx;
   color: #b0a49c;
   flex: 1;
+  /* 防挤压折行：溢出省略，保证与右侧分享链接单行基线对齐 */
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 /* 分享给家人：open-type=share 按钮，纯文字右对齐（无边框无底色），与左侧灰字同行基线；
-   重置配方沿用详情页 share-btn 经验：min-height:0 + 显式 width:auto + text-align 压基础库默认值 */
+   重置配方沿用详情页 share-btn 经验：min-height:0 + 显式 width:auto + text-align 压基础库默认值；
+   文字绿用深档 #389e0d（白底对比 4.6:1，小字号达标 WCAG AA） */
 .menu-share-btn {
-  width: auto;
   min-height: 0;
   height: auto;
   padding: 0;
@@ -80,8 +84,16 @@
   border: none;
   border-radius: 0;
   background: transparent;
-  color: #52C41A;
+  color: #389e0d;
   font-size: 22rpx;
+}
+.meal-row .menu-share-btn{
+  width: auto;
+}
+/* 触控热区扩展：视觉不变，命中区上下各扩 24rpx（总高 ≈ 88rpx 达标 44px） */
+.meal-row .menu-share-btn {
+  padding: 24rpx 0;
+  margin: -24rpx 0;
 }
 .menu-share-btn::after {
   border: none;
@@ -124,9 +136,14 @@
   border-radius: 24rpx;
   padding: 24rpx;
   margin-bottom: 20rpx;
+  box-shadow: 0 4rpx 20rpx rgba(82, 196, 26, 0.06);
 }
 .day-card.day-past {
   opacity: 0.55;
+}
+/* 今日卡片：升为卡片级强调（描边），行内不再双保险 */
+.day-card.day-today {
+  border: 2rpx solid #b7eb8f;
 }
 .day-head {
   display: flex;
@@ -139,19 +156,32 @@
   font-weight: bold;
   color: #333;
 }
-.day-name-today {
-  color: #52C41A;
-}
 .day-date {
   font-size: 24rpx;
   color: #999;
 }
+/* 今天徽章：实底绿+白字（对比度达标），与卡片描边呼应 */
 .today-flag {
   font-size: 20rpx;
-  color: #52C41A;
-  border: 2rpx solid #52C41A;
+  color: #fff;
+  background: #52C41A;
   border-radius: 16rpx;
   padding: 2rpx 12rpx;
+}
+
+/* 月龄适用角标：文字绿统一深档（白/浅绿底对比达标） */
+.picker-month {
+  font-size: 22rpx;
+  color: #389e0d;
+  background: #f6ffed;
+  border-radius: 14rpx;
+  padding: 4rpx 14rpx;
+  flex-shrink: 0;
+}
+
+/* 通用按压反馈：各 view 按钮配 hover-class="press" 使用 */
+.press {
+  opacity: 0.7;
 }
 
 .cells {
@@ -271,14 +301,16 @@
   font-size: 26rpx;
   color: #666;
   background: #f5f5f5;
+  border: 2rpx solid transparent; /* 常驻透明边框，激活切换不跳动 */
+  box-sizing: border-box;
   border-radius: 32rpx;
   padding: 14rpx 0;
 }
 .picker-tab.tab-active {
   background: #f6ffed;
-  color: #52C41A;
+  color: #389e0d;
   font-weight: bold;
-  border: 2rpx solid #b7eb8f;
+  border-color: #b7eb8f;
 }
 .picker-list {
   height: 56vh;
@@ -314,13 +346,5 @@
   border: 2rpx solid #d9d9d9;
   border-radius: 14rpx;
   padding: 2rpx 10rpx;
-  flex-shrink: 0;
-}
-.picker-month {
-  font-size: 22rpx;
-  color: #52C41A;
-  background: #f6ffed;
-  border-radius: 14rpx;
-  padding: 4rpx 14rpx;
   flex-shrink: 0;
 }

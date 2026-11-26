@@ -58,7 +58,7 @@
   flex: 1;
   text-align: center;
   background: #fff;
-  color: #52C41A;
+  color: #389e0d;
   border-radius: 40rpx;
   line-height: 72rpx;
   font-size: 28rpx;
@@ -220,7 +220,7 @@
 }
 .ov-meal {
   font-size: 22rpx;
-  color: #52C41A;
+  color: #389e0d;
   background: #E4F3D7;
   border-radius: 8rpx;
   padding: 4rpx 12rpx;
@@ -266,19 +266,19 @@
 }
 .recommend-hint {
   font-size: 22rpx;
-  color: #52C41A;
+  color: #389e0d;
   margin-left: 16rpx;
 }
 .shuffle {
   font-size: 26rpx;
-  color: #52C41A;
+  color: #389e0d;
 }
 /* 推荐列表底部"查看全部"出口 */
 .view-all {
   text-align: center;
   padding: 20rpx 0;
   font-size: 26rpx;
-  color: #52C41A;
+  color: #389e0d;
 }
 .card-cover {
   width: 100%;

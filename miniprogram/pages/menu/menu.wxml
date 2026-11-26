@@ -4,7 +4,7 @@
   <view class="guide" wx:if="{{state === 'noBaby'}}">
     <view class="guide-emoji">📅</view>
     <view class="guide-text">一周菜单按宝宝月龄生成，先创建宝宝档案吧</view>
-    <view class="guide-btn" bindtap="goBaby">去创建</view>
+    <view class="guide-btn" hover-class="press" bindtap="goBaby">去创建</view>
   </view>
 
   <!-- 月龄不足 -->
@@ -22,7 +22,7 @@
         <view class="week-title">本周菜单</view>
         <view class="week-range">{{weekLabel}}</view>
       </view>
-      <view class="gen-btn" bindtap="onGenerate">{{hasMenu ? '重新生成' : '一键生成'}}</view>
+      <view class="gen-btn" hover-class="press" bindtap="onGenerate">{{hasMenu ? '重新生成' : '一键生成'}}</view>
     </view>
     <view class="meal-row">
       <view class="meal-summary">{{mealSummary}} · 点格子可调整</view>
@@ -35,14 +35,14 @@
     <!-- 过敏冲突提示（存量菜单兜底：过敏原/过敏史变更后已排格子可能不适宜） -->
     <view class="conflict-tip" wx:if="{{conflictCount > 0}}">
       <text class="conflict-text">⚠️ 本周菜单有 {{conflictCount}} 处与宝宝过敏原或过敏史冲突，已标红</text>
-      <text class="conflict-action" bindtap="onGenerate">重新生成</text>
+      <text class="conflict-action" hover-class="press" bindtap="onGenerate">重新生成</text>
     </view>
 
     <!-- 7 天卡片 -->
     <view class="day-card {{item.isPast ? 'day-past' : ''}} {{item.isToday ? 'day-today' : ''}}"
           wx:for="{{daysList}}" wx:key="day">
       <view class="day-head">
-        <text class="day-name {{item.isToday ? 'day-name-today' : ''}}">{{item.dayLabel}}</text>
+        <text class="day-name">{{item.dayLabel}}</text>
         <text class="day-date">{{item.dateLabel}}</text>
         <text class="today-flag" wx:if="{{item.isToday}}">今天</text>
       </view>
@@ -66,7 +66,7 @@
     </view>
 
     <!-- 清空 -->
-    <view class="clear-btn" wx:if="{{hasMenu}}" bindtap="onClearAll">清空本周菜单</view>
+    <view class="clear-btn" hover-class="press" wx:if="{{hasMenu}}" bindtap="onClearAll">清空本周菜单</view>
     <view class="list-end" wx:if="{{hasMenu}}">— 本周菜单 —</view>
 
   </block>
