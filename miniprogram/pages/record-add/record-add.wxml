@@ -22,10 +22,17 @@
         <view class="form-picker">{{date}}</view>
       </picker>
     </view>
-    <view class="form-item">
+    <view class="form-item" wx:if="{{!solidBlocked}}">
       <text class="form-label">餐次</text>
       <picker range="{{meals}}" range-key="label" value="{{mealIndex}}" bindchange="onMeal">
         <view class="form-picker">{{meals[mealIndex].label}}</view>
+      </picker>
+    </view>
+    <!-- 小月龄（仅奶类）：无餐次概念，改记喂奶时间 -->
+    <view class="form-item" wx:if="{{solidBlocked}}">
+      <text class="form-label">时间</text>
+      <picker mode="time" value="{{feedTime}}" bindchange="onFeedTime">
+        <view class="form-picker">{{feedTime}}</view>
       </picker>
     </view>
     <view class="form-item">

@@ -29,7 +29,7 @@
           <view class="log-emoji">{{item.emoji || '🍽️'}}</view>
           <view class="log-info">
             <view class="log-title-row">
-              <view class="log-title">{{item.mealLabel ? item.mealLabel + ' · ' : ''}}{{item.recipeTitle}}</view>
+              <view class="log-title">{{item.mealLabel ? item.mealLabel + ' · ' : ''}}{{item.timeLabel ? item.timeLabel + ' · ' : ''}}{{item.recipeTitle}}</view>
               <text class="reaction reaction-{{item.reaction}}" wx:if="{{item.reaction && item.reaction !== 'none'}}">{{item.reactionLabel}}</text>
             </view>
             <view class="log-note" wx:if="{{item.note}}">{{item.note}}</view>

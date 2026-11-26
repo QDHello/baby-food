@@ -110,6 +110,8 @@ Page({
       ...l,
       reactionLabel: REACTION_LABEL[l.reaction] || l.reaction,
       mealLabel: MEAL_LABEL[l.meal] || '',
+      // 小月龄奶类记录无餐次，标题行显示喂奶时间
+      timeLabel: l.feedTime || '',
       images: Array.isArray(l.images) ? l.images : [],
       offset: 0
     }));

@@ -7,13 +7,19 @@ const imageStore = require('../../utils/image-store');
 
 const MAX_IMAGES = 3;
 
-// 按当前时间推断默认餐次
+// 按当前时间推断默认餐次（>=6月龄用）；小月龄用 guessFeedTime 记录喂奶时间
 function guessMeal() {
   const h = new Date().getHours();
   if (h >= 5 && h < 10) return 'breakfast';
   if (h >= 10 && h < 14) return 'lunch';
   if (h >= 17 && h < 21) return 'dinner';
   return 'snack';
+}
+
+// 当前时间 HH:mm（小月龄喂奶时间默认值）
+function guessFeedTime() {
+  const d = new Date();
+  return `${String(d.getHours()).padStart(2, '0')}:${String(d.getMinutes()).padStart(2, '0')}`;
 }
 
 Page({
@@ -35,7 +41,8 @@ Page({
     showRecipePicker: false,
     images: [],      // 已选图片（本地持久化路径）
     saving: false,
-    solidBlocked: false, // 未满 6 月龄，禁止记录辅食
+    solidBlocked: false, // 未满 6 月龄：记录仅限奶类，餐次隐藏改记喂奶时间
+    feedTime: '',    // 喂奶时间 HH:mm（仅小月龄使用）
     isEdit: false,   // 编辑模式
     logId: '',
     pendingRemove: [] // 编辑模式下待删除的旧图片
@@ -78,6 +85,8 @@ Page({
           date: log.date,
           today,
           mealIndex: mealIndex >= 0 ? mealIndex : 1,
+          // 小月龄奶类记录回填喂奶时间（旧记录无该字段则取餐次推断或当前时间兜底）
+          feedTime: log.feedTime || guessFeedTime(),
           reaction: log.reaction || 'none',
           note: log.note || '',
           images: Array.isArray(log.images) ? log.images : []
@@ -97,7 +106,8 @@ Page({
       recipeKeyword: recipeIndex >= 0 ? RECIPES[recipeIndex].title : '',
       date: today,
       today,
-      mealIndex: MEALS.findIndex((m) => m.key === guessMeal())
+      mealIndex: MEALS.findIndex((m) => m.key === guessMeal()),
+      feedTime: guessFeedTime()
     });
   },
 
@@ -212,6 +222,10 @@ Page({
   onDate(e) {
     this.setData({ date: e.detail.value });
   },
+  // 喂奶时间（仅小月龄显示，picker mode=time）
+  onFeedTime(e) {
+    this.setData({ feedTime: e.detail.value });
+  },
   onReaction(e) {
     this.setData({ reaction: e.currentTarget.dataset.reaction });
   },
@@ -320,6 +334,10 @@ Page({
       return;
     }
     const { recipe, date, reaction, note, images } = this.data;
+    // 小月龄奶类记录：无餐次概念，meal 存 null（下游 mealLabel 空值已兼容），改记喂奶时间
+    const mealField = this.data.solidBlocked
+      ? { meal: null, feedTime: this.data.feedTime || guessFeedTime() }
+      : { meal: MEALS[this.data.mealIndex].key };
     this.setData({ saving: true });
     try {
       if (this.data.isEdit) {
@@ -331,7 +349,7 @@ Page({
         });
         feeding.updateLog(this.data.logId, {
           date,
-          meal: MEALS[this.data.mealIndex].key,
+          ...mealField,
           recipeId: recipe.id,
           recipeTitle: recipe.title,
           emoji: recipe.emoji,
@@ -346,7 +364,7 @@ Page({
           id: genId('log'),
           babyId: baby.id,
           date,
-          meal: MEALS[this.data.mealIndex].key,
+          ...mealField,
           recipeId: recipe.id,
           recipeTitle: recipe.title,
           emoji: recipe.emoji,
