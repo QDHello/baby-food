@@ -59,25 +59,31 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
+  gap: 16rpx;
   margin: 0 8rpx 20rpx;
 }
 .meal-summary {
   font-size: 22rpx;
   color: #b0a49c;
+  flex: 1;
 }
-/* 分享给家人：open-type=share 按钮，样式弱化为行内文字链（重置配方沿用 mine 页反馈按钮经验：min-height:0） */
+/* 分享给家人：open-type=share 按钮压成小胶囊（白底绿边绿字），与右上「重新生成」同风格；
+   重置配方沿用详情页 share-btn 经验：min-height:0 + 显式 width:auto（压基础库默认宽度）+ 固定 line-height 锁垂直居中 */
 .menu-share-btn {
-  flex-shrink: 0;
+  width: auto;
   min-height: 0;
-  height: auto;
-  padding: 0;
+  height: 48rpx;
+  padding: 0 24rpx;
   margin: 0;
-  border: none;
-  border-radius: 0;
-  background: transparent;
+  line-height: 44rpx; /* 48 - 上下边框 2×2 */
+  box-sizing: border-box;
+  text-align: center;
+  border: 2rpx solid #95DE64;
+  border-radius: 24rpx;
+  background: #fff;
   color: #52C41A;
   font-size: 22rpx;
-  line-height: 1.4;
+  font-weight: 500;
 }
 .menu-share-btn::after {
   border: none;
