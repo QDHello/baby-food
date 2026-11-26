@@ -81,11 +81,13 @@
   <!-- 推荐辅食 -->
   <view class="section">
     <view class="section-head">
-      <view class="recommend-title-wrap">
-        <text class="section-title">{{recommendTitle}}</text>
-        <text class="recommend-hint" wx:if="{{recommendHint}}" bindtap="goBaby">{{recommendHint}} ›</text>
-      </view>
+      <text class="section-title">{{recommendTitle}}</text>
       <text class="shuffle" wx:if="{{canShuffle}}" bindtap="shuffleRecommend">换一换</text>
+    </view>
+    <!-- 小月龄引导条：标题放不下，独立成行（点击去宝宝档案） -->
+    <view class="milk-guide" wx:if="{{recommendHint}}" bindtap="goBaby">
+      <text class="milk-guide-text">{{recommendHint}}</text>
+      <text class="milk-guide-arrow">切换档案 ›</text>
     </view>
     <view class="recipe-grid" wx:if="{{recommendRecipes.length}}">
       <view class="recipe-card" wx:for="{{recommendRecipes}}" wx:key="id" data-id="{{item.id}}" bindtap="goRecipe">
