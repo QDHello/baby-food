@@ -2,53 +2,33 @@
   padding-bottom: 160rpx;
 }
 
-/* 宝宝主体条：绿色渐变通栏铺满（非卡片，与下方记录卡明确区分主体/内容） */
+/* 宝宝主体条：浅绿底通栏铺满——与导航绿之间有层次（深→浅），与下方记录白卡区分（底色→卡片） */
 .baby-bar {
-  background: linear-gradient(135deg, #95DE64, #52C41A);
-  padding: 28rpx 32rpx;
+  background: #e8f5e9;
+  padding: 24rpx 32rpx;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  color: #fff;
 }
 .baby-emoji {
-  font-size: 44rpx;
+  font-size: 40rpx;
   margin-right: 12rpx;
 }
 .baby-name {
   font-size: 30rpx;
   font-weight: 600;
+  color: #333;
 }
 .no-baby {
-  color: rgba(255, 255, 255, 0.9);
+  color: #999;
   font-size: 28rpx;
 }
-/* 切换按钮：半透明白胶囊（与首页 hero-switch 同配方） */
+/* 切换按钮：描边胶囊 */
 .baby-switch {
   font-size: 24rpx;
-  color: #fff;
-  background: rgba(255, 255, 255, 0.25);
-  padding: 8rpx 24rpx;
-  border-radius: 32rpx;
-  flex-shrink: 0;
-}
-.baby-emoji {
-  font-size: 44rpx;
-  margin-right: 12rpx;
-}
-.baby-name {
-  font-size: 30rpx;
-  font-weight: 600;
-}
-.no-baby {
-  color: rgba(255, 255, 255, 0.9);
-  font-size: 28rpx;
-}
-/* 切换按钮：半透明白胶囊（与首页 hero-switch 同配方） */
-.baby-switch {
-  font-size: 24rpx;
-  color: #fff;
-  background: rgba(255, 255, 255, 0.25);
+  color: #389e0d;
+  border: 2rpx solid #b7eb8f;
+  background: #fff;
   padding: 8rpx 24rpx;
   border-radius: 32rpx;
   flex-shrink: 0;
