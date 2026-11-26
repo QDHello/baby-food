@@ -42,11 +42,14 @@ Page({
     });
   },
 
-  // 切换当前宝宝
+  // 切换当前宝宝：切换后跳回首页（新档案的全局数据在首页 onShow 重载）
   selectBaby(e) {
     const id = e.currentTarget.dataset.id;
+    const current = babyService.getCurrentBaby();
+    if (current && current.id === id) return; // 已是当前宝宝，不重复切换/跳转
     babyService.setCurrent(id);
     this.load();
+    wx.switchTab({ url: '/pages/index/index' });
   },
 
   addBaby() {
